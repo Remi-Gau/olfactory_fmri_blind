@@ -1,10 +1,13 @@
 function quality_control_beh()
 
 clear
-close all
 clc
 
-tgt_dir = 'D:\olf_blind\raw'; % target folder
+spm_path = '/home/remi-gau/Documents/SPM/spm12';
+addpath(spm_path)
+spm('defaults','fmri')
+
+tgt_dir = '/home/remi-gau/BIDS/Olf_Blind/raw'; % target folder
 
 bids =  spm_BIDS(tgt_dir);
 stim_file = spm_BIDS(bids, 'data', 'type', 'stim');
@@ -21,6 +24,8 @@ for i_stim = 1:numel(stim_file)
     gunzip(stim_file{i_stim}) 
     x = spm_load(stim_file{i_stim}(1:end-3),'',false(1));
     
+    close all
+    
     breath = x(:,1);
     MAX = max(breath);
     
@@ -34,18 +39,21 @@ for i_stim = 1:numel(stim_file)
         comment = '';
     end
     
+    if numel(unique(stim))==1
+        comment = [comment ' No stim.']; %#ok<*AGROW>
+    end
+    
     if numel(unique(resp))==1
         comment = [comment ' No responses.']; %#ok<*AGROW>
     end
     
     %% make figure
     figure('name', stim_file{i_stim}, 'position', [50 50 1300 700], 'visible', visible)
-    clf
     hold on
     
-    FIIK = x(:,4);
-    FIIK = norm_2_range(FIIK, MAX);
-    plot(FIIK, 'g')
+%     FIIK = x(:,4);
+%     FIIK = norm_2_range(FIIK, MAX);
+%     plot(FIIK, 'g')
     
     resp = norm_2_range(resp, MAX);
     plot(resp, 'k', 'linewidth', 1.5)
@@ -62,7 +70,7 @@ for i_stim = 1:numel(stim_file)
     
     axis tight
     
-    legend({'FIIK', 'responses?', 'stimuli', 'breath'})
+    legend({'responses?', 'stimuli', 'breath'})
     
     [~, file, ~] = fileparts(stim_file{i_stim}(1:end-3));
     print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg')
@@ -70,7 +78,7 @@ for i_stim = 1:numel(stim_file)
 
     filenames{i_stim,1} = [file '.jpeg'];
     comments{i_stim,1} = comment;
-    
+
 end
 
 T = table(filenames,comments);

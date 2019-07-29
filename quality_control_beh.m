@@ -3,11 +3,13 @@ function quality_control_beh()
 clear
 clc
 
-spm_path = '/home/remi-gau/Documents/SPM/spm12';
-addpath(spm_path)
+% spm_path = '/home/remi-gau/Documents/SPM/spm12';
+% addpath(spm_path)
 spm('defaults','fmri')
 
-tgt_dir = '/home/remi-gau/BIDS/Olf_Blind/raw'; % target folder
+% tgt_dir = '/home/remi-gau/BIDS/Olf_Blind/raw'; % target folder
+tgt_dir = 'D:\Dropbox\BIDS\olf_blind\raw';
+
 
 bids =  spm_BIDS(tgt_dir);
 stim_file = spm_BIDS(bids, 'data', 'type', 'stim');
@@ -16,9 +18,9 @@ metadata = spm_BIDS(bids, 'metadata', 'type', 'stim');
 out_dir = fullfile('output', 'figures', 'beh_qc');
 mkdir(out_dir)
 
-visible = 'off';
+visible = 'on';
 
-for i_stim = 1:numel(stim_file)
+for i_stim = 1%:numel(stim_file)
     
     %get stimulus file
     gunzip(stim_file{i_stim}) 

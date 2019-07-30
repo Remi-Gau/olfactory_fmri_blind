@@ -5,14 +5,15 @@ clc
 % addpath(spm_path)
 spm('defaults','fmri')
 
-% tgt_dir = '/home/remi-gau/BIDS/Olf_Blind/raw'; % target folder
-tgt_dir = 'D:\Dropbox\BIDS\olf_blind\raw';
+addpath(genpath(fullfile(pwd, 'subfun')))
+
+tgt_dir = 'D:\BIDS\olf_blind\raw';
 
 bids =  spm_BIDS(tgt_dir);
 
 %%
 close all
-out_dir = fullfile('output', 'figures', 'beh_qc');
+out_dir = fullfile('output', 'figures', 'beh_avg');
 mkdir(out_dir)
 
 tasks = spm_BIDS(bids, 'tasks');
@@ -25,6 +26,8 @@ group(1).name = 'blnd';
 group(2).name = 'ctrl';
 
 for iGroup = 1:numel(group)
+    
+    opt.group = group(iGroup).name;
 
 for iTask = 1:numel(tasks)
     
@@ -36,15 +39,15 @@ for iTask = 1:numel(tasks)
     
     subjects(idx)
     
-    [all_resp, all_stim, run_length, task] = average_beh(bids, tasks{iTask}, subjects(idx));
+    [all_stim, task] = average_beh(bids, tasks{iTask}, subjects(idx));
     
     opt.norm_resp = 0;
-    make_figure(all_resp, all_stim, run_length, task, opt)
+    make_figure(all_stim, task, opt)
     print(gcf, fullfile(out_dir, ...
         ['beh_grp-' group(iGroup).name '_task-' task '_binsize-' num2str(opt.bin_size) '_norm-0.jpg']), '-djpeg')
     
     opt.norm_resp = 1;
-    make_figure(all_resp, all_stim, run_length, task, opt)
+    make_figure(all_stim, task, opt)
     print(gcf, fullfile(out_dir, ...
         ['beh_grp-' group(iGroup).name '_task-' task '_binsize-' num2str(opt.bin_size) '_norm-1.jpg']), '-djpeg')
     

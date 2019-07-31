@@ -1,7 +1,7 @@
-function quality_control_beh()
+% quality_control_beh()
 
 clear
-clc 
+clc
 
 % spm_path = '/home/remi-gau/Documents/SPM/spm12';
 % addpath(spm_path)
@@ -9,87 +9,139 @@ spm('defaults','fmri')
 
 tgt_dir = 'D:\BIDS\olf_blind\raw';
 
+out_dir = fullfile(pwd, 'output', 'figures', 'beh_qc');
 
+visible = 'off';
+
+% get options
+opt = get_option;
+nb_dummies = opt.nb_dummies;
+RT = opt.RT;
+samp_freq = opt.samp_freq;
+trial_type = opt.trial_type;
+stim_color = opt.stim_color;
+Legend = opt.stim_legend;
+Legend{end+1} = 'resp_1';
+Legend{end+1} = 'resp_2';
+Legend{end+1} = 'respiration';
+
+% get date info
 bids =  spm_BIDS(tgt_dir);
-stim_file = spm_BIDS(bids, 'data', 'type', 'stim');
-metadata = spm_BIDS(bids, 'metadata', 'type', 'stim');
+subjects = spm_BIDS(bids, 'subjects');
+tasks = spm_BIDS(bids, 'tasks');
 
-out_dir = fullfile('output', 'figures', 'beh_qc');
+% number of time points to remove from phsyio to align with beh
+physio_crop = 1:RT*nb_dummies*samp_freq;
+
 mkdir(out_dir)
 
-visible = 'on';
+%%
 
-for i_stim = 1:numel(stim_file)
-    
-    %get stimulus file
-    gunzip(stim_file{i_stim}) 
-    x = spm_load(stim_file{i_stim}(1:end-3),'',false(1));
-    
-    close all
-    
-    breath = x(:,1);
-    MAX = max(breath);
-    
-    stim = x(:,2);
-    
-    resp = x(:,5);
-    
-    if range(breath)<0.1
-        comment = 'Very small breath range.';
-    else
-        comment = '';
-    end
-    
-    if numel(unique(stim))==1
-        comment = [comment ' No stim.']; %#ok<*AGROW>
-    end
-    
-    if numel(unique(resp))==1
-        comment = [comment ' No responses.']; %#ok<*AGROW>
-    end
-    
-    %% make figure
-    figure('name', stim_file{i_stim}, 'position', [50 50 1300 700], 'visible', visible)
-    hold on
-    
-%     FIIK = x(:,4);
-%     FIIK = norm_2_range(FIIK, MAX);
-%     plot(FIIK, 'g')
-    
-    resp = norm_2_range(resp, MAX);
-    plot(resp, 'k', 'linewidth', 1.5)
-    
-    stim = norm_2_range(stim, MAX);
-    plot(stim, 'r', 'linewidth', 2)
-    
-    plot(breath, 'b', 'linewidth', 2) % plot breathing
-%     plot(diff(breath), 'c')
-    
-    % get the start time of the run (after the dummies have been removed)
-    StartTime = metadata{i_stim}.StartTime * -1 * metadata{i_stim}.SamplingFrequency;
-    plot([StartTime StartTime], [0 MAX], '--k', 'linewidth', 2)
-    
-    axis tight
-    
-    legend({'responses?', 'stimuli', 'breath'})
-    
-    [~, file, ~] = fileparts(stim_file{i_stim}(1:end-3));
-    print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg')
-    
+for iSub = 1:numel(subjects)
+    for iTasks = 1:2
+        
+        physio_file = spm_BIDS(bids, 'data', ...
+            'sub', subjects{iSub}, ...
+            'task', tasks{iTasks}, ...
+            'type', 'physio');
+        
+        metadata = spm_BIDS(bids, 'metadata', ...
+            'sub', subjects{iSub}, ...
+            'task', tasks{iTasks}, ...
+            'type', 'physio');
+        
+        event_file = spm_BIDS(bids, 'data', ...
+            'sub', subjects{iSub}, ...
+            'task', tasks{iTasks}, ...
+            'type', 'events');
+        
+        for iRun = 1:numel(physio_file)
+            
+            close all
 
-    filenames{i_stim,1} = [file '.jpeg'];
-    comments{i_stim,1} = comment;
-
+            
+            % get physio data
+            disp(physio_file{iRun})
+            if ~exist(physio_file{iRun}(1:end-3), 'file')
+                gunzip(physio_file{iRun})
+            end
+            x = spm_load(physio_file{iRun}(1:end-3),'',false(1));
+            respiration = x(:,1);
+            respiration(physio_crop) = [];
+            MAX = max(respiration);
+            
+            if range(respiration)<0.1
+                comment = 'Very small respiration range.';
+            else
+                comment = '';
+            end
+            
+            
+            % Get stim and responses
+            %get events file
+            disp(event_file(iRun))
+            trial_courses = get_trial_timecourse(event_file(iRun));
+            
+            % crop the time courses of the responses and trial types to
+            % match that of the respiration
+            fprintf('respiration file longer by: %02.1f seconds\n', ...
+                (length(respiration)-size(trial_courses,2)) / samp_freq );
+            trial_courses(:,length(respiration)+1:end) = [];
+            
+            % some sanity checks for later
+            if all(all(trial_courses(1:4,:)==0))
+                comment = [comment ' No stim.']; %#ok<*AGROW>
+            end
+            
+            if all(all(trial_courses(5:end,:)==0))
+                comment = [comment ' No responses.']; %#ok<*AGROW>
+            end
+            
+            % fill the onset and offset by durations
+            for iTrialtype = 1:size(trial_courses,1)
+                onsets = find(trial_courses(iTrialtype,:)==1);
+                offsets = find(trial_courses(iTrialtype,:)==-1);
+                % in case the offset was cropped out we make the stim end
+                % at the end of the timecourse
+                if isempty(offsets) && iTrialtype<5
+                    offsets = size(trial_courses,2); 
+                end
+                if iTrialtype>4
+                    trial_courses(iTrialtype,onsets) = 1;
+                else
+                    trial_courses(iTrialtype,onsets:offsets) = 1;
+                end
+                
+            end
+            
+            % make figure
+            figure('name', physio_file{iRun}, 'position', [50 50 1300 700], 'visible', visible)
+            hold on
+            
+            % plot stimuli
+            for iStim = 1:4
+                plot(trial_courses(iStim,:), stim_color{iStim}, 'linewidth', 2)
+            end
+            % plot responses
+            plot(trial_courses(5,:), '--k', 'linewidth', 2)
+            plot(trial_courses(6,:), 'k', 'linewidth', 2)
+            % plot breathing
+            plot(respiration, 'b', 'linewidth', 2) 
+            
+            axis tight
+            
+            legend(Legend)
+            
+            [~, file, ~] = fileparts(event_file{iRun}(1:end-3));
+            print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg')
+            
+            
+            filenames{iRun,1} = [file '.jpeg']; %#ok<*SAGROW>
+            comments{iRun,1} = comment;
+            
+        end
+    end
 end
 
 T = table(filenames,comments);
-writetable(T, fullfile(out_dir, 'stim_files_QC.csv'), 'Delimiter', ',')  
-
-end
-
-function x = norm_2_range(x, MAX)
-% normalizes between 0 and a given max alue
-x = x - min(x);
-x = x / max(x);
-x = x * MAX;
-end
+writetable(T, fullfile(out_dir, 'stim_files_QC.csv'), 'Delimiter', ',')

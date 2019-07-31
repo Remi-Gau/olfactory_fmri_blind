@@ -63,7 +63,6 @@ end
 %%
 figure('name', tasks, 'position', [50 50 1300 700], 'visible', opt.visible)
 
-
 iSubplot = 1;
 
 for iRun = 1:nb_columns
@@ -121,85 +120,4 @@ for iRun = 1:nb_columns
     iSubplot = iSubplot + 1;
     
 end
-end
-
-function do_plot(to_plot, sem, all_subjs, Color, iSubplot, opt)
-% either plot mean and each subject or mean +/- sem
-if opt.plot_subj
-    for iSubj = 1:size(all_subjs,1)
-        plot(1:length(to_plot), all_subjs(iSubj,:), ...
-            'color', Color(iSubplot,:)*.9, 'linewidth', .5);
-        plot(1:length(to_plot), to_plot, ...
-            'color', Color(iSubplot,:), 'linewidth', 2);
-    end
-else
-    shadedErrorBar(1:length(to_plot), to_plot, sem, ...
-        {'color', Color(iSubplot,:), 'linewidth', 2})
-end
-end
-
-function [to_plot, sem, all_subjs] = process_timeSeries(to_plot, nb_bins, opt)
-to_plot(isnan(to_plot)) = 0;
-to_plot = bin_data(to_plot, nb_bins, opt);
-if opt.normalize
-    to_plot = normalize_data(to_plot);
-end
-if opt.mov_mean
-    to_plot = movmean(to_plot,opt.moving_win_size,2);
-end
-all_subjs = to_plot;
-sem = nanstd(to_plot)/size(to_plot,1);
-to_plot = nanmean(to_plot);
-end
-
-
-function to_plot = bin_data(to_plot, nb_bins, opt)
-
-tmp = zeros(size(to_plot,1),nb_bins);
-
-t_start = 1;
-t_end = opt.bin_size;
-
-for iBin = 1:nb_bins
-    tmp(:,iBin) = sum(to_plot(:,t_start:t_end), 2);
-    t_start = t_start + opt.bin_size;
-    t_end = t_end + opt.bin_size;
-end
-
-to_plot = tmp;
-
-end
-
-function to_plot = normalize_data(to_plot)
-for iRow = 1:size(to_plot,1)
-    to_plot(iRow,:) = to_plot(iRow,:)/sum(to_plot(iRow,1:end));
-end
-end
-
-function [norm_text] = label_your_axes(fontsize, x_tick, x_label, opt)
-
-if opt.norm_resp
-    norm_text = 'YES';
-    y_tick = 0:.0025:.1;
-    y_label = 0:.0025:.1;
-else
-    norm_text = 'NO';
-    one_resp = 1/opt.nb_subj;
-    y_tick = 0:one_resp/4:1;
-    y_label = 0:.5:numel(y_tick);
-end
-
-axis tight
-set(gca, 'fontsize', fontsize, ...
-    'ytick', y_tick, 'yticklabel', y_label, ...
-    'xtick', x_tick, 'xticklabel', x_label, ...
-    'ticklength', [.02 .02], 'tickdir', 'out')
-
-if ~isempty(opt.max_y_axis)
-    max_y_axis = opt.max_y_axis(opt.normalize+1);
-    ax = axis;
-    axis([ax(1) ax(2) 0 max_y_axis]);
-end
-
-xlabel('time (sec)')
 end

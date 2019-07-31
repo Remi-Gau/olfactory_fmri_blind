@@ -61,7 +61,7 @@ for i_stim = 1:numel(physio_file)
     print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg')
 
 
-    filenames{i_stim,1} = [file '.jpeg'];
+    filenames{i_stim,1} = [file '.jpeg']; %#ok<*SAGROW>
     comments{i_stim,1} = comment;
 
 end

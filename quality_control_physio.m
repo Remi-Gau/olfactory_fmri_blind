@@ -1,4 +1,7 @@
 function quality_control_physio()
+% plots the respiratory data from each subject / run and shows when the
+% acquisition was started.
+
 
 clear
 clc

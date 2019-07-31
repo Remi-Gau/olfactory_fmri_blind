@@ -27,7 +27,7 @@ addpath(genpath(fullfile(pwd, 'subfun')))
 bids =  spm_BIDS(tgt_dir);
 
 %% plotting
-opt.bin_size = 10; % number of data point to bin. e.g. 25: means 1 sec of responses are summed 
+opt.bin_size = 20; % number of data point to bin. e.g. 25: means 1 sec of responses are summed 
 
 opt.plot_subj = 0; % plot subjects - usualluy not pretty
 
@@ -37,7 +37,7 @@ opt.moving_win_size = 20; % width of the moving window
 % limit of y axis when plotting both groups
 max_y_axis = [...
         0.105;... % with no row normalization
-        0.015 ]/1.5; % with row normalization
+        0.015 ]*1.35; % with row normalization
 
 % do the loading of the data and plot
 close all
@@ -94,25 +94,25 @@ for iTask = 1:numel(tasks)
         end
 
         % plot each group with and without row normalization
-        for iNorm = 0:1
-            opt.norm_resp = iNorm;
-            
-            % plot the 2 runs separately
-            prefix = 'beh_grp-';
-            make_figure(all_stim, task, opt)
-            mtit(sprintf('Group: %s ; Task: %s ; Row norm: %i', ...
-                opt.group, tasks{iTask}, opt.norm_resp), ....
-                'fontsize', 14, 'xoff', 0,'yoff',0.05);
-            print_fig(prefix, out_dir, group(iGroup).name, task, iNorm)
-            
-            % plot the run averages
-            prefix = 'beh_runavg_grp-';
-            make_figure(avg_all_stim, task, opt)
-            mtit(sprintf('Run avg ; Group: %s ; Task: %s ; Row norm: %i', ...
-                opt.group, tasks{iTask}, opt.norm_resp), ....
-                'fontsize', 14, 'xoff', 0,'yoff',0.05);
-            print_fig(prefix, out_dir, group(iGroup).name, task, iNorm)
-        end
+%         for iNorm = 0:1
+%             opt.norm_resp = iNorm;
+%             
+%             % plot the 2 runs separately
+%             prefix = 'beh_grp-';
+%             make_figure(all_stim, task, opt)
+%             mtit(sprintf('Group: %s ; Task: %s ; Row norm: %i', ...
+%                 opt.group, tasks{iTask}, opt.norm_resp), ....
+%                 'fontsize', 14, 'xoff', 0,'yoff',0.05);
+%             print_fig(prefix, out_dir, group(iGroup).name, task, iNorm)
+%             
+%             % plot the run averages
+%             prefix = 'beh_runavg_grp-';
+%             make_figure(avg_all_stim, task, opt)
+%             mtit(sprintf('Run avg ; Group: %s ; Task: %s ; Row norm: %i', ...
+%                 opt.group, tasks{iTask}, opt.norm_resp), ....
+%                 'fontsize', 14, 'xoff', 0,'yoff',0.05);
+%             print_fig(prefix, out_dir, group(iGroup).name, task, iNorm)
+%         end
 
     end
     

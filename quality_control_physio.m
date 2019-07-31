@@ -1,4 +1,4 @@
-function quality_control_physio()
+% quality_control_physio
 % plots the respiratory data from each subject / run and shows when the
 % acquisition was started.
 
@@ -23,15 +23,15 @@ mkdir(out_dir)
 visible = 'off';
 
 for i_stim = 1:numel(physio_file)
-    
+
     disp(physio_file{i_stim})
-    
+
     %get stimulus file
-    gunzip(physio_file{i_stim}) 
+    gunzip(physio_file{i_stim})
     x = spm_load(physio_file{i_stim}(1:end-3),'',false(1));
-    
+
     close all
-    
+
     breath = x(:,1);
     MAX = max(breath);
 
@@ -40,24 +40,24 @@ for i_stim = 1:numel(physio_file)
     else
         comment = '';
     end
-    
+
     %% make figure
     figure('name', physio_file{i_stim}, 'position', [50 50 1300 700], 'visible', visible)
     hold on
-    
+
     plot(breath, 'b', 'linewidth', 2) % plot breathing
-    
+
     % get the start time of the run (after the dummies have been removed)
     StartTime = metadata{i_stim}.StartTime * -1 * metadata{i_stim}.SamplingFrequency;
     plot([StartTime StartTime], [0 MAX], '--k', 'linewidth', 2)
-    
+
     axis tight
-    
+
     legend({'respiration' ,'first scan'})
-    
+
     [~, file, ~] = fileparts(physio_file{i_stim}(1:end-3));
     print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg')
-    
+
 
     filenames{i_stim,1} = [file '.jpeg'];
     comments{i_stim,1} = comment;
@@ -65,6 +65,6 @@ for i_stim = 1:numel(physio_file)
 end
 
 T = table(filenames,comments);
-writetable(T, fullfile(out_dir, 'physio_files_QC.csv'), 'Delimiter', ',')  
+writetable(T, fullfile(out_dir, 'physio_files_QC.csv'), 'Delimiter', ',')
 
 end

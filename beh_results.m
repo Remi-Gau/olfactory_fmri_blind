@@ -1,0 +1,264 @@
+% behavioral results
+
+clear
+clc
+
+% mention where the BIDS data set is (can get the behavioral from OSF)
+tgt_dir = 'D:\BIDS\olf_blind\raw';
+
+% if needed add spm to the path
+% spm_path = '/home/remi-gau/Documents/SPM/spm12';
+% addpath(spm_path)
+spm('defaults','fmri')
+
+addpath(genpath(fullfile(pwd, 'subfun')))
+
+% loads bids data
+bids =  spm_BIDS(tgt_dir);
+
+%% get data
+
+% do the loading of the data and plot
+close all
+
+out_dir = fullfile('output', 'figures', 'beh_avg');
+mkdir(out_dir)
+
+tasks = spm_BIDS(bids, 'tasks');
+if numel(tasks)==3
+    tasks(3) = [];
+end
+
+group(1).name = 'blnd';
+group(2).name = 'ctrl';
+
+
+for iTask = 1:numel(tasks)
+    
+    for iGroup = 1:numel(group)
+        
+        subjects = spm_BIDS(bids, 'subjects', ...
+            'task', tasks{iTask});
+        
+        idx = strfind(subjects, {group(iGroup).name});
+        idx = find(~cellfun('isempty', idx)); %#ok<STRCL1>
+
+        subjects(idx)
+        
+        all_stim = average_beh(bids, tasks{iTask}, subjects(idx));
+        
+        for iTrialType = 1:size(all_stim,1)
+            for iRun = 1:2
+                all_time_courses{iTrialType, iRun, iGroup, iTask} = ...
+                    all_stim{iTrialType,iRun}; %#ok<*SAGROW>
+            end
+        end
+        
+    end
+end
+
+
+%% epoch the data
+
+opt = get_option;
+
+baseline_dur = 20;
+pre_stim = 15;
+stim_dur = 16;
+post_stim = 15;
+
+baseline_dur = baseline_dur * opt.samp_freq;
+pre_stim = pre_stim * opt.samp_freq;
+stim_dur = stim_dur * opt.samp_freq;
+post_stim = post_stim * opt.samp_freq;
+
+for iTask = 1:numel(tasks)
+    for iGroup = 1:numel(group)
+        for iRun = 1:2
+            
+            % onset and offset of each stim
+            for iTrialtype = 1:4
+                data = all_time_courses{iTrialtype, iRun, iGroup, iTask};
+                for iSubj = 1:size(data,1)
+                    ON = find(data(iSubj,:)==1);
+                    if isempty(ON)
+                        ON = 1;
+                    end
+                    onsets(iSubj,iTrialtype) = ON;
+                end
+            end
+            
+            % indices of baseline epoch
+            baseline_idx = onsets(:,1);
+            
+            % in case some subjects have messed up onsets
+            bad_baseline = baseline_idx<=baseline_dur/2;
+            if any(bad_baseline)
+                baseline_idx(bad_baseline,:) = ...
+                    repmat(round(mean(baseline_idx(~bad_baseline,:))), ...
+                    [sum(bad_baseline),1]);
+            end
+            
+            % Do something similar for the other onsets
+            for iTrialtype = 2:4
+                tmp = onsets(:,iTrialtype)==1;
+                onsets(tmp,iTrialtype) = repmat(round(mean(onsets(~tmp,iTrialtype))), ...
+                    [sum(tmp),1]);
+            end
+            
+            % update onsets
+            onsets(:,1) = baseline_idx(:,1);
+            
+            % create offsets using a fixed duration
+            offsets = onsets+stim_dur;
+            
+            % create epoch index for baseline
+            baseline_idx = [baseline_idx - baseline_dur, baseline_idx];
+
+            % for each response 
+            for iResp = 1:2
+                
+                data = all_time_courses{iResp+4, iRun, iGroup, iTask};
+                
+                % get baseline for each response
+                for iSubj = 1:size(data,1)
+                    baseline(iSubj,iResp) = ...
+                        mean( data(iSubj, baseline_idx(iSubj,1):baseline_idx(iSubj,2) ) );
+                end
+                
+                % slice the responses time courses for pre-stim epoch for each stim
+                % and normalizes the data by the baseline (minus the
+                % average number of responses per time point during the
+                % baseline)
+                for iTrialtype = 1:4
+                    for iSubj = 1:size(data,1)
+                        
+                        ON = onsets(iSubj,iTrialtype);
+                        OFF = offsets(iSubj,iTrialtype);
+                        
+                        prestim_epoch{iResp,iGroup,iTask}(iSubj,:,iTrialtype,iRun) = ...
+                            data(iSubj, ON-pre_stim:ON-1);% - baseline(iSubj,iResp);
+                        stim_epoch{iResp,iGroup,iTask}(iSubj,:,iTrialtype,iRun) = ...
+                            data(iSubj, ON:OFF);% - baseline(iSubj,iResp);
+                        poststim_epoch{iResp,iGroup,iTask}(iSubj,:,iTrialtype,iRun) = ...
+                            data(iSubj, OFF+1:OFF+post_stim);% - baseline(iSubj,iResp);
+                        
+                    end
+                end
+            end
+            
+        end
+        
+        % average across runs
+        for iResp = 1:2
+            prestim_epoch{iResp,iGroup,iTask} = mean(poststim_epoch{iResp,iGroup,iTask} ,4);
+            stim_epoch{iResp,iGroup,iTask} = mean(stim_epoch{iResp,iGroup,iTask} ,4);
+            poststim_epoch{iResp,iGroup,iTask} = mean(poststim_epoch{iResp,iGroup,iTask} ,4);
+        end
+    end
+    
+end
+
+
+%% Plots the PSTH
+clc
+close all
+
+opt.bin_size = 10;
+
+opt.mov_mean = 1;
+opt.moving_win_size = 20;
+
+opt.max_y_axis = [0.08 0.08];
+
+opt.plot_subj = 0;
+opt.normalize = 0;
+opt.visible = 'on';
+fontsize = 12;
+
+
+opt = get_option(opt);
+stim_color_mat = opt.stim_color_mat;
+stim_color_mat(stim_color_mat==0) = .8;
+stim_linestyle = opt.stim_linestyle;
+stim_legend = opt.stim_legend;
+samp_freq = opt.samp_freq;
+
+bin_duration  = 1/samp_freq * opt.bin_size;
+
+x1_patch = pre_stim/opt.bin_size;
+x2_patch = (pre_stim+stim_dur)/opt.bin_size;
+
+% just to prevent label_your_axes from trying to give a meaningful scale
+opt.norm_resp = 1;
+
+
+for iGroup = 1:2
+    
+    for iTask = 1:2
+        
+        figure('name', tasks{iTask}, 'position', [50 50 1300 700], 'visible', opt.visible)
+        
+        iSubplot = 1;
+        
+        for iResp = 1:2
+            for iTrialtype = 1:4
+                
+                to_plot = cat(2, ...
+                    prestim_epoch{iResp,iGroup,iTask}(:,:,iTrialtype),...
+                    stim_epoch{iResp,iGroup,iTask}(:,:,iTrialtype),...
+                    poststim_epoch{iResp,iGroup,iTask}(:,:,iTrialtype) );
+                
+                opt.nb_subj = size(to_plot,2);
+                
+                nb_bins = round(length(to_plot)/opt.bin_size);
+                x_tick = round(linspace(0,nb_bins,10));
+                x_label = round(linspace(0,nb_bins*bin_duration,10)) - pre_stim/samp_freq;
+                
+                [to_plot, sem, all_subjs] = process_timeSeries(to_plot, nb_bins, opt);
+                
+                subplot(2,4, iSubplot)
+                hold on
+                
+                patch(...
+                    [x1_patch x1_patch x2_patch x2_patch],...
+                    [0 opt.max_y_axis(1) opt.max_y_axis(1) 0],...
+                    stim_color_mat(iTrialtype,:),...
+                    'linestyle', stim_linestyle{iTrialtype});
+                
+                do_plot(to_plot, sem, all_subjs, [0 0 0], 1, opt)
+                
+                plot([0 numel(to_plot)], [0 0], 'k')
+                
+                label_your_axes(fontsize, x_tick, x_label, opt);
+    
+                axis tight
+                ax = axis;
+                axis([ax(1) ax(2) ax(3) opt.max_y_axis(1)]);
+                
+                iSubplot = iSubplot + 1;
+            end
+            
+        end
+        
+        subplot(2, 4, 1)
+        t = ylabel('Resp 1  - [A U]');
+        set(t, 'fontsize', fontsize);
+        
+        subplot(2, 4, 5)
+        t = ylabel('Resp 2 - [A U]');
+        set(t, 'fontsize', fontsize);
+        
+        for iTrialtype = 1:4
+            subplot(2, 4, iTrialtype)
+            title(stim_legend{iTrialtype});
+        end
+        
+        mtit(sprintf('Group: %s ; Task: %s', ...
+            group(iGroup).name, tasks{iTask}), ....
+            'fontsize', 14, 'xoff', 0,'yoff',0.05);
+        
+        
+    end
+end
+

@@ -27,7 +27,9 @@ for i_stim = 1:numel(physio_file)
     disp(physio_file{i_stim})
 
     %get stimulus file
-    gunzip(physio_file{i_stim})
+    if ~exist(physio_file{i_stim}(1:end-3), 'file')
+        gunzip(physio_file{i_stim})
+    end
     x = spm_load(physio_file{i_stim}(1:end-3),'',false(1));
 
     close all
@@ -67,4 +69,3 @@ end
 T = table(filenames,comments);
 writetable(T, fullfile(out_dir, 'physio_files_QC.csv'), 'Delimiter', ',')
 
-end

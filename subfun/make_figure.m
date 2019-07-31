@@ -9,23 +9,19 @@ function make_figure(all_stim, tasks, opt)
 %     'resp_12'};
 
 fontsize = 12;
-samp_freq = 25;
 
-stim_color = {...
-    '-g';...  % Eucalyptus Left
-    '-r'; ... % Almond Left
-    '--g';...  % Eucalyptus Right
-    '--r'};    % Almond Right
+opt = get_option(opt);
 
-Legend = {...
-    'Euc - Left';...
-    'Alm - Left';...
-    'Euc - Right';...
-    'Alm - Right'};
+samp_freq = opt.samp_freq;
+
+stim_color = opt.stim_color;
+stim_legend = opt.stim_legend;
+
+blnd_color = opt.blnd_color;
+sighted_color = opt.sighted_color;
 
 black = [0 0 0];
-blnd_color = [255 158 74];
-sighted_color = [105 170 153];
+
 
 % take latest offset of the last stim to set the end of the run for
 % plottingg
@@ -91,7 +87,7 @@ for iRun = 1:nb_columns
         opt.plot, Run{iRun}, opt.bin_size, opt.moving_win_size));
     set(t, 'fontsize', fontsize)
     ylabel('Stimuli')
-    legend(Legend)
+    legend(stim_legend)
     
     iSubplot = iSubplot + 1;
     

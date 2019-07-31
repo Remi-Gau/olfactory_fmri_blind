@@ -46,7 +46,9 @@ out_dir = fullfile('output', 'figures', 'beh_avg');
 mkdir(out_dir)
 
 tasks = spm_BIDS(bids, 'tasks');
-tasks(3) = [];
+if numel(tasks)==3
+    tasks(3) = [];
+end
 
 group(1).name = 'blnd';
 group(2).name = 'ctrl';

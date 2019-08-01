@@ -1,12 +1,38 @@
 # code base for the analysis of olfaction fMRI experiment in blind and sighted control
 
 
-## fMRI preprocessing run with fMRIprep
+## fMRI QC and preprocessing
+
+### MRIQC
 
 ```
-insert here command used to run fMRIprep
+docker run -it --rm \
+-v ~/mnt/data/christine/olf_blind/raw:/data:ro \
+-v ~/mnt/data/christine/olf_blind:/out poldracklab/mriqc:0.15.0 /data /out/derivatives/mriqc \
+participant \
+--verbose-reports --mem_gb 50 --n_procs 16 -m bold
 ```
 
+### fmriprep
+
+```
+docker run -it --rm \
+-v /mnt/data/christine/olf_blind:/data:ro \
+-v /mnt/data/christine/olf_blind/:/out poldracklab/fmriprep:1.4.0 /data/raw /out/derivatives/ \
+participant --participant_label ctrl02 ctrl06 ctrl07 ctrl08 ctrl09 \
+--fs-license-file /data/freesurfer/license.txt \
+--output-spaces T1w:res-native MNI152NLin2009cAsym:res-native --nthreads 10 --use-aroma
+```
+
+#### Done:
+ctrl01 ctrl03 ctrl04 ctrl05
+
+#### Running:
+ctrl02 ctrl06 ctrl07 ctrl08 ctrl09
+
+#### Less urgent (problematic anat or func data)
+
+???
 
 ## functions descriptions
 

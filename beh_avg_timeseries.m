@@ -63,6 +63,7 @@ for iTask = 1:numel(tasks)
     
     for iGroup = 1:numel(group)
         
+        opt.iGroup = iGroup;
         opt.group = group(iGroup).name;
         
         opt.plot = 'Run';

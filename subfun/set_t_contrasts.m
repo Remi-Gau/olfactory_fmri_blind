@@ -1,13 +1,9 @@
-function matlabbatch = set_t_contrasts(analysis_dir)
+function matlabbatch = set_t_contrasts(analysis_dir, contrat_ls)
 % set batch to estimate the following contrasts (> baseline and < baseline)
-% (1) gamble_trial
-% (2) gamble_trialxgain : parametric effect of gain,
-% (3) gamble_trialxloss : parametric effect of loss,
-% (4) gamble_trialxEV : effect of expected value,
-% (5) missed_trial : effect of missed trials,
-% (6) gamble_trial_button_press : effect button presses,
-% (7) FramewiseDisplacement : effet of the FD regressor
 
+for iCon = 1:numel(contrat_ls)
+    cdt_ls{iCon,1} = [contrat_ls{iCon} '*bf(1)']; %#ok<*AGROW>
+end
 
 % cdt_ls = {...
 %     ' gamble_trial*bf(1)', ...
@@ -17,14 +13,6 @@ function matlabbatch = set_t_contrasts(analysis_dir)
 %     ' missed_trial*bf(1)', ...             
 %     ' gamble_trial_button_press*bf(1)', ...
 %     ' FramewiseDisplacement'};
-
-cdt_ls = {...
-    ' gamble_trial*bf(1)', ...
-    ' gamble_trialxgain^1*bf(1)', ...  
-    ' gamble_trialxloss^1*bf(1)', ...      
-    ' gamble_trialxEV^1*bf(1)', ...       
-    ' missed_trial*bf(1)', ...             
-    ' gamble_trial_button_press*bf(1)'};
 
 load(fullfile(analysis_dir, 'SPM.mat'), 'SPM');
 
@@ -38,7 +26,7 @@ for iCdt = 1:numel(cdt_ls)
     % add the suffix '*bf(1)' to look for regressors that are convolved
     % with canonical HRF
     idx = strfind(SPM.xX.name', cdt_ls{iCdt});
-    idx = ~cellfun('isempty', idx); %#ok<STRCL1>
+    idx = ~cellfun('isempty', idx);
     
     % do X > baseline
     weight_vec = init_weight_vector(SPM);

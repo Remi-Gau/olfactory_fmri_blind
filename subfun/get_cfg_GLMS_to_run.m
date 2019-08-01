@@ -3,7 +3,7 @@ function [sets] = get_cfg_GLMS_to_run()
 % see set_all_GLMS for what each analytical choice corresponds to
 
 % opt.inc_mask_thres = [0 0.8]; 
-sets{1} = 1;
+sets{1} = 2;
 
 % opt.HPF = 128; % high pass filter
 sets{2} = 1;

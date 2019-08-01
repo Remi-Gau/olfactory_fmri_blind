@@ -18,7 +18,7 @@ clc
 debug_mode = 1;
 
 machine_id = 1;% 0: container ;  1: Remi ;  2: Marco
-smoothing_prefix = '';
+smoothing_prefix = ''; %#ok<*NASGU>
 filter =  '.*.nii$'; % to unzip only the files in MNI space
 
 if debug_mode
@@ -28,6 +28,15 @@ end
 
 %% set options
 opt.task = {'olfid' 'olfloc'};
+
+%%
+opt.contrat_ls = {
+    'Euc-Right';...
+    'Alm-Left';...
+    'Euc-Right';...
+    'Alm-Right';...
+    'resp-03';...
+    'resp-12'};
 
 
 %% setting up
@@ -43,7 +52,7 @@ if debug_mode
     output_dir = data_dir;
 end
 
-data_dir
+data_dir %#ok<*NOPTS>
 code_dir
 output_dir
 
@@ -53,7 +62,7 @@ folder_subj = cellstr(char({folder_subj.name}')); % turn subject folders into a 
 nb_subjects = numel(folder_subj);
 
 if debug_mode
-    nb_subjects = 3;
+    nb_subjects = 1;
 end
 
 
@@ -163,6 +172,7 @@ for isubj = 1:nb_subjects
             output_dir, ...
             folder_subj{isubj}, 'stats', analysis_dir );
         [~, ~, ~] = mkdir(analysis_dir);
+        mkdir(fullfile(analysis_dir, 'jobs'));
         
         % to remove any previous analysis so that the whole thing does not
         % crash
@@ -192,19 +202,19 @@ for isubj = 1:nb_subjects
         matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
         matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
         
-        save(fullfile(analysis_dir,'GLM_matlabbatch.mat'), 'matlabbatch')
+        save(fullfile(analysis_dir,'jobs','GLM_matlabbatch.mat'), 'matlabbatch')
         
         spm_jobman('run', matlabbatch)
         
         % estimate contrasts
-%         matlabbatch = [];
-%         matlabbatch = set_t_contrasts(analysis_dir);
-%         
-%         spm_jobman('run', matlabbatch)
-%         
-%         save(fullfile(analysis_dir,'contrast_matlabbatch.mat'), 'matlabbatch')
-%         
-%         toc
+        matlabbatch = [];
+        matlabbatch = set_t_contrasts(analysis_dir, opt.contrat_ls);
+        
+        spm_jobman('run', matlabbatch)
+        
+        save(fullfile(analysis_dir,'jobs','contrast_matlabbatch.mat'), 'matlabbatch')
+        
+        toc
         
     end
     

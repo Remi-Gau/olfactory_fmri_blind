@@ -12,32 +12,35 @@
 clear
 clc
 
-machine_id = 1;% 0: container ;  1: Remi ;  2: Chris
+machine_id = 2;% 0: container ;  1: Remi ;  2: beast
 filter =  'sub-.*space-MNI152NLin2009cAsym_desc-preproc'; % to unzip only the files in MNI space
-% nb_subjects = 2; % to only try on a couple of subjects; comment out to run on all
+subj_to_do = [1 3:5]; % to only try on a couple of subjects; comment out to run on all
 
 %% setting up
 % setting up directories
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
+spm('defaults','fmri')
 
 % creating output sub-dirs in derivatives/spm12
 [~, ~, ~] = mkdir(output_dir);
 folder_subj = get_subj_list(fMRIprep_DIR);
 folder_subj = cellstr(char({folder_subj.name}')); % turn subject folders into a cellstr
-spm_mkdir(output_dir, folder_subj, {'anat','func'});
 
-if ~exist('nb_subjects', 'var')
-    nb_subjects = numel(folder_subj);
+if ~exist('subj_to_do', 'var')
+    subj_to_do = 1:numel(folder_subj);
 end
+
 
 %% copy files of interest to another folder ('derivatives/spm12')
 sub_folders = {'anat', 'func'};
 
-for i_subj = 1:nb_subjects
+for i_subj = subj_to_do
     
     fprintf('\n%s', folder_subj{i_subj});
     
     sub_source_folder = fullfile(fMRIprep_DIR, folder_subj{i_subj});
+    
+    spm_mkdir(output_dir, folder_subj{i_subj}, {'anat','func'});
     
     for i_folder = 1:numel(sub_folders)
         
@@ -60,6 +63,30 @@ for i_subj = 1:nb_subjects
                 'nifti', true);
         end
     end
+    
+        % copy *.txt and *.h5 files from anat (in case we want to do some normalization)
+    copyfile(...
+        fullfile(sub_source_folder, 'anat', '*.txt'), ...
+        fullfile(output_dir, folder_subj{i_subj}, 'anat'));
+    copyfile(...
+        fullfile(sub_source_folder, 'anat', '*.h5'), ...
+        fullfile(output_dir, folder_subj{i_subj}, 'anat'));
+    
+    % copy confound*.tsv files from func
+    copyfile(...
+        fullfile(sub_source_folder, 'func', '*.tsv'), ...
+        fullfile(output_dir, folder_subj{i_subj}, 'func'));
+    
+    % copy *events.tsv files from func
+    copyfile(...
+        fullfile(data_dir, 'raw', folder_subj{i_subj}, 'func', '*.tsv'), ...
+        fullfile(output_dir, folder_subj{i_subj}, 'func'));
+    
+    % copy *physio.tsv.gz files from func
+    copyfile(...
+        fullfile(data_dir, 'raw', folder_subj{i_subj}, 'func', '*physio.tsv.gz'), ...
+        fullfile(output_dir, folder_subj{i_subj}, 'func'));
+    
 
     fprintf('\n')
     
@@ -68,4 +95,4 @@ end
 fprintf('\n Files transferred\n')
 
 %% unzipping
-unzip_fmriprep(output_dir, filter)
+unzip_fmriprep(output_dir, [filter '.*.nii.gz$'])

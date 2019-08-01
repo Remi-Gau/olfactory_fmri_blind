@@ -8,6 +8,6 @@ if opt.mov_mean
     to_plot = movmean(to_plot,[opt.moving_win_size],2);
 end
 all_subjs = to_plot;
-sem = nanstd(to_plot)/size(to_plot,1);
+sem = nanstd(to_plot)/size(to_plot,1)^.5;
 to_plot = nanmean(to_plot);
 end

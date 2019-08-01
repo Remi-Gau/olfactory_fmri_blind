@@ -17,12 +17,6 @@ samp_freq = opt.samp_freq;
 stim_color = opt.stim_color;
 stim_legend = opt.stim_legend;
 
-blnd_color = opt.blnd_color;
-sighted_color = opt.sighted_color;
-
-black = [0 0 0];
-
-
 % take latest offset of the last stim to set the end of the run for
 % plottingg
 run_length = find(any(all_stim{4,1}==-1), 1, 'last');
@@ -37,28 +31,7 @@ bin_duration  = 1/samp_freq * opt.bin_size;
 x_tick = round(linspace(0,nb_bins,10));
 x_label = round(linspace(0,nb_bins*bin_duration,10));
 
-switch nb_columns
-    case 1
-        SubPlot = [1 2 3];
-        if strcmp(opt.plot, 'Run')
-            Run = {'1 & 2'};
-            Color = repmat(black,[3,1])/255;
-        else
-            Run = {opt.group};
-            %             Color = repmat(black,[3,1]);
-        end
-    case 2
-        SubPlot = [1 3 5 2 4 6];
-        if strcmp(opt.plot, 'Run')
-            Run = {'1','2'};
-            Color = repmat(black,[6,1])/255;
-        else
-            Run = {'blnd' 'ctrl'};
-            Color = [...
-                black; blnd_color; blnd_color;...
-                black; sighted_color; sighted_color]/255;
-        end
-end
+[Color, Run, SubPlot] = choose_color(nb_columns, opt);
 
 %%
 figure('name', tasks, 'position', [50 50 1300 700], 'visible', opt.visible)
@@ -120,4 +93,40 @@ for iRun = 1:nb_columns
     iSubplot = iSubplot + 1;
     
 end
+end
+
+
+function [Color, Run, SubPlot] = choose_color(nb_columns, opt)
+
+blnd_color = opt.blnd_color;
+sighted_color = opt.sighted_color;
+black = [0 0 0];
+
+if opt.iGroup==1
+    Color = blnd_color/255;
+else
+    Color = sighted_color/255;
+end
+Color = repmat(Color, [6 1]);
+
+switch nb_columns
+    case 1
+        SubPlot = [1 2 3];
+        if strcmp(opt.plot, 'Run')
+            Run = {'1 & 2'};
+        else
+            error('Cannot plot both runs and both groups at the same time.')
+        end
+    case 2
+        SubPlot = [1 3 5 2 4 6];
+        if strcmp(opt.plot, 'Run')
+            Run = {'1','2'};
+        else
+            Run = {'blnd' 'ctrl'};
+            Color = [...
+                black; blnd_color; blnd_color;...
+                black; sighted_color; sighted_color]/255;
+        end
+end
+
 end

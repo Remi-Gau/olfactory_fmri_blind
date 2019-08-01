@@ -5,6 +5,8 @@
 % some subjects have weird onsets for some stimuli so we replace them by
 % the average onset from the rest of the group
 
+% assumes a fixed 16 seconds stimulation duration
+
 clear
 clc
 
@@ -139,7 +141,7 @@ for iTask = 1:numel(tasks)
                 
                 data = all_time_courses{iResp+4, iRun, iGroup, iTask};
                 
-                % get baseline for each response
+                % get baseline
                 for iSubj = 1:size(data,1)
                     baseline(iSubj,iResp) = ...
                         mean( data(iSubj, baseline_idx(iSubj,1):baseline_idx(iSubj,2) ) );
@@ -190,12 +192,12 @@ fprintf(1, '\nDone!\n\n')
 clc
 close all
 
-opt.bin_size = 50;
+opt.bin_size = 20;
 
 opt.mov_mean = 1;
-opt.moving_win_size = 2;
+opt.moving_win_size = 20;
 
-opt.max_y_axis = ones(2,1)*.5;
+opt.max_y_axis = ones(2,1)*.15;
 
 opt.plot_subj = 0;
 opt.normalize = 0;
@@ -210,6 +212,10 @@ stim_linestyle = opt.stim_linestyle;
 stim_legend = opt.stim_legend;
 samp_freq = opt.samp_freq;
 
+blnd_color = opt.blnd_color;
+sighted_color = opt.sighted_color;
+black = [0 0 0];
+
 bin_duration  = 1/samp_freq * opt.bin_size;
 
 x1_patch = pre_stim/opt.bin_size;
@@ -220,6 +226,12 @@ opt.norm_resp = 1;
 
 
 for iGroup = 1:2
+    
+    if iGroup==1
+        Color = blnd_color/255;
+    else
+        Color = sighted_color/255;
+    end
     
     for iTask = 1:2
         
@@ -253,9 +265,9 @@ for iGroup = 1:2
                     [0 opt.max_y_axis(1) opt.max_y_axis(1) 0],...
                     stim_color_mat(iTrialtype,:),...
                     'linestyle', stim_linestyle{iTrialtype});
-                
-                do_plot(to_plot, sem, all_subjs, [0 0 0], 1, opt)
-                
+ 
+                do_plot(to_plot, sem, all_subjs, Color, 1, opt)
+
                 plot([0 numel(to_plot)], [0 0], 'k')
                 
                 label_your_axes(fontsize, x_tick, x_label, opt);
@@ -332,23 +344,23 @@ for iTask = 1:2
                 
                 to_plot = sum(stim_epoch{iResp,iGroup,iTask}(:,:,iTrialtype),2);
                 
-%                 h = plotSpread(to_plot, 'distributionIdx', ones(size(to_plot)), ...
-%                     'distributionMarkers',{'o'},...
-%                     'distributionColors',Colors(iGroup,:), ...
-%                     'xValues', iGroup, ...
-%                     'showMM', 0, ...
-%                     'binWidth', .1, 'spreadWidth', 1);
-% 
-%                 set(h{1}, 'MarkerSize', 7, 'MarkerEdgeColor', 'k', ...
-%                     'MarkerFaceColor', Colors(iGroup,:), ...
-%                     'LineWidth', 2)
+                h = plotSpread(to_plot, 'distributionIdx', ones(size(to_plot)), ...
+                    'distributionMarkers',{'o'},...
+                    'distributionColors',Colors(iGroup,:), ...
+                    'xValues', iGroup, ...
+                    'showMM', 0, ...
+                    'binWidth', .1, 'spreadWidth', 1);
+
+                set(h{1}, 'MarkerSize', 7, 'MarkerEdgeColor', 'k', ...
+                    'MarkerFaceColor', Colors(iGroup,:), ...
+                    'LineWidth', 2)
                 
                 h = errorbar(iGroup-.5, ...
                     mean(to_plot), ...
                     std(to_plot)/numel(to_plot)^.5,...
                     'o',...
                     'color', Colors(iGroup,:), 'linewidth', 2,...
-                    'MarkerSize', 10, ...
+                    'MarkerSize', 5, ...
                     'MarkerEdgeColor', 'k', ...
                     'MarkerFaceColor', Colors(iGroup,:));
  
@@ -361,7 +373,7 @@ for iTask = 1:2
                 'xtick', 1:2, 'xticklabel', {group.name}, ...
                 'ticklength', [.02 .02], 'tickdir', 'out')
             
-            axis([.5 2.5 -1 max_y_axis]);
+            axis([0.2 2.5 0 max_y_axis]);
             
             iSubplot = iSubplot + 1;
         end
@@ -380,6 +392,16 @@ for iTask = 1:2
         subplot(2, 4, iTrialtype)
         title(stim_legend{iTrialtype});
     end
+    
+    mtit(sprintf('Mean number of responses during stim epoch ; Task: %s', tasks{iTask}),....
+        'fontsize', 14, 'xoff', 0,'yoff',0.05);
+    
+    print(gcf, fullfile(out_dir, ...
+        ['Avg_Resp_' ...
+        group(iGroup).name ...
+        '_task-' tasks{iTask} ...
+        '_rmbase-' num2str(rm_baseline) ...
+        '.jpg']), '-djpeg')
     
 end
 

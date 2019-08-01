@@ -1,5 +1,11 @@
 % script to smooth the functional fmriprep preprocessed data
 
+
+% TO DO
+% adapt to copy only some subjects
+
+
+
 % example of docker command to run it
 % docker run -it --rm \
 % -v /c/Users/Remi/Documents/NARPS/:/data \
@@ -10,9 +16,9 @@
 clear
 clc
 
-machine_id = 1;% 0: container ;  1: Remi ;  2: Marco
-FWHM = 6;
-prefix = 's-6_';
+machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+FWHM = 8;
+prefix = 's-8_';
 filter =  'sub-.*space-MNI152NLin2009cAsym_desc-preproc'; % to smooth only the preprocessed files
 
 % setting up directories

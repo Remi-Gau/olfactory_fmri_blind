@@ -32,7 +32,7 @@ end
 if cfg.FD_censor.do
     
     to_censor = ...
-        confounds{irun}.FramewiseDisplacement > cfg.FD_censor.thres;
+        confounds{irun}.framewise_displacement > cfg.FD_censor.thres;
     
     if any(to_censor)
         

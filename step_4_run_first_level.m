@@ -8,18 +8,19 @@
 %  - set_all_GLMS.m: that lists all the possible options of GLM to run
 %  - get_cfg_GLMS_to_run.m: sets the GLM that will actually be run
 
-% TO DO:
+% TO DO
+% adapt to only run some subjects
 
 
 %% parameters
 clear
 clc
 
-debug_mode = 1;
+debug_mode = 0;
 
-machine_id = 1;% 0: container ;  1: Remi ;  2: Marco
-smoothing_prefix = ''; %#ok<*NASGU>
-filter =  '.*.nii$'; % to unzip only the files in MNI space
+machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+smoothing_prefix = 's-8_'; %#ok<*NASGU>
+filter =  '.*space-MNI152NLin2009cAsym_desc-preproc.*.nii$';
 
 if debug_mode
     smoothing_prefix = '';
@@ -47,7 +48,7 @@ opt.contrat_ls = {
 spm('defaults','fmri')
 
 % get date info
-bids =  spm_BIDS(data_dir);
+bids =  spm_BIDS(fullfile(data_dir, 'raw'));
 
 if debug_mode
     output_dir = data_dir;
@@ -66,18 +67,12 @@ if debug_mode
     nb_subjects = 1;
 end
 
-
 % get metadate from BIDS
 metadata = spm_BIDS(bids, 'metadata', ...
             'type', 'bold');
-opt.nb_slices = numel(metadata{1}.SliceTiming);
+opt.nb_slices = numel(unique(metadata{1}.SliceTiming));
 opt.TR = metadata{1}.RepetitionTime;
 opt.slice_reference = round(opt.nb_slices/2);
-
-
-
-
-
 
 % manually specify prefix of the images to use
 opt.prefix = smoothing_prefix;
@@ -92,7 +87,7 @@ opt.suffix = filter;
 
 %% for each subject
 
-for isubj = 1:nb_subjects
+for isubj = 1%:nb_subjects
     
     fprintf('running %s\n', folder_subj{isubj})
     
@@ -118,10 +113,11 @@ for isubj = 1:nb_subjects
                 'sub', folder_subj{isubj}, ...
                 'task', opt.task(iTask), ...
                 'run', runs{iRun});
-            [~, filename] = spm_fileparts(source_data_file{1});
+            [~, bold_filename] = spm_fileparts(source_data_file{1});
+            bold_filename = strrep(bold_filename, '_bold', '');
             data{iSes,1} = spm_select('FPList', ...
                 subj_dir, ...
-                ['^' opt.prefix filename opt.suffix ] ); %#ok<*SAGROW>
+                ['^' opt.prefix bold_filename opt.suffix ] ); %#ok<*SAGROW>
             
             
             source_event_file = spm_BIDS(bids, 'data', ...
@@ -132,15 +128,15 @@ for isubj = 1:nb_subjects
             [path, filename] = spm_fileparts(source_event_file{1});
             % get onsets for all the conditions and blocks as well as each trial caracteristics
             events{iSes,1} = spm_select('FPList', ...
-                path, ...
-                ['^' filename '.mat$'] );
+                subj_dir, ...
+                ['^'  filename '.mat$'] );
 
             
-            %         % list realignement parameters and other fMRIprep data for each run
-            %         confounds_file = strrep( source_file, ...
-            %             '_space-MNI152NLin2009cAsym_preproc.nii', ...
-            %             '_confounds.tsv');
-            %         confounds{iRun} = spm_load(confounds_file); %#ok<*SAGROW>
+            % list realignement parameters and other fMRIprep data for each run
+            confound_file = spm_select('FPList', ...
+                subj_dir, ...
+                ['^' bold_filename '.*confounds.*.tsv$'] );
+            confounds{iSes, 1} = spm_load(confound_file); %#ok<*SAGROW>
             if debug_mode
                 confounds{iSes, 1} = '';
             end
@@ -164,7 +160,7 @@ for isubj = 1:nb_subjects
         
         % get configuration for this GLM
         cfg = get_configuration(all_GLMs, opt, iGLM);
-        cfg.confounds = {[]};
+
         disp(cfg)
         
         % create the directory for this specific analysis
@@ -177,7 +173,7 @@ for isubj = 1:nb_subjects
         
         % to remove any previous analysis so that the whole thing does not
         % crash
-%         delete(fullfile(analysis_dir,'SPM.mat'))
+        %         delete(fullfile(analysis_dir,'SPM.mat'))
 
         matlabbatch = [];
         
@@ -205,7 +201,7 @@ for isubj = 1:nb_subjects
         
         save(fullfile(analysis_dir,'jobs','GLM_matlabbatch.mat'), 'matlabbatch')
         
-%         spm_jobman('run', matlabbatch)
+        spm_jobman('run', matlabbatch)
         
         % estimate contrasts
         matlabbatch = [];

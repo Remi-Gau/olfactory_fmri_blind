@@ -4,6 +4,8 @@
 clear
 clc
 
+subj_to_do = [1 3:5];
+
 % spm_path = '/home/remi-gau/Documents/SPM/spm12';
 % addpath(spm_path)
 spm('defaults','fmri')
@@ -23,18 +25,16 @@ end
 group(1).name = 'blnd';
 group(2).name = 'ctrl';
 
+subjects = subjects(subj_to_do)
+
+if ~exist('subj_to_do', 'var')
+    subj_to_do = 1:numel(folder_subj);
+end
+
 for iTask = 1:numel(tasks)
     
     for iGroup = 1:numel(group)
-        
-        subjects = spm_BIDS(bids, 'subjects', ...
-            'task', tasks{iTask});
-        
-        idx = strfind(subjects, {group(iGroup).name});
-        idx = find(~cellfun('isempty', idx)); %#ok<STRCL1>
-        
-        subjects = subjects(idx)
-        
+
         % we take each event file from each subject for that task and we collect
         % onsets and offsets of all stim and responses
         for iSubjects = 1:numel(subjects)

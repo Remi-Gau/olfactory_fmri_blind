@@ -1,5 +1,10 @@
 % behavioral results
 
+% plots data with PSTH for each stimulus (averaged across runs)
+
+% some subjects have weird onsets for some stimuli so we replace them by
+% the average onset from the rest of the group
+
 clear
 clc
 
@@ -42,8 +47,10 @@ for iTask = 1:numel(tasks)
         
         idx = strfind(subjects, {group(iGroup).name});
         idx = find(~cellfun('isempty', idx)); %#ok<STRCL1>
-
+        
         subjects(idx)
+        
+        group(iGroup).subjects = subjects(idx);
         
         all_stim = average_beh(bids, tasks{iTask}, subjects(idx));
         
@@ -62,15 +69,19 @@ end
 
 opt = get_option;
 
+rm_baseline = 0;
+
 baseline_dur = 20;
-pre_stim = 15;
+pre_stim = 16;
 stim_dur = 16;
-post_stim = 15;
+post_stim = 16;
 
 baseline_dur = baseline_dur * opt.samp_freq;
 pre_stim = pre_stim * opt.samp_freq;
 stim_dur = stim_dur * opt.samp_freq;
 post_stim = post_stim * opt.samp_freq;
+
+fprintf(1, '\n\nEpoching the data')
 
 for iTask = 1:numel(tasks)
     for iGroup = 1:numel(group)
@@ -94,6 +105,14 @@ for iTask = 1:numel(tasks)
             % in case some subjects have messed up onsets
             bad_baseline = baseline_idx<=baseline_dur/2;
             if any(bad_baseline)
+                
+                fprintf(1, '\n')
+                warning('Filling in some bad onsets with average from onset from the rest of the group.')
+                fprintf(1, 'Group: %s\n', ...
+                    group(iGroup).name)
+                fprintf(1, 'Subject: %s \n',...
+                    group(iGroup).subjects{bad_baseline})
+                
                 baseline_idx(bad_baseline,:) = ...
                     repmat(round(mean(baseline_idx(~bad_baseline,:))), ...
                     [sum(bad_baseline),1]);
@@ -114,8 +133,8 @@ for iTask = 1:numel(tasks)
             
             % create epoch index for baseline
             baseline_idx = [baseline_idx - baseline_dur, baseline_idx];
-
-            % for each response 
+            
+            % for each response
             for iResp = 1:2
                 
                 data = all_time_courses{iResp+4, iRun, iGroup, iTask};
@@ -136,12 +155,18 @@ for iTask = 1:numel(tasks)
                         ON = onsets(iSubj,iTrialtype);
                         OFF = offsets(iSubj,iTrialtype);
                         
+                        if rm_baseline
+                            OFFSET = baseline(iSubj,iResp);
+                        else
+                            OFFSET = 0;
+                        end
+                        
                         prestim_epoch{iResp,iGroup,iTask}(iSubj,:,iTrialtype,iRun) = ...
-                            data(iSubj, ON-pre_stim:ON-1);% - baseline(iSubj,iResp);
+                            data(iSubj, ON-pre_stim:ON-1) - OFFSET;
                         stim_epoch{iResp,iGroup,iTask}(iSubj,:,iTrialtype,iRun) = ...
-                            data(iSubj, ON:OFF);% - baseline(iSubj,iResp);
+                            data(iSubj, ON:OFF) - OFFSET;
                         poststim_epoch{iResp,iGroup,iTask}(iSubj,:,iTrialtype,iRun) = ...
-                            data(iSubj, OFF+1:OFF+post_stim);% - baseline(iSubj,iResp);
+                            data(iSubj, OFF+1:OFF+post_stim) - OFFSET;
                         
                     end
                 end
@@ -159,17 +184,18 @@ for iTask = 1:numel(tasks)
     
 end
 
+fprintf(1, '\nDone!\n\n')
 
 %% Plots the PSTH
 clc
 close all
 
-opt.bin_size = 10;
+opt.bin_size = 50;
 
 opt.mov_mean = 1;
-opt.moving_win_size = 20;
+opt.moving_win_size = 2;
 
-opt.max_y_axis = [0.08 0.08];
+opt.max_y_axis = ones(2,1)*.5;
 
 opt.plot_subj = 0;
 opt.normalize = 0;
@@ -197,7 +223,9 @@ for iGroup = 1:2
     
     for iTask = 1:2
         
-        figure('name', tasks{iTask}, 'position', [50 50 1300 700], 'visible', opt.visible)
+        figure('name', ['PSTH - ' tasks{iTask}], ...
+            'position', [50 50 1300 700], ...
+            'visible', opt.visible)
         
         iSubplot = 1;
         
@@ -231,7 +259,7 @@ for iGroup = 1:2
                 plot([0 numel(to_plot)], [0 0], 'k')
                 
                 label_your_axes(fontsize, x_tick, x_label, opt);
-    
+                
                 axis tight
                 ax = axis;
                 axis([ax(1) ax(2) ax(3) opt.max_y_axis(1)]);
@@ -254,11 +282,104 @@ for iGroup = 1:2
             title(stim_legend{iTrialtype});
         end
         
-        mtit(sprintf('Group: %s ; Task: %s', ...
-            group(iGroup).name, tasks{iTask}), ....
+        mtit(sprintf('Group: %s ; Task: %s ; Bin size: %i ; Mov win size: %i', ...
+            group(iGroup).name, tasks{iTask}, opt.bin_size, opt.moving_win_size),....
             'fontsize', 14, 'xoff', 0,'yoff',0.05);
         
+        print(gcf, fullfile(out_dir, ...
+            ['PSTH_' ...
+            group(iGroup).name ...
+            '_task-' tasks{iTask} ...
+            '_rmbase-' num2str(rm_baseline) ...
+            '.jpg']), '-djpeg')
         
     end
+end
+
+
+%% Plots the average number of response during stimulus period
+clc
+close all
+
+max_y_axis = 6.5;
+
+opt.visible = 'on';
+fontsize = 12;
+
+opt = get_option(opt);
+stim_color_mat = opt.stim_color_mat;
+stim_linestyle = opt.stim_linestyle;
+stim_legend = opt.stim_legend;
+Colors(1,:) = opt.blnd_color;
+Colors(2,:) = opt.sighted_color;
+Colors = Colors/255;
+
+for iTask = 1:2
+    
+    figure('name', tasks{iTask}, 'position', [50 50 1300 700], 'visible', opt.visible)
+    
+    iSubplot = 1;
+    
+    for iResp = 1:2
+        for iTrialtype = 1:4
+            
+            clear to_plot
+            
+            subplot(2,4, iSubplot)
+            hold on
+            
+            for iGroup = 1:2
+                
+                to_plot = sum(stim_epoch{iResp,iGroup,iTask}(:,:,iTrialtype),2);
+                
+%                 h = plotSpread(to_plot, 'distributionIdx', ones(size(to_plot)), ...
+%                     'distributionMarkers',{'o'},...
+%                     'distributionColors',Colors(iGroup,:), ...
+%                     'xValues', iGroup, ...
+%                     'showMM', 0, ...
+%                     'binWidth', .1, 'spreadWidth', 1);
+% 
+%                 set(h{1}, 'MarkerSize', 7, 'MarkerEdgeColor', 'k', ...
+%                     'MarkerFaceColor', Colors(iGroup,:), ...
+%                     'LineWidth', 2)
+                
+                h = errorbar(iGroup-.5, ...
+                    mean(to_plot), ...
+                    std(to_plot)/numel(to_plot)^.5,...
+                    'o',...
+                    'color', Colors(iGroup,:), 'linewidth', 2,...
+                    'MarkerSize', 10, ...
+                    'MarkerEdgeColor', 'k', ...
+                    'MarkerFaceColor', Colors(iGroup,:));
+ 
+            end
+           
+            plot([0 3], [0 0], 'k')
+            
+            set(gca, 'fontsize', fontsize, ...
+                'ytick', 0:1:6, 'yticklabel', 0:1:6, ...
+                'xtick', 1:2, 'xticklabel', {group.name}, ...
+                'ticklength', [.02 .02], 'tickdir', 'out')
+            
+            axis([.5 2.5 -1 max_y_axis]);
+            
+            iSubplot = iSubplot + 1;
+        end
+        
+    end
+    
+    subplot(2, 4, 1)
+    t = ylabel('Resp 1  - [A U]');
+    set(t, 'fontsize', fontsize);
+    
+    subplot(2, 4, 5)
+    t = ylabel('Resp 2 - [A U]');
+    set(t, 'fontsize', fontsize);
+    
+    for iTrialtype = 1:4
+        subplot(2, 4, iTrialtype)
+        title(stim_legend{iTrialtype});
+    end
+    
 end
 

@@ -15,7 +15,7 @@ switch machine_id
         addpath(fullfile('/opt/spm12'));
     case 1 % windows matlab/octave : Remi
         code_dir = 'D:\github\chem_sens_blind';
-        data_dir = 'D:\bids';
+        data_dir = 'D:\BIDS\olf_blind\raw';
         output_dir = fullfile(data_dir, 'derivatives', 'spm12');
     case 2 % mac matlab/octave : Chris
         error('directory paths not set up');

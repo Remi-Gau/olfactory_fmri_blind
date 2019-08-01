@@ -34,19 +34,41 @@ ctrl02 ctrl06 ctrl07 ctrl08 ctrl09
 
 ???
 
-## functions descriptions
 
-`quality_control_physio`
-Plots the respiratory data from each subject / run and shows when the acquisition was started.
+## behavioral analysis
 
-`avg_beh_results`
-Plots for each task the average across subjects time courses of:
+### quality control
+
+`quality_control_beh` plots stimulation epochs, responses and respirations.
+
+`quality_control_physio` plots the respiratory data from each subject / run and shows when the acquisition was started.
+
+### results
+
+`beh_avg_timeseries` plots the average across subjects of:
 - stimulus onsets / offsets (to make sure that there is not too much variation between subjects)
-- mean across subject of each response type for each run and each group
-- mean across subject / runs of each response type for each group
-- same as above but plots the 2 groups on the same figure with the same scale
+- average across subject of the time course of each response type.
+  - this can be row normalized for each subject (by the sum of response for that subject on that run - gives more weight to subjects with more SNR in their response)
+  - it is possible to bin the responses from their original 25 Hz sampling frequency.
+  - responses can be passed through a moving with window size
 
-Possible options:
- - row normalization for each subject's response (by the sum of response for that subject on that run - gives more weight to subjects with more SNR in their response)
- - bin the responses from their original 25 Hz sampling frequency.
- - responses can be passed through a moving with window size
+`beh_PSTH` plots data with PSTH for each stimulus (averaged across runs) and also plots the mean +/- SEM (and distribution) of the number of responses.
+
+
+## fMRI analysis
+
+For those you might need to edit the `set_dir` function to specify where the code is, the folder containing the BIDS raw data and the target directory where the SPM analysis should go.
+
+### Copy and unzipping data
+Type in the following command to copy the relevant files and unzip them:
+`step_1_copy_and_unzip_files`
+
+
+### Smoothing the data
+Type in the following command to smooth the data them:
+`step_2_smooth_func_files.m`
+
+
+### Running the subject level GLM
+Type in the following command to run the subject level GLM:
+`step_3_run_first_level.m`

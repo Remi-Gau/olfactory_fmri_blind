@@ -29,7 +29,7 @@ end
 folder_subj = get_subj_list(folder_path);
 
 % Loop across folder and unpack .gz files
-parfor k = 1 : length(folder_subj)
+for k = 1 : length(folder_subj)
     fprintf('\nSub folder #%d = %s\n', k, folder_subj(k).name);
     % Anatomical data
     fprintf('\n Unpacking anat\n');
@@ -64,7 +64,7 @@ if ~isempty(file_list)
         file_name = strsplit(file_list(ifile,:), filesep);
         fprintf('  %s\n', cell2mat(file_name(size(file_name,2))));
         
-        gunzip(file_list(ifile,:));
+        gunzip(deblank(file_list(ifile,:)));
     end
 else
     fprintf('\nno ".gz" files to unpack\n')

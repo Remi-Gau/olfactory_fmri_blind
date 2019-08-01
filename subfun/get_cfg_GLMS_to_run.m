@@ -19,9 +19,9 @@ sets{4} = 2;
 %     {'FramewiseDisplacement', 'WhiteMatter', 'CSF', 'X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ'},...
 %     {'FramewiseDisplacement', 'WhiteMatter', 'CSF', 'X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ' ...
 %         'tCompCor00', 'tCompCor01', 'tCompCor02', 'tCompCor03', 'tCompCor04', 'tCompCor05'},...
-sets{5} = 0;
+sets{5} = 1;
 % opt.FD_censor.do = [0 1]; 
-sets{6} = 0;
+sets{6} = 1;
 % opt.FD_censor.thres = 0.5; 
 sets{7} = 1;
 

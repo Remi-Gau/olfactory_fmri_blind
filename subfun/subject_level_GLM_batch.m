@@ -26,7 +26,7 @@ matlabbatch{idx}.spm.stats.fmri_spec.global = 'None';
 
 matlabbatch{idx}.spm.stats.fmri_spec.mthresh = cfg.inc_mask_thres;
 
-matlabbatch{idx}.spm.stats.fmri_spec.mask = {cfg.explicit_mask};
+matlabbatch{idx}.spm.stats.fmri_spec.mask = {};
 
 matlabbatch{idx}.spm.stats.fmri_spec.cvi = cfg.spher_cor{1};
 end

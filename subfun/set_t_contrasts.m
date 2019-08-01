@@ -1,18 +1,18 @@
 function matlabbatch = set_t_contrasts(analysis_dir, contrat_ls)
 % set batch to estimate the following contrasts (> baseline and < baseline)
 
-for iCon = 1:numel(contrat_ls)
-    cdt_ls{iCon,1} = [contrat_ls{iCon} '*bf(1)']; %#ok<*AGROW>
-end
+cdt_ls = cell(size(contrat_ls));
 
-% cdt_ls = {...
-%     ' gamble_trial*bf(1)', ...
-%     ' gamble_trialxgain^1*bf(1)', ...  
-%     ' gamble_trialxloss^1*bf(1)', ...      
-%     ' gamble_trialxEV^1*bf(1)', ...       
-%     ' missed_trial*bf(1)', ...             
-%     ' gamble_trial_button_press*bf(1)', ...
-%     ' FramewiseDisplacement'};
+% add the suffix '*bf(1)' to look for regressors that are convolved
+% with canonical HRF
+for iCdt = 1:numel(contrat_ls)
+    cdt_name_ls{iCdt,1} = [];
+    for iSubcdt = 1:numel(contrat_ls{iCdt,1})
+        cdt_ls{iCdt,1}{iSubcdt} = [contrat_ls{iCdt}{iSubcdt} '*bf(1)']; %#ok<*AGROW>
+        cdt_name_ls{iCdt,1} = [cdt_name_ls{iCdt,1} ' + ' contrat_ls{iCdt}{iSubcdt}];
+    end
+    cdt_name_ls{iCdt,1}(1:3) = [];
+end
 
 load(fullfile(analysis_dir, 'SPM.mat'), 'SPM');
 
@@ -23,22 +23,27 @@ con_idx = 1;
 
 for iCdt = 1:numel(cdt_ls)
 
-    % add the suffix '*bf(1)' to look for regressors that are convolved
-    % with canonical HRF
-    idx = strfind(SPM.xX.name', cdt_ls{iCdt});
-    idx = ~cellfun('isempty', idx);
+    idx = [];
+    
+    for iSubcdt = 1:numel(cdt_ls{iCdt,1})
+        cdt_name = cdt_ls{iCdt,1}{iSubcdt}; %#ok<*AGROW>
+        tmp = strfind(SPM.xX.name', cdt_name);
+        tmp = ~cellfun('isempty', tmp); %#ok<*STRCL1>
+        idx = [idx ; find(tmp)];
+    end
+
     
     % do X > baseline
     weight_vec = init_weight_vector(SPM);
     weight_vec(idx) = 1;
-    [weight_vec, cdt_name] = warning_dummy_contrast(weight_vec, [cdt_ls{iCdt} ' > 0']);
+    [weight_vec, cdt_name] = warning_dummy_contrast(weight_vec, [cdt_name_ls{iCdt,1} ' > 0']);
     matlabbatch = set_cdt_contrast_batch(matlabbatch, cdt_name, weight_vec, con_idx);
     con_idx = con_idx + 1;
     
     % do X < baseline
     weight_vec = init_weight_vector(SPM);
     weight_vec(idx) = -1;
-    [weight_vec, cdt_name] = warning_dummy_contrast(weight_vec, [cdt_ls{iCdt} ' < 0']);
+    [weight_vec, cdt_name] = warning_dummy_contrast(weight_vec, [cdt_name_ls{iCdt,1} ' < 0']);
     matlabbatch = set_cdt_contrast_batch(matlabbatch, cdt_name, weight_vec, con_idx);
     con_idx = con_idx + 1;
     

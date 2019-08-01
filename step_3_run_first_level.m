@@ -31,12 +31,13 @@ opt.task = {'olfid' 'olfloc'};
 
 %%
 opt.contrat_ls = {
-    'Euc-Right';...
-    'Alm-Left';...
-    'Euc-Right';...
-    'Alm-Right';...
-    'resp-03';...
-    'resp-12'};
+    {'Euc-Left', 'Alm-Left', 'Euc-Right', 'Alm-Right'};...
+    {'Euc-Left'};...
+    {'Alm-Left'};...
+    {'Euc-Right'};...
+    {'Alm-Right'};...
+    {'resp-03'};...
+    {'resp-12'}};
 
 
 %% setting up
@@ -176,7 +177,7 @@ for isubj = 1:nb_subjects
         
         % to remove any previous analysis so that the whole thing does not
         % crash
-        delete(fullfile(analysis_dir,'SPM.mat'))
+%         delete(fullfile(analysis_dir,'SPM.mat'))
 
         matlabbatch = [];
         
@@ -204,7 +205,7 @@ for isubj = 1:nb_subjects
         
         save(fullfile(analysis_dir,'jobs','GLM_matlabbatch.mat'), 'matlabbatch')
         
-        spm_jobman('run', matlabbatch)
+%         spm_jobman('run', matlabbatch)
         
         % estimate contrasts
         matlabbatch = [];

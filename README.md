@@ -1,5 +1,15 @@
 # code base for the analysis of olfaction fMRI experiment in blind and sighted control
 
+
+## fMRI preprocessing run with fMRIprep
+
+```
+insert here command used to run fMRIprep
+```
+
+
+## functions descriptions
+
 `quality_control_physio`
 Plots the respiratory data from each subject / run and shows when the acquisition was started.
 

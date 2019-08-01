@@ -11,7 +11,7 @@ clear
 clc
 
 % mention where the BIDS data set is (can get the behavioral from OSF)
-tgt_dir = 'D:\BIDS\olf_blind\raw';
+tgt_dir = 'D:\BIDS\olf_blind\raw_beh';
 
 % if needed add spm to the path
 % spm_path = '/home/remi-gau/Documents/SPM/spm12';

@@ -118,25 +118,25 @@ for iSub = 1:numel(subjects)
             end
             
             % make figure
-%             figure('name', physio_file{iRun}, 'position', [50 50 1300 700], 'visible', visible)
-%             hold on
-%             
-%             % plot stimuli
-%             for iStim = 1:4
-%                 plot(trial_courses(iStim,:), stim_color{iStim}, 'linewidth', 2)
-%             end
-%             % plot responses
-%             plot(trial_courses(5,:), '--k', 'linewidth', 2)
-%             plot(trial_courses(6,:), 'k', 'linewidth', 2)
-%             % plot breathing
-%             plot(respiration, 'b', 'linewidth', 2) 
-%             
-%             axis tight
-%             
-%             legend(Legend)
-%             
+            figure('name', physio_file{iRun}, 'position', [50 50 1300 700], 'visible', visible)
+            hold on
+            
+            % plot stimuli
+            for iStim = 1:4
+                plot(trial_courses(iStim,:), stim_color{iStim}, 'linewidth', 2)
+            end
+            % plot responses
+            plot(trial_courses(5,:), '--k', 'linewidth', 2)
+            plot(trial_courses(6,:), 'k', 'linewidth', 2)
+            % plot breathing
+            plot(respiration, 'b', 'linewidth', 2) 
+            
+            axis tight
+            
+            legend(Legend)
+            
             [~, file, ~] = fileparts(event_file{iRun}(1:end-3));
-%             print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg')
+            print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg')
             
             
             filenames{end+1,1} = [file '.jpeg']; %#ok<*SAGROW>

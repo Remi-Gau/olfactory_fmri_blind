@@ -9,6 +9,6 @@ if opt.plot_subj
     end
 else
     shadedErrorBar(1:length(to_plot), to_plot, sem, ...
-        {'color', Color(iSubplot,:), 'linewidth', 2})
+        {'color', Color(iSubplot,:), 'linewidth', 2}, 1)
 end
 end

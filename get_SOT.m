@@ -33,7 +33,7 @@ for iTask = 1:numel(tasks)
         idx = strfind(subjects, {group(iGroup).name});
         idx = find(~cellfun('isempty', idx)); %#ok<STRCL1>
         
-        subjects(idx)
+        subjects = subjects(idx)
         
         % we take each event file from each subject for that task and we collect
         % onsets and offsets of all stim and responses
@@ -106,9 +106,14 @@ for iTask = 1:numel(tasks)
                             target_name = 3;
                         case 'ch7'
                             target_name = 4;
+                        otherwise
+                            target_name = 0;
                     end
-                    names{iCdt} = strrep(opt.stim_legend{target_name}, ' ', '');
-                    is_here(target_name) = 1;
+                    if target_name
+                        names{iCdt} = strrep(opt.stim_legend{target_name}, ' ', '');
+                        is_here(target_name) = 1;
+                    end
+                    names{iCdt} = strrep(names{iCdt}, '_', '-');
                 end
                 
                 if all(is_here)

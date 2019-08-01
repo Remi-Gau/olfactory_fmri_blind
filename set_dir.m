@@ -17,11 +17,11 @@ switch machine_id
         code_dir = 'D:\github\chem_sens_blind';
         data_dir = 'D:\BIDS\olf_blind\raw';
         output_dir = fullfile(data_dir, 'derivatives', 'spm12');
-    case 2 % mac matlab/octave : Chris
-        error('directory paths not set up');
-        code_dir = '';% ???????
-        data_dir = '';% ???????
+    case 2 % beast
+        code_dir = '/mnt/data/christine/olf_blind/chem_sens_blind';
+        data_dir = '/mnt/data/christine/olf_blind/';
         output_dir = fullfile(data_dir, 'derivatives', 'spm12');
+        addpath(fullfile('/home/remi-gau/Documents/SPM/spm12'));
 end
 
 % add subfunctions to path

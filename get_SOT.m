@@ -4,7 +4,7 @@
 clear
 clc
 
-subj_to_do = [18 20:22];
+subj_to_do = [18:29];
 
 machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
 % setting up directories

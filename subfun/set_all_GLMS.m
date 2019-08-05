@@ -2,6 +2,8 @@ function [opt, all_GLMs] = set_all_GLMS(opt, sets)
 % defines some more options for setting up GLMs and gets all possible
 % combinations of GLMs to run
 
+opt.explicit_mask = [0 1]; % use fMRIprep mask
+
 opt.inc_mask_thres = [0 0.8]; % SPM threshold to define inclusive mask
 
 opt.HPF = 128; % high pass filter
@@ -24,8 +26,10 @@ opt.spher_cor = {'AR(1)' 'FAST' 'none'}; % non-sphericity correction used for th
 
 if ~exist('sets', 'var')
     % list all possible GLMs to run
+    
+    sets{1} = 1:numel(opt.explicit_mask);
 
-    sets{1} = 1:numel(opt.inc_mask_thres);
+    sets{end+1} = 1:numel(opt.inc_mask_thres);
     
     sets{end+1} = 1:numel(opt.HPF);
 
@@ -41,8 +45,8 @@ if ~exist('sets', 'var')
     
 end
 
-[a1, a2, a3, a4, a5, a6, a7, a8] = ...
+[a1, a2, a3, a4, a5, a6, a7, a8, a9] = ...
     ndgrid(sets{:});
-all_GLMs = [a1(:), a2(:), a3(:), a4(:), a5(:), a6(:), a7(:), a8(:)];
+all_GLMs = [a1(:), a2(:), a3(:), a4(:), a5(:), a6(:), a7(:), a8(:), a9(:)];
 
 end

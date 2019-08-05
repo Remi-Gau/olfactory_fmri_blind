@@ -21,11 +21,20 @@ docker run -it --rm -v ~/mnt/data/christine/olf_blind/raw:/data:ro -v ~/mnt/data
 docker run -it --rm -v /mnt/data/christine/olf_blind:/data:ro -v /mnt/data/christine/olf_blind/:/out poldracklab/fmriprep:1.4.0 /data/raw /out/derivatives/ participant --participant_label ctrl02 ctrl06 ctrl07 ctrl08 ctrl09 --fs-license-file /data/freesurfer/license.txt --output-spaces T1w:res-native MNI152NLin2009cAsym:res-native --nthreads 10 --use-aroma
 ```
 
-#### Done:
-ctrl01 ctrl03 ctrl04 ctrl05
+Done:
+ctrl01 ctrl02 ctrl03 ctrl04 ctrl05 ctrl06 ctrl07 ctrl08 ctrl09 ctrl10 ctrl11 ctrl12
 
-#### Running:
-ctrl02 ctrl06 ctrl07 ctrl08 ctrl09
+Running:
+ctrl13 ctrl14 ctrl15 ctrl17
+
+TO RUN
+ctrl:
+ctrl18
+
+blnd:
+blnd01 blnd02 blnd03 blnd04 blnd05 blnd06 blnd07 blnd08 blnd09 blnd10 blnd11 blnd12 blnd13 blnd14 blnd15 blnd16 blnd17
+
+
 
 #### Less urgent (problematic anat or func data)
 

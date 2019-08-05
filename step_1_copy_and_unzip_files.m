@@ -12,9 +12,9 @@
 clear
 clc
 
-machine_id = 2;% 0: container ;  1: Remi ;  2: beast
-filter =  'sub-.*space-MNI152NLin2009cAsym_desc-preproc'; % to unzip only the files in MNI space
-subj_to_do = [1 3:5]; % to only try on a couple of subjects; comment out to run on all
+machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+filter =  'sub-.*space-MNI152NLin2009cAsym_desc-'; % to unzip only the files in MNI space
+subj_to_do = [1:12]; % to only try on a couple of subjects; comment out to run on all
 
 %% setting up
 % setting up directories
@@ -48,23 +48,33 @@ for i_subj = subj_to_do
         
         % files to copy
         if strcmp(sub_folders{i_folder}, 'func')
-            tmp_filter = [filter '.*bold.nii.gz$'];
+            filter_ls = {...
+                [filter '.*brain_mask.*$']; ...
+                [filter '.*preproc_bold.*$']};
         else
-            tmp_filter = [filter '.*.nii.gz$'];
+            filter_ls = {...
+                [filter '.*brain_mask.*$']; ...
+                [filter '.*T1w.*$']};
         end
-        file_list = spm_select('FPList', ...
-            fullfile(sub_source_folder, sub_folders{i_folder}), ...
-            [tmp_filter]);
         
-        % copy files
-        for i_file = 1:size(file_list,1)
-            spm_copy(file_list(i_file,:), ...
-                fullfile(output_dir, folder_subj{i_subj}, sub_folders{i_folder}), ...
-                'nifti', true);
+        % choose and copy files
+        for iFilter = 1:numel(filter_ls)
+            tmp_filter = filter_ls{iFilter};
+            file_list = spm_select('FPList', ...
+                fullfile(sub_source_folder, sub_folders{i_folder}), ...
+                tmp_filter);
+            
+            
+            for i_file = 1:size(file_list,1)
+                spm_copy(file_list(i_file,:), ...
+                    fullfile(output_dir, folder_subj{i_subj}, sub_folders{i_folder}), ...
+                    'nifti', true);
+            end
         end
+        
     end
     
-        % copy *.txt and *.h5 files from anat (in case we want to do some normalization)
+    % copy *.txt and *.h5 files from anat (in case we want to do some normalization)
     copyfile(...
         fullfile(sub_source_folder, 'anat', '*.txt'), ...
         fullfile(output_dir, folder_subj{i_subj}, 'anat'));
@@ -87,7 +97,7 @@ for i_subj = subj_to_do
         fullfile(data_dir, 'raw', folder_subj{i_subj}, 'func', '*physio.tsv.gz'), ...
         fullfile(output_dir, folder_subj{i_subj}, 'func'));
     
-
+    
     fprintf('\n')
     
 end

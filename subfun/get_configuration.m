@@ -2,6 +2,8 @@ function cfg = get_configuration(all_GLMs, opt, iGLM)
 % Get the GLM configuration for the iGLM and given the options and the list
 % of the GLMs we want to try 
 
+cfg.explicit_mask = opt.explicit_mask(all_GLMs(iGLM,1));
+
 cfg.inc_mask_thres  = opt.inc_mask_thres(all_GLMs(iGLM,1));
 
 cfg.HPF = opt.HPF(all_GLMs(iGLM,2));

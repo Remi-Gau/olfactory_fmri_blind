@@ -2,16 +2,19 @@ function [sets] = get_cfg_GLMS_to_run()
 % will load the sets of of GLM to compute at the subject level.
 % see set_all_GLMS for what each analytical choice corresponds to
 
-% opt.inc_mask_thres = [0 0.8]; 
+% opt.explicit_mask = [0 1]; 
 sets{1} = 2;
 
+% opt.inc_mask_thres = [0 0.8]; 
+sets{2} = 2;
+
 % opt.HPF = 128; % high pass filter
-sets{2} = 1;
+sets{3} = 1;
 
 % opt.time_der = [0 1]; 
-sets{3} = 2;
-% opt.disp_der = [0 1]; 
 sets{4} = 2;
+% opt.disp_der = [0 1]; 
+sets{5} = 2;
 
 % opt.confounds = {...
 %     {'FramewiseDisplacement', 'WhiteMatter', 'CSF'}, ...
@@ -25,13 +28,13 @@ sets{4} = 2;
 % rot_x, rot_x_derivative1, rot_x_power2, rot_x_derivative1_power2, 
 % rot_y, rot_y_derivative1, rot_y_derivative1_power2, rot_y_power2, 
 % rot_z, rot_z_derivative1, rot_z_power2, rot_z_derivative1_power2
-sets{5} = 3;
+sets{6} = 3;
 % opt.FD_censor.do = [0 1]; 
-sets{6} = 2;
+sets{7} = 2;
 % opt.FD_censor.thres = 0.5; 
-sets{7} = 1;
+sets{8} = 1;
 
 % opt.spher_cor = {'AR1' 'FAST' 'none'}; 
-sets{8} = 2;
+sets{9} = 2;
     
 end

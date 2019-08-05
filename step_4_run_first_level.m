@@ -22,6 +22,7 @@ machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
 smoothing_prefix = 's-8_'; %#ok<*NASGU>
 filter =  '.*space-MNI152NLin2009cAsym_desc-preproc.*.nii$';
 
+
 if debug_mode
     smoothing_prefix = '';
     filter =  '.*.nii$';
@@ -87,12 +88,16 @@ opt.suffix = filter;
 
 %% for each subject
 
-for isubj = 1%:nb_subjects
+for isubj = 1:nb_subjects
     
     fprintf('running %s\n', folder_subj{isubj})
     
     subj_dir = fullfile(output_dir, [folder_subj{isubj}], 'func')
     
+    
+    %% get explicit mask
+    fprintf(' getting mask\n')
+    explicit_mask = create_mask(subj_dir, folder_subj{isubj});
     
     %%  get data onsets and confounds for each run
     fprintf(' getting data, onsets and confounds\n')
@@ -173,9 +178,17 @@ for isubj = 1%:nb_subjects
         
         % to remove any previous analysis so that the whole thing does not
         % crash
-        %         delete(fullfile(analysis_dir,'SPM.mat'))
+        delete(fullfile(analysis_dir,'SPM.mat'))
 
         matlabbatch = [];
+        
+        % define the explicit mask for this GLM if specified
+        if cfg.explicit_mask
+            cfg.explicit_mask = explicit_mask;
+        else
+            cfg.explicit_mask = '';
+        end
+        
         
         % set the basic batch for this GLM
         matlabbatch = ...

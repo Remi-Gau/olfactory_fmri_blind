@@ -14,7 +14,7 @@ end
 if rm_do
     % Remove outliers in terms of fMRI or behavior
     subj_to_exclude = {
-     'sub-ctrl18'}'; %sub-056 seems to have buttons switched.
+     'sub-blnd04'}'; %sub-056 seems to have buttons switched.
 else
     subj_to_exclude = '';
 end
@@ -23,8 +23,8 @@ end
 to_rm = ismember(ppp.participant_id, subj_to_exclude);
 grp_id(to_rm) = [];
 ppp.participant_id(to_rm) = [];
-ppp.sex(to_rm) = [];
-ppp.age(to_rm) = [];
+ppp.Sex(to_rm) = [];
+ppp.Age(to_rm) = [];
 
 if ~isempty(folder_subj)
     to_rm = ismember(folder_subj, subj_to_exclude);

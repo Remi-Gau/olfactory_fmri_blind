@@ -32,7 +32,7 @@ end
 opt.task = {'olfid' 'olfloc'};
 
 %%
-opt.contrat_ls = {
+opt.contrast_ls = {
     {'Euc-Left', 'Alm-Left', 'Euc-Right', 'Alm-Right'};...
     {'Euc-Left'};...
     {'Alm-Left'};...
@@ -218,7 +218,7 @@ for isubj = 1:nb_subjects
         
         % estimate contrasts
         matlabbatch = [];
-        matlabbatch = set_t_contrasts(analysis_dir, opt.contrat_ls);
+        matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
         
         spm_jobman('run', matlabbatch)
         

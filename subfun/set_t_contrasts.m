@@ -1,15 +1,15 @@
-function matlabbatch = set_t_contrasts(analysis_dir, contrat_ls)
+function matlabbatch = set_t_contrasts(analysis_dir, contrast_ls)
 % set batch to estimate the following contrasts (> baseline and < baseline)
 
-cdt_ls = cell(size(contrat_ls));
+cdt_ls = cell(size(contrast_ls));
 
 % add the suffix '*bf(1)' to look for regressors that are convolved
 % with canonical HRF
-for iCdt = 1:numel(contrat_ls)
+for iCdt = 1:numel(contrast_ls)
     cdt_name_ls{iCdt,1} = [];
-    for iSubcdt = 1:numel(contrat_ls{iCdt,1})
-        cdt_ls{iCdt,1}{iSubcdt} = [contrat_ls{iCdt}{iSubcdt} '*bf(1)']; %#ok<*AGROW>
-        cdt_name_ls{iCdt,1} = [cdt_name_ls{iCdt,1} ' + ' contrat_ls{iCdt}{iSubcdt}];
+    for iSubcdt = 1:numel(contrast_ls{iCdt,1})
+        cdt_ls{iCdt,1}{iSubcdt} = [contrast_ls{iCdt}{iSubcdt} '*bf(1)']; %#ok<*AGROW>
+        cdt_name_ls{iCdt,1} = [cdt_name_ls{iCdt,1} ' + ' contrast_ls{iCdt}{iSubcdt}];
     end
     cdt_name_ls{iCdt,1}(1:3) = [];
 end

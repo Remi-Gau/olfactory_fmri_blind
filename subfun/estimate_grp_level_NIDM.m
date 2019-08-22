@@ -45,6 +45,9 @@ for iCmp = 1:numel(cmp)
     matlabbatch{4}.spm.stats.results.conspec(iCmp).extent = k;
     matlabbatch{4}.spm.stats.results.conspec(iCmp).conjunction = 1;
     matlabbatch{4}.spm.stats.results.conspec(iCmp).mask.none = 1;
+    
+%     matlabbatch{1}.spm.stats.results.conspec.mask.image.name = '<UNDEFINED>';
+%     matlabbatch{1}.spm.stats.results.conspec.mask.image.mtype = 0;
 end
 
 matlabbatch{4}.spm.stats.results.units = 1;

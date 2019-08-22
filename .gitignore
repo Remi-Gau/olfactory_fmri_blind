@@ -4,3 +4,6 @@
 *.csv
 *.jpg
 *.m~
+*.nii
+*.nii.gz
+*.dset

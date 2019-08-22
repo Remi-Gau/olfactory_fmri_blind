@@ -1,30 +1,24 @@
 % scritps to transform Z-score maps from neurosynth into binary mask with
-% only one voxel.
+% fewer clusters
 % Adapted from: https://en.wikibooks.org/wiki/SPM/How-to#How_to_remove_clusters_under_a_certain_size_in_a_binary_mask?
 
 roi_path = fullfile(pwd,'inputs');
 
-for iROI = 1:3
+for iROI = 1:2
     
     switch iROI
         case 1
-            % amygdala
-            z = 7;
-            k = 50;
-            ROI  = 'amygdala_association-test_z_FDR_0.01_thres_0.nii';
-            ROIf = 'amygdala_Z_7_k_50.nii';
-        case 2
-            % VMPFC
-            z = 4;
-            k = 300;
-            ROI  = 'vmpfc_association-test_z_FDR_0.01_thres_0.nii';
-            ROIf = 'VMPFC_Z_4_k_300.nii';
-        case 3
-            % ventral striatum
-            z = 8;
-            k = 100;
-            ROI  = 'ventral striatum_association-test_z_FDR_0.01_thres_0.nii';
-            ROIf = 'ventral_striatum_Z_8_k_100.nii';
+            % hand
+            z = .1;
+            k = 10;
+            ROI  = 'hand_association-test_z_FDR_0.01.nii';
+            ROIf = 'hand_Z_.1_k_10.nii';
+                    case 2
+            % hand
+            z = .1;
+            k = 10;
+            ROI  = 'olfactory_association-test_z_FDR_0.01.nii';
+            ROIf = 'olfactory_Z_.1_k_10.nii';
     end
     
     gunzip(fullfile(roi_path, [ROI '.gz']))

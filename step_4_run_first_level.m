@@ -8,9 +8,6 @@
 %  - set_all_GLMS.m: that lists all the possible options of GLM to run
 %  - get_cfg_GLMS_to_run.m: sets the GLM that will actually be run
 
-% TO DO
-% adapt to only run some subjects
-
 
 %% parameters
 clear
@@ -211,6 +208,7 @@ for isubj = 1:nb_subjects
         % estimate design
         matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
         matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
+        matlabbatch{end}.spm.stats.fmri_est.write_residuals = 1;
         
         save(fullfile(analysis_dir,'jobs','GLM_matlabbatch.mat'), 'matlabbatch')
         

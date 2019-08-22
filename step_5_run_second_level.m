@@ -11,7 +11,7 @@ spm('defaults','fmri')
 
 debug_mode = 0;
 
-machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
+machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
 
 %% setting up
 % setting up directories

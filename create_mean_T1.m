@@ -1,12 +1,15 @@
 % script to create mean structural (normalized smoothed and masked)
 
+% TO DO:
+% make one for each group???
+
 %% parameters
 clear
 clc
 
 debug_mode = 0;
 
-machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
 
 %% setting up
 % setting up directories

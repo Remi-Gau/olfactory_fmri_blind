@@ -72,7 +72,7 @@ for i = 1:numel(ROIs_2_select)
     this_roi = zeros(size(vol));
     this_roi(vol==ROIs_2_select(i).label) = 1;
     hdr.fname = fullfile(pwd, 'inputs', ...
-        ['ROI-' ROIs_2_select(i).name ' _space-MNI.nii']);
+        ['ROI-' ROIs_2_select(i).name '_space-MNI.nii']);
     spm_write_vol(hdr, this_roi);
     
     % aupdate all ROIs

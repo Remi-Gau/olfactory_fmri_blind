@@ -34,15 +34,15 @@ opt = struct();
 
 
 % event specification for getting fitted event time-courses
-% A bit silly here, as we only have one session per model and one event type
-event_session_no = 1;
-event_type_no = 1;
-event_spec = [event_session_no; event_type_no];
-event_duration = 0; % default SPM event duration
+contrast_idx = 1 ;
+event_session_no = repmat(1:4, 1, 4);
+event_type_no = repmat([1:4]', 1, 4)';
+event_spec = [event_session_no; event_type_no(:)'];
+event_duration = 16; % default SPM event duration
 
 %% for each subject
 
-for isubj = 1:nb_subjects
+for isubj = 1%:nb_subjects
     
     fprintf('running %s\n', folder_subj{isubj})
     
@@ -71,49 +71,55 @@ for isubj = 1:nb_subjects
             output_dir, ...
             folder_subj{isubj}, 'stats', analysis_dir );
         
+        SPM = load(fullfile(analysis_dir, 'SPM.mat'));
+        
         for roi_no = 1%:size(roi_array,1)
             
             roi = roi_ls{roi_no};
             [path, file] = spm_fileparts(roi);
 
-            % create ROI object for Marsbar
+            % create ROI object for Marsbar and convert to matrix format to avoid delicacies of image format
             roi_obj = maroi_image(struct('vol', spm_vol(roi), 'binarize',1,...
                 'func', []));
-            % convert to matrix format to avoid delicacies of image format
             roi_obj = maroi_matrix(roi_obj);
+            % give it a label
+            label(roi_obj, strrep(file, 'ROI-', ''));
+            saveroi(roi_obj, fullfile(roi_tgt_folder, [file '_roi.mat']));
             
-            saveroi(roi_obj, fullfile(roi_tgt_folder, [file '.mat']));
-            
-            D = mardo(fullfile(analysis_dir, 'SPM.mat'));
+            D = mardo(SPM);
             
             % Extract data
             Y = get_marsy(roi_obj, D, 'mean');
             
             % MarsBaR estimation
             E = estimate(D, Y);
+
+            % Get, store statistics
+            stat_struct = compute_contrasts(E, contrast_idx);
             
-            %             % Add contrast, return model, and contrast index
-            %             [E Ic] = add_contrasts(E, 'stim_hrf', 'T', [1 0 0]);
-            %             % Get, store statistics
-            %             stat_struct(ss) = compute_contrasts(E, Ic);
-            %             % And fitted time courses
-            %             [this_tc dt] = event_fitted(E, event_spec, event_duration);
-            %             % Make fitted time course into ~% signal change
-            %             tc(:, ss) = this_tc / block_means(E) * 100;
+            % And fitted time courses
+            [tc, dt] = event_fitted(E, event_spec, event_duration);
+            
             %
+            psc = event_signal(E, event_spec, event_duration, 'abs max')
+            
+            % Make fitted time course into ~% signal change
+            tc = tc / block_means(E) * 100;
+            
             %             % Show calculated t statistics and contrast values
             %             % NB this next line only works when we have only one stat/contrast
             %             % value per analysis
             %             vals = [ [1 3]; [stat_struct(:).con]; [stat_struct(:).stat]; ];
             %             fprintf('Statistics for %s\n', label(roi));
             %             fprintf('Session %d; contrast value %5.4f; t stat %5.4f\n', vals);
-            %             % Show fitted event time courses
-            %             figure
-            %             secs = [0:length(tc) - 1] * dt;
-            %             plot(secs, tc)
-            %             title(['Time courses for ' label(roi)], 'Interpreter', 'none');
-            %             xlabel('Seconds')
-            %             ylabel('% signal change');
+            
+            % Show fitted event time courses
+            figure
+            secs = [0:length(tc) - 1] * dt;
+            plot(secs, tc)
+            title(['Time courses for ' label(roi_obj)], 'Interpreter', 'none');
+            xlabel('Seconds')
+            ylabel('% signal change');
         end
     end
     

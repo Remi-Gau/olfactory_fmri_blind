@@ -213,12 +213,11 @@ for isubj = 1:nb_subjects
                 set_extra_regress_batch(matlabbatch, 1, iRun, cfg, confounds);
             
         end
-        
-        % Marsbar does not need the model to be estimated
+                
+        % estimate design
+        matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
+        matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
         if  strcmp(space,'MNI')
-            % estimate design
-            matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
-            matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
             matlabbatch{end}.spm.stats.fmri_est.write_residuals = 1;
         end
         
@@ -226,15 +225,13 @@ for isubj = 1:nb_subjects
         
         spm_jobman('run', matlabbatch)
         
-        if  strcmp(space,'MNI')
-            estimate contrasts
-            matlabbatch = [];
-            matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
-            
-            spm_jobman('run', matlabbatch)
-            
-            save(fullfile(analysis_dir,'jobs','contrast_matlabbatch.mat'), 'matlabbatch')
-        end
+        % estimate contrasts
+        matlabbatch = [];
+        matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
+        
+        spm_jobman('run', matlabbatch)
+        
+        save(fullfile(analysis_dir,'jobs','contrast_matlabbatch.mat'), 'matlabbatch')
         
         toc
         

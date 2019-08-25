@@ -6,6 +6,8 @@ matlab
 
 SPM 12
 
+[marsbar 0.44](http://marsbar.sourceforge.net/download.html)
+
 docker
 
 
@@ -33,7 +35,7 @@ data_dir=~/mnt/data/christine/olf_blind/
 
 docker run -it --rm -v $data_dir:/data:ro -v $data_dir:/out poldracklab/fmriprep:1.4.0 /data/raw /out/derivatives/ participant --participant_label ctrl02 ctrl06 ctrl07 ctrl08 ctrl09 --fs-license-file /data/freesurfer/license.txt --output-spaces T1w:res-native MNI152NLin2009cAsym:res-native --nthreads 10 --use-aroma
 ```
-
+http://marsbar.sourceforge.net/download.html
 
 #### Problematic anat or func data
 
@@ -98,8 +100,8 @@ Then run this script: `step_5_run_second_level.m`
 Set some variable for the directories: this part will depend on where the files are on your computer
 ```bash
 data_dir=~/BIDS/olf_blind # where the data are
-code_dir=~/github/chem_sens_blind # where this repo was
-output_dir=~/BIDS/olf_blind/derivatives/ANTs  # where to ouput the data
+code_dir=~/github/chem_sens_blind # where this repo was downloaded or cloned
+output_dir=~/BIDS/olf_blind/derivatives/ANTs  # where to output the data
 mkdir $output_dir
 ```
 

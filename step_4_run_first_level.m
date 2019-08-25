@@ -13,18 +13,25 @@
 clear
 clc
 
-debug_mode = 0;
+debug_mode = 1;
 
-machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
-smoothing_prefix = 's-8_'; %#ok<*NASGU>
-filter =  '.*space-MNI152NLin2009cAsym_desc-preproc.*.nii$';
+machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
 
-% filter =  '.*space-T1w_desc-preproc.*.nii$'; % for the files in native space
-
+% 'MNI' or  'T1w' (native)
+space = 'T1w';
 
 if debug_mode
     smoothing_prefix = '';
     filter =  '.*.nii$';
+end
+
+switch space
+    case 'MNI'
+        smoothing_prefix = 's-8_'; %#ok<*NASGU>
+        filter =  '.*space-MNI152NLin2009cAsym_desc-preproc.*.nii$';
+    case 'T1w'
+        smoothing_prefix = 's-6_';
+        filter =  '.*space-T1w_desc-preproc.*.nii$'; % for the files in native space
 end
 
 %% set options
@@ -168,7 +175,7 @@ for isubj = 1:nb_subjects
         disp(cfg)
         
         % create the directory for this specific analysis
-        analysis_dir = name_analysis_dir(cfg);
+        analysis_dir = name_analysis_dir(cfg, space);
         analysis_dir = fullfile ( ...
             output_dir, ...
             folder_subj{isubj}, 'stats', analysis_dir );
@@ -207,22 +214,27 @@ for isubj = 1:nb_subjects
             
         end
         
-        % estimate design
-        matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
-        matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
-        matlabbatch{end}.spm.stats.fmri_est.write_residuals = 1;
+        % Marsbar does not need the model to be estimated
+        if  strcmp(space,'MNI')
+            % estimate design
+            matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
+            matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
+            matlabbatch{end}.spm.stats.fmri_est.write_residuals = 1;
+        end
         
         save(fullfile(analysis_dir,'jobs','GLM_matlabbatch.mat'), 'matlabbatch')
         
         spm_jobman('run', matlabbatch)
         
-        % estimate contrasts
-        matlabbatch = [];
-        matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
-        
-        spm_jobman('run', matlabbatch)
-        
-        save(fullfile(analysis_dir,'jobs','contrast_matlabbatch.mat'), 'matlabbatch')
+        if  strcmp(space,'MNI')
+            estimate contrasts
+            matlabbatch = [];
+            matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
+            
+            spm_jobman('run', matlabbatch)
+            
+            save(fullfile(analysis_dir,'jobs','contrast_matlabbatch.mat'), 'matlabbatch')
+        end
         
         toc
         

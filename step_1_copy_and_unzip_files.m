@@ -13,7 +13,11 @@ clear
 clc
 
 machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+
 filter =  'sub-.*space-MNI152NLin2009cAsym_desc-'; % to unzip only the files in MNI space
+
+% filter =  'sub-.*space-T1w_desc-'; % to unzip only the files in native space
+
 subj_to_do = [1:12]; % to only try on a couple of subjects; comment out to run on all
 
 %% setting up

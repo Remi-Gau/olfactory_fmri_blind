@@ -19,6 +19,8 @@ machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
 smoothing_prefix = 's-8_'; %#ok<*NASGU>
 filter =  '.*space-MNI152NLin2009cAsym_desc-preproc.*.nii$';
 
+% filter =  '.*space-T1w_desc-preproc.*.nii$'; % for the files in native space
+
 
 if debug_mode
     smoothing_prefix = '';

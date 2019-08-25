@@ -19,7 +19,10 @@ clc
 machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
 FWHM = 8;
 prefix = 's-8_';
+
 filter =  'sub-.*space-MNI152NLin2009cAsym_desc-preproc'; % to smooth only the preprocessed files
+
+% filter =  'sub-.*space-T1w_desc-preproc'; % for the files in native space
 
 % setting up directories
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);

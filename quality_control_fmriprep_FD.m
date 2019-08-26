@@ -22,8 +22,11 @@ nb_2_scrub = [0 2 4]; %number of additional time points to scrub after an outlie
 %% Load fMRIprep confound reports
 % stores only the FD values and separates them into 2 groups
 
-machine_id = 1;
+machine_id = 2;
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
+
+out_dir = fullfile(pwd, 'output', 'figures', 'fmriprep_qc');
+mkdir(out_dir)
 
 % Get which participant is in which group
 participants_file = fullfile(data_dir, 'raw' ,'participants.tsv');
@@ -78,6 +81,8 @@ end
 % for each group
 close all
 
+visible = 'on';
+
 for i_thres = thresh
     
     for i_nb_2_scrub = nb_2_scrub
@@ -114,7 +119,8 @@ for i_thres = thresh
             summed_proportion = sum(reshape(proportion, [4, size(proportion,2)/4]));
             
             %%
-            figure('name', ['Framewise Displacement - ' group_name])
+            fig_name = ['Scrubbing_Group-' group_name '_FD-thres' num2str(i_thres) 'scrub' num2str(i_nb_2_scrub+1)];
+            figure('name', ['Framewise Displacement - ' group_name], 'position', [50 50 1300 700], 'visible', visible)
             
             hold on
             
@@ -137,8 +143,11 @@ for i_thres = thresh
             
             axis([1 numel(proportion) 0 0.25])
             
+            print(gcf, fullfile(out_dir, [fig_name '.jpeg']), '-djpeg')
+            
             %%
-            figure('name', ['Framewise Displacement - ' group_name])
+            fig_name = ['Scrubbing_Group-' group_name '_FD-thres' num2str(i_thres) 'scrub' num2str(i_nb_2_scrub+1) '_sum'];
+            figure('name', ['Framewise Displacement - ' group_name], 'position', [50 50 1300 700], 'visible', visible)
             
             hold on
             
@@ -160,6 +169,8 @@ for i_thres = thresh
                 'fontsize', 8)
             
             axis([.5 numel(summed_proportion)+.5 0 0.25])
+            
+            print(gcf, fullfile(out_dir, [fig_name '.jpeg']), '-djpeg')
             
         end
         

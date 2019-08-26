@@ -13,7 +13,7 @@
 clear
 clc
 
-debug_mode = 1;
+debug_mode = 0;
 
 machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
 
@@ -73,6 +73,7 @@ nb_subjects = numel(folder_subj);
 if debug_mode
     nb_subjects = 1;
 end
+nb_subjects = 1;
 
 % get metadate from BIDS
 metadata = spm_BIDS(bids, 'metadata', ...

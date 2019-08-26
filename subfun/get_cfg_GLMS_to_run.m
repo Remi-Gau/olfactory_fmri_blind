@@ -12,9 +12,9 @@ sets{2} = 2;
 sets{3} = 1;
 
 % opt.time_der = [0 1]; 
-sets{4} = 2;
+sets{4} = [1];
 % opt.disp_der = [0 1]; 
-sets{5} = 2;
+sets{5} = [1];
 
 % opt.confounds = {...
 %     {'FramewiseDisplacement', 'WhiteMatter', 'CSF'}, ...
@@ -30,11 +30,14 @@ sets{5} = 2;
 % rot_z, rot_z_derivative1, rot_z_power2, rot_z_derivative1_power2
 sets{6} = 3;
 % opt.FD_censor.do = [0 1]; 
-sets{7} = 2;
-% opt.FD_censor.thres = 0.5; 
-sets{8} = 1;
+sets{7} = [1];
+% opt.FD_censor.thres = [0.5 0.9]; 
+sets{8} = [2];
+
+% opt.FD_censor.nb = [1 3 5]; % FD threshold to censor points (in mm)
+sets{9} = 1:3;
 
 % opt.spher_cor = {'AR1' 'FAST' 'none'}; 
-sets{9} = 2;
+sets{10} = [2];
     
 end

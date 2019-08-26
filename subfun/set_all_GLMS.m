@@ -20,7 +20,8 @@ opt.confounds = {...
     }; %list the confounds from fMRIprep (or SPM RP) to include 1 cell lists all the regressors to include
 
 opt.FD_censor.do = [0 1]; % censor points with a framewise displacement superior to threshold
-opt.FD_censor.thres = 0.9; % FD threshold to censor points (in mm)
+opt.FD_censor.thres = [0.5 0.9]; % FD threshold to censor points (in mm)
+opt.FD_censor.nb = [1 3 5]; % FD threshold to censor points (in mm)
 
 opt.spher_cor = {'AR(1)' 'FAST' 'none'}; % non-sphericity correction used for the estimation
 
@@ -45,8 +46,8 @@ if ~exist('sets', 'var')
     
 end
 
-[a1, a2, a3, a4, a5, a6, a7, a8, a9] = ...
+[a1, a2, a3, a4, a5, a6, a7, a8, a9, a10] = ...
     ndgrid(sets{:});
-all_GLMs = [a1(:), a2(:), a3(:), a4(:), a5(:), a6(:), a7(:), a8(:), a9(:)];
+all_GLMs = [a1(:), a2(:), a3(:), a4(:), a5(:), a6(:), a7(:), a8(:), a9(:), a10(:)];
 
 end

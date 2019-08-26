@@ -76,7 +76,7 @@ end
 
 % get metadate from BIDS
 metadata = spm_BIDS(bids, 'metadata', ...
-            'type', 'bold');
+    'type', 'bold');
 opt.nb_slices = numel(unique(metadata{1}.SliceTiming));
 opt.TR = metadata{1}.RepetitionTime;
 opt.slice_reference = round(opt.nb_slices/2);
@@ -141,7 +141,7 @@ for isubj = 1:nb_subjects
             events{iSes,1} = spm_select('FPList', ...
                 subj_dir, ...
                 ['^'  filename '.mat$'] );
-
+            
             
             % list realignement parameters and other fMRIprep data for each run
             confound_file = spm_select('FPList', ...
@@ -171,7 +171,7 @@ for isubj = 1:nb_subjects
         
         % get configuration for this GLM
         cfg = get_configuration(all_GLMs, opt, iGLM);
-
+        
         disp(cfg)
         
         % create the directory for this specific analysis
@@ -185,7 +185,7 @@ for isubj = 1:nb_subjects
         % to remove any previous analysis so that the whole thing does not
         % crash
         delete(fullfile(analysis_dir,'SPM.mat'))
-
+        
         matlabbatch = [];
         
         % define the explicit mask for this GLM if specified
@@ -213,7 +213,7 @@ for isubj = 1:nb_subjects
                 set_extra_regress_batch(matlabbatch, 1, iRun, cfg, confounds);
             
         end
-                
+        
         % estimate design
         matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
         matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
@@ -224,6 +224,12 @@ for isubj = 1:nb_subjects
         save(fullfile(analysis_dir,'jobs','GLM_matlabbatch.mat'), 'matlabbatch')
         
         spm_jobman('run', matlabbatch)
+        
+        if  strcmp(space,'MNI')
+            plot_power_spectra_of_GLM_residuals(...
+                analysis_dir, ...
+                opt.TR, 1/cfg.HPF, 12, 24)
+        end
         
         % estimate contrasts
         matlabbatch = [];

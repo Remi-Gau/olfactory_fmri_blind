@@ -1,12 +1,22 @@
 # code base for the analysis of olfaction fMRI experiment in blind and sighted control
 
-## dependencies
+## Dependencies
 
-matlab
+| Dependencies                                                            | Used version |
+|-------------------------------------------------------------------------|--------------|
+| [Matlab](https://www.mathworks.com/products/matlab.html)                | 201?         |
+| [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/)              | v7487        |
+| [Marsbar toolbox for SPM](http://marsbar.sourceforge.net/download.html) | 0.44         |
 
-SPM 12
+This has not been tried on Octave. Sorry open-science friends... :see_no_evil:
 
-docker
+## Docker images
+
+| Image                                                  | Used version                |
+|--------------------------------------------------------|-----------------------------|
+| [MRIQC](https://mriqc.readthedocs.io/en/stable/)       | poldracklab/mriqc:0.15.0    |
+| [fMRIprep](https://fmriprep.readthedocs.io/en/stable/) | poldracklab/fmriprep:1.4.0  |
+| [ANTs](http://marsbar.sourceforge.net/download.html)   | kaczmarj/ants:v2.3.1-source |
 
 
 
@@ -21,19 +31,21 @@ sudo dockerd
 ### MRIQC
 
 ```bash
-data_dir=~/mnt/data/christine/olf_blind/
+data_dir=~/mnt/data/christine/olf_blind/ # define where the data is
 
 docker run -it --rm -v $data_dir/raw:/data:ro -v $data_dir:/out poldracklab/mriqc:0.15.0 /data /out/derivatives/mriqc participant --verbose-reports --mem_gb 50 --n_procs 16 -m bold
 ```
 
 ### fmriprep
 
+Preprocessing done with [fMRIprep](https://fmriprep.readthedocs.io/en/stable/) and outputs data in both native and MNI space.  
+
 ```bash
-data_dir=~/mnt/data/christine/olf_blind/
+data_dir=~/mnt/data/christine/olf_blind/ # define where the data is
 
 docker run -it --rm -v $data_dir:/data:ro -v $data_dir:/out poldracklab/fmriprep:1.4.0 /data/raw /out/derivatives/ participant --participant_label ctrl02 ctrl06 ctrl07 ctrl08 ctrl09 --fs-license-file /data/freesurfer/license.txt --output-spaces T1w:res-native MNI152NLin2009cAsym:res-native --nthreads 10 --use-aroma
 ```
-
+http://marsbar.sourceforge.net/download.html
 
 #### Problematic anat or func data
 
@@ -64,15 +76,28 @@ docker run -it --rm -v $data_dir:/data:ro -v $data_dir:/out poldracklab/fmriprep
 
 For those you might need to edit the `set_dir` function to specify where the code is, the folder containing the BIDS raw data and the target directory where the SPM analysis should go.
 
+Here is how I set up the directories on my machine.
+
+```matlab
+case 1 % windows matlab/octave : Remi
+    code_dir = '/home/remi/github/chem_sens_blind';
+    data_dir = '/home/remi/BIDS/olf_blind';
+    output_dir = fullfile(data_dir, 'derivatives', 'spm12');
+```
+
 ### Copy and unzipping data
 
 Run this script: `step_1_copy_and_unzip_files`
+
+Setting up the `space` variable `MNI` or  `T1w` will take care of the data in MNI space or in native space respectively.
 
 ### Smoothing the data
 
 Run this script:  `step_2_smooth_func_files.m`
 
-### Converting the evnts.tsv files into SOT.mat files for SPM
+Setting up the `space` variable `MNI` or  `T1w` will take care of the data in MNI space or in native space respectively.
+
+### Converting the events.tsv files into SOT.mat files for SPM
 
 Run this script:  `step_3_get_SOT.m`
 
@@ -80,9 +105,14 @@ Run this script:  `step_3_get_SOT.m`
 
 Run this script: `step_4_run_first_level.m`
 
-After you can create a group mask with the `create_group_mask.m` script.
+Setting up the `space` variable `MNI` or  `T1w` will take care of the data in MNI space or in native space respectively.
 
+After you can create a group mask with the `create_group_mask.m` script.
 You can also create a group T1w image with the `create_mean_T1w.m` script.
+
+When running the GLM with the data in MNI space, the images of the residuals are kept and this to do a bit of quality control: it calls the function `subfun/plot_power_spectra_of_GLM_residuals.m` (taken from this [repo](https://github.com/wiktorolszowy/fMRI_temporal_autocorrelation)) to plot the frequency content of the residuals to see how far it is from white noise (flat profile). The figure is generated in the folder of each GLM.
+
+See this [paper](https://www.nature.com/articles/s41467-019-09230-w.pdf) and this [repo](https://github.com/wiktorolszowy/fMRI_temporal_autocorrelation) for more info.
 
 ### Running the group level GLM
 You will first need to create the ROIs (or you can download them from neurovault (*insert URL*)) that will be used for this analysis.
@@ -93,13 +123,15 @@ You will first need to create the ROIs (or you can download them from neurovault
 
 Then run this script: `step_5_run_second_level.m`
 
-### Converting ROIs to native space usin ANTs
+### Converting ROIs to native space using ANTs
+
+If you want to convert the ROIS created above into their native space equivalent we used ANTs and the transformation file created by fMRIprep to do that.
 
 Set some variable for the directories: this part will depend on where the files are on your computer
 ```bash
 data_dir=~/BIDS/olf_blind # where the data are
-code_dir=~/github/chem_sens_blind # where this repo was
-output_dir=~/BIDS/olf_blind/derivatives/ANTs  # where to ouput the data
+code_dir=~/github/chem_sens_blind # where this repo was downloaded or cloned
+output_dir=~/BIDS/olf_blind/derivatives/ANTs  # where to output the data
 mkdir $output_dir
 ```
 
@@ -117,3 +149,7 @@ Run the conversion script
 ```bash
 sh /code/inv_norm_ROIs.sh
 ```
+
+### Running the ROI based analysis in native space to get time courses and percent signal change for each ROIS
+
+Work in progress...

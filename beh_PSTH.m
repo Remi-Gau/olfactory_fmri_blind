@@ -11,15 +11,15 @@ clear
 clc
 
 % mention where the BIDS data set is (can get the behavioral from OSF)
-tgt_dir = 'D:\BIDS\olf_blind\raw_beh';
-
-rm_baseline = 0;
+tgt_dir = '/mnt/data/christine/olf_blind/raw';
 
 baseline_dur = 20;
 pre_stim = 16;
 stim_dur = 16;
 post_stim = 16;
 
+% offset time courses by the pre stimulus baseline level of response
+opt.rm_baseline = 0; 
 
 % some settings for the figures
 max_y_axis = 6.5;
@@ -34,6 +34,7 @@ opt.max_y_axis = ones(2,1)*.15;
 opt.plot_subj = 0;
 opt.normalize = 0;
 opt.visible = 'on';
+
 fontsize = 12;
 
 % just to prevent label_your_axes from trying to give a meaningful scale
@@ -100,14 +101,12 @@ end
 
 %% epoch the data
 
-opt = get_option;
+opt = get_option(opt);
 
-baseline_dur = baseline_dur * opt.samp_freq;
-pre_stim = pre_stim * opt.samp_freq;
-stim_dur = stim_dur * opt.samp_freq;
-post_stim = post_stim * opt.samp_freq;
-
-[prestim_epoch, stim_epoch, poststim_epoch] = epoch_data(tasks, group, all_time_courses, baseline_dur, pre_stim, post_stim);
+[prestim_epoch, stim_epoch, poststim_epoch] = ...
+        epoch_data(tasks, group, all_time_courses, ...
+        baseline_dur, stim_dur, pre_stim, post_stim, ...
+        opt);
 
 
 
@@ -115,7 +114,9 @@ post_stim = post_stim * opt.samp_freq;
 clc
 close all
 
-opt = get_option(opt);
+pre_stim = pre_stim * opt.samp_freq;
+stim_dur = stim_dur * opt.samp_freq;
+
 stim_color_mat = opt.stim_color_mat;
 stim_color_mat(stim_color_mat==0) = .8;
 stim_linestyle = opt.stim_linestyle;
@@ -209,7 +210,7 @@ for iGroup = 1:2
             ['PSTH_' ...
             group(iGroup).name ...
             '_task-' tasks{iTask} ...
-            '_rmbase-' num2str(rm_baseline) ...
+            '_rmbase-' num2str(opt.rm_baseline) ...
             '.jpg']), '-djpeg')
         
     end
@@ -221,7 +222,6 @@ clc
 close all
 
 
-opt = get_option(opt);
 stim_color_mat = opt.stim_color_mat;
 stim_linestyle = opt.stim_linestyle;
 stim_legend = opt.stim_legend;
@@ -303,14 +303,20 @@ for iTask = 1:2
         ['Avg_Resp_' ...
         group(iGroup).name ...
         '_task-' tasks{iTask} ...
-        '_rmbase-' num2str(rm_baseline) ...
+        '_rmbase-' num2str(opt.rm_baseline) ...
         '.jpg']), '-djpeg')
     
 end
 
 
+%%
+function [prestim_epoch, stim_epoch, poststim_epoch] = epoch_data(tasks, group, all_time_courses, baseline_dur, stim_dur, pre_stim, post_stim, opt)
 
-function [prestim_epoch, stim_epoch, poststim_epoch] = epoch_data(tasks, group, all_time_courses, baseline_dur, pre_stim, post_stim)
+baseline_dur = baseline_dur * opt.samp_freq;
+pre_stim = pre_stim * opt.samp_freq;
+stim_dur = stim_dur * opt.samp_freq;
+post_stim = post_stim * opt.samp_freq;
+
 fprintf(1, '\n\nEpoching the data')
 
 for iTask = 1:numel(tasks)
@@ -385,7 +391,7 @@ for iTask = 1:numel(tasks)
                         ON = onsets(iSubj,iTrialtype);
                         OFF = offsets(iSubj,iTrialtype);
                         
-                        if rm_baseline
+                        if opt.rm_baseline
                             OFFSET = baseline(iSubj,iResp);
                         else
                             OFFSET = 0;

@@ -42,6 +42,8 @@ if ~exist('sets', 'var')
     sets{end+1} = 1:numel(opt.FD_censor.do);
     sets{end+1} = 1:numel(opt.FD_censor.thres);
     
+    sets{end+1} =  1:numel(opt.FD_censor.nb);
+    
     sets{end+1} = 1:numel(opt.spher_cor);
     
 end

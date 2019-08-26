@@ -37,6 +37,11 @@ if cfg.FD_censor.do
     if any(to_censor)
         
         to_censor = find(to_censor);
+        for extra_scrub = 1:cfg.FD_censor.nb-1
+            to_censor(:,end+1) = to_censor(:,end)+1;
+        end
+        to_censor = unique(to_censor);
+        
         
         for i_censor = 1:numel(to_censor)
             

@@ -15,10 +15,10 @@ clc
 
 debug_mode = 0;
 
-machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
+machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
 
 % 'MNI' or  'T1w' (native)
-space = 'T1w';
+space = 'MNI';
 
 if debug_mode
     smoothing_prefix = '';
@@ -68,12 +68,12 @@ output_dir
 % listing subjects
 folder_subj = get_subj_list(output_dir);
 folder_subj = cellstr(char({folder_subj.name}')); % turn subject folders into a cellstr
+[~, ~, folder_subj] = rm_subjects([], [], folder_subj, 1)
 nb_subjects = numel(folder_subj);
 
 if debug_mode
     nb_subjects = 1;
 end
-nb_subjects = 1;
 
 % get metadate from BIDS
 metadata = spm_BIDS(bids, 'metadata', ...
@@ -232,7 +232,7 @@ for isubj = 1:nb_subjects
                 opt.TR, 1/cfg.HPF, 12, 24)
         end
         
-        % estimate contrasts
+        %  estimate contrasts
         matlabbatch = [];
         matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
         

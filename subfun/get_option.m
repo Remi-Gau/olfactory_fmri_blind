@@ -1,5 +1,7 @@
 function opt = get_option(opt)
+% set some options for the analysis and plotting of the behavioral results.
 
+% sampling frequency of the physio file for breathing
 opt.samp_freq = 25;
 opt.timecourse_dur = 280;
 
@@ -21,12 +23,14 @@ opt.stim_color = {...
     '--g';...  % Eucalyptus Right
     '--r'};    % Almond Right
 
+% color used to plot the stimuli
 opt.stim_color_mat = [...
     0 1 0;
     1 0 0;
     0 1 0;
     1 0 0];
 
+% linestyle for plotting the stimuli
 opt.stim_linestyle = {...
     '-', ...
     '-', ...

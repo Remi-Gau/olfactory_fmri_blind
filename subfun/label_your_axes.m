@@ -1,4 +1,5 @@
 function [norm_text] = label_your_axes(fontsize, x_tick, x_label, opt)
+% a quick function to do some systematic labelling of some axis
 
 if opt.norm_resp
     norm_text = 'YES';

@@ -127,7 +127,7 @@ You will first need to create the ROIs (or you can download them from neurovault
 
 `create_ROIs.m` create the ROIs to check responses in the regions corresponding to the terms _hand_ and _olfactory_ in neurosynth (*insert URL*)
 
-`create_ROI_visual.m` creates the ROIs for the visual system. All of them combined and one for each ROI. It uses the [retinotopic atlas from Kastner's lab](http://scholar.princeton.edu/sites/default/files/napl/files/probatlas_v4.zip).
+`create_ROI_visual.m` creates the ROIs for the visual system. All of them combined and one for each ROI. It uses the [ROIs of the anatomy toolbox](https://www.fz-juelich.de/SharedDocs/Downloads/INM/INM-1/DE/Toolbox/Toolbox_22c.html?nn=563092).
 
 Then run this script: `step_5_run_second_level.m`
 

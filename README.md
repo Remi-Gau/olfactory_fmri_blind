@@ -2,13 +2,20 @@
 
 ## Dependencies
 
-| Dependencies                                                            | Used version |
-|-------------------------------------------------------------------------|--------------|
-| [Matlab](https://www.mathworks.com/products/matlab.html)                | 201?         |
-| [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/)              | v7487        |
-| [Marsbar toolbox for SPM](http://marsbar.sourceforge.net/download.html) | 0.44         |
+| Dependencies                                                                                                              | Used version |
+|---------------------------------------------------------------------------------------------------------------------------|--------------|
+| [Matlab](https://www.mathworks.com/products/matlab.html)                                                                  | 201?         |
+| [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/)                                                                | v7487        |
+| [Marsbar toolbox for SPM](http://marsbar.sourceforge.net/download.html)                                                   | 0.44         |
+| [Anatomy toolbox for SPM](https://www.fz-juelich.de/SharedDocs/Downloads/INM/INM-1/DE/Toolbox/Toolbox_22c.html?nn=563092) | 2.2          |
 
 This has not been tried on Octave. Sorry open-science friends... :see_no_evil:
+
+### Other Dependencies
+
+... are included in the `subfun/matlab_exchange` to make your life easier.
+
+But might be worth using this in the future: https://github.com/mobeets/mpm
 
 ## Docker images
 

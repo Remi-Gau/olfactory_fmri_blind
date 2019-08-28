@@ -55,11 +55,13 @@ end
 %% read maximum probability map (sum both hemispheres)
 hdr = spm_vol(MPM_img);
 vol = spm_read_vols(hdr);
+% correct offset of the anatomy toolbox
+hdr.mat(2,4) = hdr.mat(2,4)+4;
+hdr.mat(3,4) = hdr.mat(3,4)-5;
+
 
 
 %% Create an image for each ROI and one that combines them all
-hdr = hdr(1);
-
 all_rois = zeros(size(vol));
 
 for i = 1:numel(ROIs_2_select)

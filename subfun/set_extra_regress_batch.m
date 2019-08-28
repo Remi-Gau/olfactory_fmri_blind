@@ -7,21 +7,45 @@ if ~isempty(cfg.confounds)
     for iField = 1:numel(target_fields)
         
         name = target_fields{iField};
-        value = getfield(confounds{irun}, target_fields{iField});
         
-        if isnan(value(1))
-            value(1) = 0;
+        % include all t_comp_cor regressors
+        if strcmp(name,'t_comp_cor_*')
+            
+            field_names = fieldnames(confounds{irun});
+            t_comp_cor_idx = strfind(field_names, 't_comp_cor_');
+            t_comp_cor_idx = find(~cellfun(@isempty, t_comp_cor_idx));
+            
+            for i_t_com_cor = t_comp_cor_idx'
+                name = field_names{i_t_com_cor};
+                value = getfield(confounds{irun}, name);
+                
+                matlabbatch{idx}.spm.stats.fmri_spec.sess(1, irun).regress(1,extra_regress) = ...
+                    struct(...
+                    'name', name, ...
+                    'val', value );
+                
+                extra_regress = extra_regress + 1;
+            end
+            
+        else
+            
+            value = getfield(confounds{irun}, name);
+            
+            
+            if isnan(value(1))
+                value(1) = 0;
+            end
+            if any(isnan(value))
+                warning('NaN values one of the extra regressors.')
+            end
+            
+            matlabbatch{idx}.spm.stats.fmri_spec.sess(1, irun).regress(1,extra_regress) = ...
+                struct(...
+                'name', name, ...
+                'val', value );
+            
+            extra_regress = extra_regress + 1;
         end
-        if any(isnan(value))
-            warning('NaN values one of the extra regressors.')
-        end
-        
-        matlabbatch{idx}.spm.stats.fmri_spec.sess(1, irun).regress(1,extra_regress) = ...
-            struct(...
-            'name', name, ...
-            'val', value );
-        
-        extra_regress = extra_regress + 1;
     end
 else
     matlabbatch{idx}.spm.stats.fmri_spec.sess(1, irun).regress = struct(...

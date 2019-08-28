@@ -10,15 +10,22 @@
 
 
 %% parameters
-clear
 clc
 
 debug_mode = 0;
 
-machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+if ~exist('machine_id', 'var')
+    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+end
 
 % 'MNI' or  'T1w' (native)
-space = 'MNI';
+if ~exist('space', 'var')
+    space = 'T1w';
+end
+
+if ~exist('estimate_GLM', 'var')
+    estimate_GLM = 1;
+end
 
 if debug_mode
     smoothing_prefix = '';
@@ -56,10 +63,6 @@ spm('defaults','fmri')
 
 % get date info
 bids =  spm_BIDS(fullfile(data_dir, 'raw'));
-
-if debug_mode
-    output_dir = data_dir;
-end
 
 data_dir %#ok<*NOPTS>
 code_dir
@@ -149,9 +152,6 @@ for isubj = 1:nb_subjects
                 subj_dir, ...
                 ['^' bold_filename '.*confounds.*.tsv$'] );
             confounds{iSes, 1} = spm_load(confound_file); %#ok<*SAGROW>
-            if debug_mode
-                confounds{iSes, 1} = '';
-            end
             
             iSes = iSes +1;
         end
@@ -216,29 +216,33 @@ for isubj = 1:nb_subjects
         end
         
         % estimate design
-        matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
-        matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
-        if  strcmp(space,'MNI')
-            matlabbatch{end}.spm.stats.fmri_est.write_residuals = 1;
+        if estimate_GLM
+            matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
+            matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
+            if  strcmp(space,'MNI')
+                matlabbatch{end}.spm.stats.fmri_est.write_residuals = 1;
+            end
         end
         
         save(fullfile(analysis_dir,'jobs','GLM_matlabbatch.mat'), 'matlabbatch')
         
         spm_jobman('run', matlabbatch)
         
-        if  strcmp(space,'MNI')
-            plot_power_spectra_of_GLM_residuals(...
-                analysis_dir, ...
-                opt.TR, 1/cfg.HPF, 12, 24)
+        if estimate_GLM
+            if  strcmp(space,'MNI')
+                plot_power_spectra_of_GLM_residuals(...
+                    analysis_dir, ...
+                    opt.TR, 1/cfg.HPF, 12, 24)
+            end
+            
+            %  estimate contrasts
+            matlabbatch = [];
+            matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
+            
+            spm_jobman('run', matlabbatch)
+            
+            save(fullfile(analysis_dir,'jobs','contrast_matlabbatch.mat'), 'matlabbatch')
         end
-        
-        %  estimate contrasts
-        matlabbatch = [];
-        matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
-        
-        spm_jobman('run', matlabbatch)
-        
-        save(fullfile(analysis_dir,'jobs','contrast_matlabbatch.mat'), 'matlabbatch')
         
         toc
         

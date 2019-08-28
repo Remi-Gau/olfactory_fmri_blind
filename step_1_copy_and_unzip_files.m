@@ -9,15 +9,17 @@
 
 
 %% parameters
-clear
-clc
 
-machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
+% subj_to_do = [1]; % to only try on a couple of subjects; comment out to run on all
+
+if ~exist('machine_id', 'var')
+    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+end
 
 % 'MNI' or  'T1w' (native)
-space = 'T1w';
-
-subj_to_do = [1]; % to only try on a couple of subjects; comment out to run on all
+if ~exist('space', 'var')
+    space = 'T1w';
+end
 
 switch space
     case 'MNI'

@@ -29,6 +29,8 @@ bids =  spm_BIDS(tgt_dir);
 subjects = spm_BIDS(bids, 'subjects');
 tasks = spm_BIDS(bids, 'tasks');
 
+subjects(ismember(subjects, 'blnd04')) = [];
+
 % number of time points to remove from phsyio to align with beh
 physio_crop = 1:RT*nb_dummies*samp_freq;
 

@@ -1,25 +1,15 @@
 % script to smooth the functional fmriprep preprocessed data
 
-
-% TO DO
-% adapt to copy only some subjects
-
-
-
-% example of docker command to run it
-% docker run -it --rm \
-% -v /c/Users/Remi/Documents/NARPS/:/data \
-% -v /c/Users/Remi/Documents/NARPS/code/:/code/ \
-% -v /c/Users/Remi/Documents/NARPS/derivatives/:/output \
-% spmcentral/spm:octave-latest script '/code/step_2_smooth_func_files.m'
-
-clear
 clc
 
-machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
+if ~exist('machine_id', 'var')
+    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+end
 
 % 'MNI' or  'T1w' (native)
-space = 'T1w';
+if ~exist('space', 'var')
+    space = 'T1w';
+end
 
 switch space
     case 'MNI'

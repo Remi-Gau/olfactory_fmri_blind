@@ -1,12 +1,14 @@
 % a script to run through a bids structure and create .mat files that
 % can be used as stimulus onset time file for a subject level GLM by SPM
 
-clear
 clc
 
-subj_to_do = [18 20:22];
+% subj_to_do = [18 20:22];
 
-machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+if ~exist('machine_id', 'var')
+    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+end
+
 % setting up directories
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
 spm('defaults','fmri')
@@ -24,8 +26,6 @@ end
 
 group(1).name = 'blnd';
 group(2).name = 'ctrl';
-
-subjects = subjects(subj_to_do)
 
 if ~exist('subj_to_do', 'var')
     subj_to_do = 1:numel(subjects);

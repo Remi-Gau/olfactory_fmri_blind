@@ -5,6 +5,7 @@ opt.timecourse_dur = 280;
 
 opt.RT = 0.785;
 opt.nb_dummies = 8;
+opt.nb_vol = 295;
 
 opt.trial_type = {...
     'ch1', ...

@@ -11,7 +11,6 @@ end
 
 % setting up directories
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
-spm('defaults','fmri')
 
 % get date info
 bids =  spm_BIDS(fullfile(data_dir, 'raw'));

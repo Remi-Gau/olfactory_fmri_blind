@@ -7,11 +7,19 @@
 
 % assumes a fixed 16 seconds stimulation duration
 
+close all
 clear
 clc
 
+if ~exist('machine_id', 'var')
+    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+end
+% setting up directories
+[data_dir, code_dir] = set_dir(machine_id);
+
 % mention where the BIDS data set is (can get the behavioral from OSF)
-tgt_dir = '/mnt/data/christine/olf_blind/raw';
+tgt_dir = fullfile(data_dir, 'raw');
+
 
 baseline_dur = 20;
 pre_stim = 16;
@@ -39,17 +47,6 @@ fontsize = 12;
 
 % just to prevent label_your_axes from trying to give a meaningful scale
 opt.norm_resp = 1;
-
-
-% if needed add spm to the path
-% spm_path = '/home/remi-gau/Documents/SPM/spm12';
-% addpath(spm_path)
-
-% check that spm is there
-spm('defaults','fmri')
-
-addpath(genpath(fullfile(pwd, 'subfun')))
-
 
 
 %% get data

@@ -1,4 +1,7 @@
-% quality_control_beh()
+% quality_control_FD_beh()
+% plots framewise displacement, stimuli and controls on the same figures
+% for each runa nd subjects
+% to check if scrubbed time points are not during stimuli period
 
 clear
 clc

@@ -1,15 +1,18 @@
 % quality_control_beh()
+% plots stimuli, responses and breathing 
+
 
 clear
 clc
 
-% spm_path = '/home/remi-gau/Documents/SPM/spm12';
-% addpath(spm_path)
-spm('defaults','fmri')
+if ~exist('machine_id', 'var')
+    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+end
+% setting up directories
+[data_dir, code_dir] = set_dir(machine_id);
 
-tgt_dir = 'D:\BIDS\olf_blind\raw';
-
-out_dir = fullfile(pwd, 'output', 'figures', 'beh_qc');
+tgt_dir = fullfile(data_dir, 'raw');
+out_dir = fullfile(code_dir, 'output', 'figures', 'beh_qc');
 
 visible = 'off';
 
@@ -71,7 +74,6 @@ for iSub = 1:numel(subjects)
             x = spm_load(physio_file{iRun}(1:end-3),'',false(1));
             respiration = x(:,1);
             respiration(physio_crop) = [];
-            MAX = max(respiration);
             
             if range(respiration)<0.1
                 comment = 'Very small respiration range.';
@@ -135,10 +137,11 @@ for iSub = 1:numel(subjects)
             
             legend(Legend)
             
+            % print figure
             [~, file, ~] = fileparts(event_file{iRun}(1:end-3));
             print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg')
             
-            
+            % save comments for log file
             filenames{end+1,1} = [file '.jpeg']; %#ok<*SAGROW>
             comments{end+1,1} = comment;
             

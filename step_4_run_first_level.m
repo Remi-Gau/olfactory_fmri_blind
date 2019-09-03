@@ -11,6 +11,7 @@
 
 %% parameters
 clc
+clear
 
 debug_mode = 0;
 
@@ -20,7 +21,7 @@ end
 
 % 'MNI' or  'T1w' (native)
 if ~exist('space', 'var')
-    space = 'T1w';
+    space = 'MNI';
 end
 
 if ~exist('estimate_GLM', 'var')
@@ -28,8 +29,8 @@ if ~exist('estimate_GLM', 'var')
 end
 
 if debug_mode
-    smoothing_prefix = '';
-    filter =  '.*.nii$';
+    space = 'MNI';
+    estimate_GLM = 1;
 end
 
 switch space
@@ -43,6 +44,7 @@ end
 
 %% set options
 opt.task = {'olfid' 'olfloc'};
+opt.nb_vol = 295;
 
 %%
 opt.contrast_ls = {
@@ -58,8 +60,6 @@ opt.contrast_ls = {
 %% setting up
 % setting up directories
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
-
-spm('defaults','fmri')
 
 % get date info
 bids =  spm_BIDS(fullfile(data_dir, 'raw'));
@@ -206,7 +206,7 @@ for isubj = 1:nb_subjects
             
             % adds run specific parameters
             matlabbatch = ...
-                set_session_GLM_batch(matlabbatch, 1, data, events, iRun, cfg);
+                set_session_GLM_batch(matlabbatch, 1, data, events, iRun, cfg, opt);
             
             % adds extra regressors (RT param mod, movement, ...) for this
             % run

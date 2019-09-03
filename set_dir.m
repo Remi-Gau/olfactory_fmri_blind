@@ -25,8 +25,10 @@ switch machine_id
 end
 
 % add subfunctions to path
-[~]  = addpath(fullfile(code_dir,'subfun'));
+[~]  = addpath(genpath(fullfile(code_dir,'subfun')));
 
 % define derivatives fMRIprep dir
 fMRIprep_DIR = fullfile(data_dir, 'derivatives', 'fmriprep');
+
+spm('defaults','fmri')
 end

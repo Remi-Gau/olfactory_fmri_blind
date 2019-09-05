@@ -13,15 +13,13 @@ end
 
 % 'MNI' or  'T1w' (native)
 if ~exist('space', 'var')
-    space = 'T1w';
+    space = 'MNI';
 end
 
 
 %% setting up
 % setting up directories
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
-
-spm('defaults','fmri')
 
 % get date info
 bids =  spm_BIDS(fullfile(data_dir, 'raw'));
@@ -49,13 +47,15 @@ opt =  struct();
 
 matlabbatch{1}.spm.tools.MACS.MA_model_space.dir = {output_dir};
 
+% matlabbatch{1}.spm.tools.MACS.MA_model_space.names = {
+%     'GLM_FD-whi-CSF'
+%     'GLM_trans-rot'
+%     'GLM_FD-whi-CSF-trans-rot'
+%     'GLM_FD-whi-CSF-trans-rot-tcomcor'}
 matlabbatch{1}.spm.tools.MACS.MA_model_space.names = {
     'GLM_FD-whi-CSF'
     'GLM_trans-rot'
-    'GLM_FD-whi-CSF-trans-rot'
-    'GLM_FD-whi-CSF-trans-rot-tcomcor'}
-matlabbatch{1}.spm.tools.MACS.MA_model_space.names = {
-    'GLM_FD-whi-CSF-trans-rot-tcomcor'}
+    'GLM_FD-whi-CSF-trans-rot'}
 
 for isubj = 1:nb_subjects
 

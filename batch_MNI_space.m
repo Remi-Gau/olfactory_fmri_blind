@@ -9,5 +9,5 @@ space = 'MNI';
 % step_2_smooth_func_files
 % step_3_get_SOT
 
-estimate_GLM = 0
+estimate_GLM = 1
 step_4_run_first_level

@@ -1,4 +1,4 @@
-function matlabbatch = set_ttest_batch(matlabbatch, directory, scans, cdts, cmp)
+function matlabbatch = set_ttest_batch(matlabbatch, directory, scans, cdts, cmp, mask, opt)
 
 
 %% set design
@@ -31,7 +31,7 @@ switch test_type
         matlabbatch{1}.spm.stats.factorial_design.des.pt.ancova = 0;
         
     case 'two-sample'
-        directory = fullfile(directory, 'two-sample_ttest');
+        directory = fullfile(directory, ['ts_ttest_' cdts{1}]);
         % enter contrast image pairs for each subject
         for iSubj = 1:numel(scans{1})
             matlabbatch{1}.spm.stats.factorial_design.des.t2.scans1{iSubj,1} = ...
@@ -65,7 +65,7 @@ matlabbatch{1}.spm.stats.factorial_design.globalm.gmsca.gmsca_no = 1;
 matlabbatch{1}.spm.stats.factorial_design.globalm.glonorm = 1;
 
 
-matlabbatch = estimate_grp_level_NIDM(matlabbatch, cmp, cdts, scans);
+matlabbatch = estimate_grp_level_NIDM(matlabbatch, cmp, cdts, scans, mask, opt);
 
 save(fullfile(directory,'grp_lvl_matlabbatch.mat'), 'matlabbatch')
 

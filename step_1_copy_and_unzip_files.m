@@ -37,6 +37,8 @@ spm('defaults','fmri')
 [~, ~, ~] = mkdir(output_dir);
 folder_subj = get_subj_list(fMRIprep_DIR);
 folder_subj = cellstr(char({folder_subj.name}')); % turn subject folders into a cellstr
+[~, ~, folder_subj] = rm_subjects([], [], folder_subj, 1)
+
 
 if ~exist('subj_to_do', 'var')
     subj_to_do = 1:numel(folder_subj);

@@ -11,7 +11,6 @@
 
 %% parameters
 clc
-clear
 
 debug_mode = 0;
 
@@ -23,6 +22,7 @@ end
 if ~exist('space', 'var')
     space = 'MNI';
 end
+space
 
 if ~exist('estimate_GLM', 'var')
     estimate_GLM = 1;
@@ -211,7 +211,7 @@ for isubj = 1:nb_subjects
             % adds extra regressors (RT param mod, movement, ...) for this
             % run
             matlabbatch = ...
-                set_extra_regress_batch(matlabbatch, 1, iRun, cfg, confounds);
+                set_extra_regress_batch(matlabbatch, 1, iRun, cfg, confounds, opt);
             
         end
         

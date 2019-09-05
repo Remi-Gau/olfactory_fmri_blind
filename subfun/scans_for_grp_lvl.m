@@ -21,6 +21,9 @@ function [scans, con_names]= scans_for_grp_lvl(contrast_ls, ctrsts, contrasts_fi
                 contrasts_file_ls(subj_to_include(iSubj)).con_file{ctrst_to_choose,:});
             
             i_scan = i_scan + 1;
+        else
+            warning('we got a dumy contrast for subject %i. \n File: %s ', ...
+                iSubj, contrasts_file_ls(subj_to_include(iSubj)).con_file{ctrst_to_choose,:})
         end
 
     end

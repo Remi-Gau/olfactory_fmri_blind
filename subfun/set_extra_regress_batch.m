@@ -1,4 +1,4 @@
-function matlabbatch = set_extra_regress_batch(matlabbatch, idx, irun, cfg, confounds)
+function matlabbatch = set_extra_regress_batch(matlabbatch, idx, irun, cfg, confounds, opt)
 
 extra_regress = 1;
 % includes realignement parameters from the fMRIprep confounds
@@ -11,25 +11,35 @@ if ~isempty(cfg.confounds)
         % include all t_comp_cor regressors
         if strcmp(name,'t_comp_cor_*')
             
+            % find the fields that correspond to a t comp cor
             field_names = fieldnames(confounds{irun});
             t_comp_cor_idx = strfind(field_names, 't_comp_cor_');
             t_comp_cor_idx = find(~cellfun(@isempty, t_comp_cor_idx));
             
+            % add each t comp cor as a regressor and crop it to match the
+            % number of volume included in this run
             for i_t_com_cor = t_comp_cor_idx'
                 name = field_names{i_t_com_cor};
                 value = getfield(confounds{irun}, name);
                 
+                % take either the length of that regressor or the number of
+                % volumes we include in this run (whichever is the smallest)
+                MIN  = min([opt.nb_vol, numel(value)]);
+                
                 matlabbatch{idx}.spm.stats.fmri_spec.sess(1, irun).regress(1,extra_regress) = ...
                     struct(...
                     'name', name, ...
-                    'val', value );
+                    'val', value(1:MIN) );
                 
                 extra_regress = extra_regress + 1;
             end
             
         else
             
+            % same as above but simpler as we can simply lok up the field
+            % name and don't need to list them
             value = getfield(confounds{irun}, name);
+            MIN  = min([opt.nb_vol, numel(value)]);
             
             
             if isnan(value(1))
@@ -42,7 +52,7 @@ if ~isempty(cfg.confounds)
             matlabbatch{idx}.spm.stats.fmri_spec.sess(1, irun).regress(1,extra_regress) = ...
                 struct(...
                 'name', name, ...
-                'val', value );
+                'val', value(1:MIN) );
             
             extra_regress = extra_regress + 1;
         end

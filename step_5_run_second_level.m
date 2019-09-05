@@ -1,50 +1,34 @@
-% runs group level on the olf blind data and export the results corresponding to those
-% published in the NIDM format
+% runs group level on the olf blind data and export the results in the NIDM format
+
+% there is an option to randomize the data between groups when doing a 2
+% sample t-test to blind results
 
 
 
 %% parameters
-clear
 clc
-
-spm('defaults','fmri')
+clear
 
 debug_mode = 0;
 
 machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
 
-%% setting up
-% setting up directories
-[data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
+% to randomize between groups analysis (for blinding purposes)
+randomize = 1;
 
+opt.task = {'olfid' 'olfloc'};
+opt.grp_name = {'blnd', 'ctrl'};
 
-% listing subjects
-folder_subj = get_subj_list(output_dir);
-folder_subj = cellstr(char({folder_subj.name}')); % turn subject folders into a cellstr
+opt.p = 0.05;
+opt.k = 0;
 
-opt = [];
+% contrast name / directory name / ROI for inclusive mask
+opt.ctrsts = {...
+    'resp-03 > 0', 'resp-03', 'ROI_hand_Z_.1_k_10.nii'; ...
+    'resp-12 > 0', 'resp-12', 'ROI_hand_Z_.1_k_10.nii'; ...
+    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0', 'all', 'ROI-AllVisual_space-MNI.nii' 
+    };
 
-% Get which participant is in which group
-participants_file = fullfile(data_dir, 'raw' ,'participants.tsv');
-participants = spm_load(participants_file);
-group_id = ~cellfun(@isempty, strfind(participants.participant_id, 'ctrl'));
-
-% remove excluded subjects
-[participants, group_id, folder_subj] = rm_subjects(participants, group_id, folder_subj, true);
-
-folder_subj
-
-nb_subj = numel(folder_subj);
-
-
-%% figure out which GLMs to run
-% set up all the possible of combinations of GLM possible given the
-% different analytical options we have
-[sets] = get_cfg_GLMS_to_run();
-[opt, all_GLMs] = set_all_GLMS(opt, sets);
-
-
-%%
 %%
 contrast_ls = {
     'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0';
@@ -63,6 +47,38 @@ contrast_ls = {
     'resp-12 < 0'};
 
 
+%% setting up
+% setting up directories
+[data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
+
+
+% listing subjects
+folder_subj = get_subj_list(output_dir);
+folder_subj = cellstr(char({folder_subj.name}')); % turn subject folders into a cellstr
+
+% remove excluded subjects
+[~, ~, folder_subj] = rm_subjects([], [], folder_subj, true);
+group_id = ~cellfun(@isempty, strfind(folder_subj, 'ctrl')); %#ok<*STRCLFH>
+disp(folder_subj)
+
+nb_subj = numel(folder_subj);
+
+if ~exist('space', 'var')
+    space = 'MNI';
+end
+
+if ~exist('randomize', 'var')
+    randomize = 1;
+end
+
+
+%% figure out which GLMs to run
+% set up all the possible of combinations of GLM possible given the
+% different analytical options we have
+[sets] = get_cfg_GLMS_to_run();
+[opt, all_GLMs] = set_all_GLMS(opt, sets);
+
+
 %%
 for iGLM = 1:size(all_GLMs)
     
@@ -71,7 +87,7 @@ for iGLM = 1:size(all_GLMs)
     
     
     % set output dir for this GLM configutation
-    analysis_dir = name_analysis_dir(cfg);
+    analysis_dir = name_analysis_dir(cfg, space);
     grp_lvl_dir = fullfile (output_dir, 'group', analysis_dir );
     mkdir(grp_lvl_dir)
     
@@ -105,87 +121,97 @@ for iGLM = 1:size(all_GLMs)
     end
     
     
-    %% ttest
-    for i_ttest = 1:2
+    
+    for i_ttest = size(opt.ctrsts,1)
         
-        switch i_ttest
-            case 1
-                % Motor responses
-                cdts = {'resp-03 > 0'}; %#ok<*NASGU>
-                ctrsts = {'resp-03 > 0'};
-                subdir_name = 'resp-03';
-            case 2
-                % Motor responses
-                cdts = {'resp-12 > 0'}; %#ok<*NASGU>
-                ctrsts = {'resp-12 > 0'};
-                subdir_name = 'resp-12';
-                
-        end
+        ctrsts = opt.ctrsts(i_ttest,1);
         
-        ctrsts %#ok<*NOPTS>
+        disp(ctrsts)
         
-        for iGroup = 1:2
+        subdir_name = opt.ctrsts{i_ttest,2};
+        
+        mask = fullfile(code_dir, 'inputs', opt.ctrsts{i_ttest,3})
+        
+        %% ttest
+        for iGroup = 1:numel(opt.grp_name)
             
-            if iGroup==1
-                grp_name = 'blnd';
-                subj_to_include = find(group_id(1:nb_subj)==0);
-            else
-                grp_name = 'ctrl';
-                subj_to_include = find(group_id(1:nb_subj)==1);
-            end
-            
-            grp_name
+            subj_to_include = find(group_id(1:nb_subj)==iGroup-1);
+            grp_name = opt.grp_name{iGroup};
             
             % identify the right con images for each subject to bring to
             % the grp lvl as summary stat
             
-            [scans, con_names]= scans_for_grp_lvl(contrast_ls, ctrsts, contrasts_file_ls, subj_to_include)
+            [scans, con_names]= scans_for_grp_lvl(contrast_ls, ctrsts, contrasts_file_ls, subj_to_include);
             
-            con_names
-            
-            scans'
+            disp(grp_name)
+            disp(con_names) 
+            disp(scans')
             
             matlabbatch = [];
-            matlabbatch = set_ttest_batch(matlabbatch, ...
-                fullfile(grp_lvl_dir, grp_name), ...
-                scans, ...
-                {subdir_name}, ...
-                {'>'});
+%             matlabbatch = set_ttest_batch(matlabbatch, ...
+%                 fullfile(grp_lvl_dir, grp_name), ...
+%                 scans, ...
+%                 {subdir_name}, ...
+%                 {'>'}, ...
+%                 mask, opt);
             
-            spm_jobman('run', matlabbatch)
+%             spm_jobman('run', matlabbatch)
+            
+            % rename NIDM output file
+%             NIDM_file = spm_select('FPList', ...
+%                 matlabbatch{1}.spm.stats.factorial_design.dir{1}, ...
+%                 '^spm.*.*nidm.*zip$');
+%             [path, file, ext] = spm_fileparts(NIDM_file);
+%             file = [grp_name, '_', strrep(ctrsts{1}, ' ', ''), '_', file]; %#ok<*AGROW>
+%             movefile(NIDM_file, fullfile(path, [file ext]))
+            
+            clear scans
         end
         
+        %% two sample ttest
+        % identify the right con images for each subject to bring to
+        % the grp lvl as summary stat
+        for iGroup = 1:numel(opt.grp_name)
+            subj_to_include = find(group_id(1:nb_subj)==iGroup-1);
+            [scans{iGroup,1}, con_names]= scans_for_grp_lvl(contrast_ls, ctrsts, contrasts_file_ls, subj_to_include);
+            
+            disp(con_names) 
+        end
+
+        % shuffle date from both groups to blind analysis
+        if randomize
+            tmp = cat(1,scans{1}',scans{2}');
+            tmp = tmp(randperm(size(tmp,1)),:);
+            for iGroup = 1:numel(opt.grp_name)
+                scans{iGroup} = cellstr( tmp( 1:size(scans{iGroup},2) , : ) )';
+            end
+        end
+        
+        % display
+        for iGroup = 1:numel(opt.grp_name)
+            disp(scans{iGroup}')
+        end
+        
+        matlabbatch = [];
+        matlabbatch = set_ttest_batch(matlabbatch, ...
+            fullfile(grp_lvl_dir), ...
+            scans, ...
+            {subdir_name}, ...
+            {'>'}, ...
+            mask, opt);
+        
+        spm_jobman('run', matlabbatch)
+        
+        % rename NIDM output file
+        NIDM_file = spm_select('FPList', ...
+            matlabbatch{1}.spm.stats.factorial_design.dir{1}, ...
+            '^spm.*.*nidm.*zip$');
+        [path, file, ext] = spm_fileparts(NIDM_file);
+        file = ['ts_ttest_', strrep(ctrsts{1}, ' ', ''), '_', file]; %#ok<*AGROW>
+        movefile(NIDM_file, fullfile(path, [file ext]))
+        
+        clear scans
+        
     end
-    
-    %% two sample ttest
-    
-    % Equal range vs. equal indifference:
-    %
-    % Greater positive response to losses in amygdala for equal range condition vs. equal indifference condition.
-    
-    %     % Positive effect
-    %     cdts = {' gamble_trialxloss^1*bf(1) > 0'};
-    %     ctrsts = {'gamble_trialxloss>0'};
-    %     subdir_name = 'loss_sup_baseline_range_sup_indiff';
-    %
-    %     % identify the right con images for each subject to bring to
-    %     % the grp lvl as summary stat
-    %     subj_to_include = find(group_id(1:nb_subj)==1);
-    %     scans1 = scans_for_grp_lvl(contrast_ls, ctrsts, contrasts_file_ls, subj_to_include)
-    %
-    %     subj_to_include = find(group_id(1:nb_subj)==0);
-    %     scans2 = scans_for_grp_lvl(contrast_ls, ctrsts, contrasts_file_ls, subj_to_include)
-    %
-    %     scans{1,1} =  scans1;
-    %     scans{2,1} =  scans2;
-    %
-    %     matlabbatch = [];
-    %     matlabbatch = set_ttest_batch(matlabbatch, ...
-    %         fullfile(grp_lvl_dir), ...
-    %         scans, ...
-    %         {subdir_name}, ...
-    %         {'>'});
-    %
-    %     spm_jobman('run', matlabbatch)
     
 end

@@ -16,11 +16,12 @@ opt.confounds = {...
     {'trans_x' 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z'},...
     {'framewise_displacement', 'white_matter', 'csf', 'trans_x' 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z'},...
     {'framewise_displacement', 'white_matter', 'csf', 'trans_x' 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z' ...
-        't_comp_cor_00', 't_comp_cor_01', 't_comp_cor_02', 't_comp_cor_03', 't_comp_cor_04', 't_comp_cor_05'},...
+        't_comp_cor_*'},...
     }; %list the confounds from fMRIprep (or SPM RP) to include 1 cell lists all the regressors to include
 
 opt.FD_censor.do = [0 1]; % censor points with a framewise displacement superior to threshold
-opt.FD_censor.thres = 0.9; % FD threshold to censor points (in mm)
+opt.FD_censor.thres = [0.5 0.9]; % FD threshold to censor points (in mm)
+opt.FD_censor.nb = [1 3 5]; % FD threshold to censor points (in mm)
 
 opt.spher_cor = {'AR(1)' 'FAST' 'none'}; % non-sphericity correction used for the estimation
 
@@ -41,12 +42,14 @@ if ~exist('sets', 'var')
     sets{end+1} = 1:numel(opt.FD_censor.do);
     sets{end+1} = 1:numel(opt.FD_censor.thres);
     
+    sets{end+1} =  1:numel(opt.FD_censor.nb);
+    
     sets{end+1} = 1:numel(opt.spher_cor);
     
 end
 
-[a1, a2, a3, a4, a5, a6, a7, a8, a9] = ...
+[a1, a2, a3, a4, a5, a6, a7, a8, a9, a10] = ...
     ndgrid(sets{:});
-all_GLMs = [a1(:), a2(:), a3(:), a4(:), a5(:), a6(:), a7(:), a8(:), a9(:)];
+all_GLMs = [a1(:), a2(:), a3(:), a4(:), a5(:), a6(:), a7(:), a8(:), a9(:), a10(:)];
 
 end

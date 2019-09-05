@@ -36,24 +36,28 @@ end
 
 % Get subject list and folders
 folder_subj = get_subj_list(folder_path);
+ % turn subject folders into a cellstr
+folder_subj = cellstr(char({folder_subj.name}'));
+% remove some subjects
+[~, ~, folder_subj] = rm_subjects([], [], folder_subj, 1)
 
 % Loop across folder and unpack .gz files
-parfor isubj = 1 : length(folder_subj)
+parfor i_subj = 1 : length(folder_subj)
 
     tic
 
     matlabbatch = [];
 
-    fprintf('\nProcessing Subject n. %d of %d\n\n',isubj, size(folder_subj,1))
+    fprintf('\nProcessing Subject n. %d of %d\n\n',i_subj, size(folder_subj,1))
     % Build subj folder path
-    folder_files = fullfile(folder_path, folder_subj(isubj).name, 'func');
+    folder_files = fullfile(folder_path, folder_subj{i_subj}, 'func');
     % Make a list of the file in it with '.gz' extension
     file_list = cellstr(spm_select('ExtFPList', folder_files, filter, Inf));
 
     if isempty(file_list)
-        warning('no file to smooth for subject %s', folder_subj(isubj).name)
+        warning('no file to smooth for subject %s', folder_subj{i_subj})
     elseif size(file_list,1)<4
-        warning('some files are missing from subject %s', folder_subj(isubj).name)
+        warning('some files are missing from subject %s', folder_subj{i_subj})
     else
         % Create the batch
         matlabbatch{1}.spm.spatial.smooth.data   = cellstr(file_list);
@@ -61,7 +65,7 @@ parfor isubj = 1 : length(folder_subj)
         matlabbatch{1}.spm.spatial.smooth.dtype  = 0;
         matlabbatch{1}.spm.spatial.smooth.prefix = prefix;
 
-        save_the_job(matlabbatch, folder_files, folder_subj(isubj).name);
+        save_the_job(matlabbatch, folder_files, folder_subj{i_subj});
 
         spm_jobman('run',matlabbatch);
     end

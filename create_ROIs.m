@@ -12,13 +12,13 @@ for iROI = 1:2
             z = .1;
             k = 10;
             ROI  = 'hand_association-test_z_FDR_0.01.nii';
-            ROIf = 'hand_Z_.1_k_10.nii';
+            ROIf = 'ROI_hand_Z_.1_k_10.nii';
                     case 2
             % hand
             z = .1;
             k = 10;
             ROI  = 'olfactory_association-test_z_FDR_0.01.nii';
-            ROIf = 'olfactory_Z_.1_k_10.nii';
+            ROIf = 'ROI_olfactory_Z_.1_k_10.nii';
     end
 
     gunzip(fullfile(roi_path, [ROI '.gz']))

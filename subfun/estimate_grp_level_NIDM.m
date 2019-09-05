@@ -1,7 +1,7 @@
-function matlabbatch = estimate_grp_level_NIDM(matlabbatch, cmp, cdts, scans)
+function matlabbatch = estimate_grp_level_NIDM(matlabbatch, cmp, cdts, scans, mask, opt)
 
-p = 0.01;
-k = 0;
+p = opt.p;
+k = opt.k;
 
 
 %% estimate design
@@ -21,7 +21,7 @@ matlabbatch{3}.spm.stats.con.spmmat(1) = ...
 
 % design contrast vectors
 for iCmp = 1:numel(cmp)
-    [name, weights] = name_weight_contrast(cmp{iCmp}, cdts, scans);
+    [name, weights] = name_weight_contrast(cmp{iCmp}, cdts, scans, opt);
     matlabbatch{3}.spm.stats.con.consess{iCmp}.tcon.name = name;
     matlabbatch{3}.spm.stats.con.consess{iCmp}.tcon.weights = weights;
     matlabbatch{3}.spm.stats.con.consess{iCmp}.tcon.sessrep = 'none';
@@ -37,17 +37,21 @@ matlabbatch{4}.spm.stats.results.spmmat(1) = ...
     substruct('.','spmmat'));
 
 for iCmp = 1:numel(cmp)
-    name = name_weight_contrast(cmp{iCmp}, cdts, scans);
+    name = name_weight_contrast(cmp{iCmp}, cdts, scans, opt);
     matlabbatch{4}.spm.stats.results.conspec(iCmp).titlestr = name;
     matlabbatch{4}.spm.stats.results.conspec(iCmp).contrasts = iCmp;
     matlabbatch{4}.spm.stats.results.conspec(iCmp).threshdesc = 'none';
     matlabbatch{4}.spm.stats.results.conspec(iCmp).thresh = p;
     matlabbatch{4}.spm.stats.results.conspec(iCmp).extent = k;
     matlabbatch{4}.spm.stats.results.conspec(iCmp).conjunction = 1;
-    matlabbatch{4}.spm.stats.results.conspec(iCmp).mask.none = 1;
     
-%     matlabbatch{1}.spm.stats.results.conspec.mask.image.name = '<UNDEFINED>';
-%     matlabbatch{1}.spm.stats.results.conspec.mask.image.mtype = 0;
+    if isempty(mask)
+        matlabbatch{4}.spm.stats.results.conspec(iCmp).mask.none = 1;
+    else
+        matlabbatch{4}.spm.stats.results.conspec.mask.image.name = {mask};
+        matlabbatch{4}.spm.stats.results.conspec.mask.image.mtype = 0;
+    end
+
 end
 
 matlabbatch{4}.spm.stats.results.units = 1;
@@ -60,7 +64,7 @@ matlabbatch{4}.spm.stats.results.export{2}.nidm.group.label = 'ctrl';
 
 end
 
-function [name, weights] = name_weight_contrast(cmp, cdts, scans)
+function [name, weights] = name_weight_contrast(cmp, cdts, scans, opt)
 
 
 %% set design
@@ -79,7 +83,7 @@ switch test_type
     case 'two-sample'
         
         cdt_1 = cdts{1};
-        cdt_2 = '';
+        cdt_2 = ['baseline: ' opt.grp_name{1} '>' opt.grp_name{2}];
     
     case 'ttest'
         cdt_1 = cdts{1};

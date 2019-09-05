@@ -12,29 +12,32 @@ sets{2} = 2;
 sets{3} = 1;
 
 % opt.time_der = [0 1]; 
-sets{4} = 2;
+sets{4} = [2];
 % opt.disp_der = [0 1]; 
-sets{5} = 2;
+sets{5} = [2];
 
 % opt.confounds = {...
 %     {'FramewiseDisplacement', 'WhiteMatter', 'CSF'}, ...
 %     {'X' 'Y' 'Z' 'RotX' 'RotY' 'RotZ'},...
 %     {'FramewiseDisplacement', 'WhiteMatter', 'CSF', 'X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ'},...
 %     {'FramewiseDisplacement', 'WhiteMatter', 'CSF', 'X', 'Y', 'Z', 'RotX', 'RotY', 'RotZ' ...
-%         'tCompCor00', 'tCompCor01', 'tCompCor02', 'tCompCor03', 'tCompCor04', 'tCompCor05'},...
+%         'tCompCor*'},...
 % trans_x, trans_x_derivative1, trans_x_derivative1_power2, trans_x_power2, 
 % trans_y, trans_y_derivative1, trans_y_power2, trans_y_derivative1_power2, 
 % trans_z, trans_z_derivative1, trans_z_power2, trans_z_derivative1_power2, 
 % rot_x, rot_x_derivative1, rot_x_power2, rot_x_derivative1_power2, 
 % rot_y, rot_y_derivative1, rot_y_derivative1_power2, rot_y_power2, 
 % rot_z, rot_z_derivative1, rot_z_power2, rot_z_derivative1_power2
-sets{6} = 3;
+sets{6} = 1:4;
 % opt.FD_censor.do = [0 1]; 
-sets{7} = 2;
-% opt.FD_censor.thres = 0.5; 
-sets{8} = 1;
+sets{7} = [1];
+% opt.FD_censor.thres = [0.5 0.9]; 
+sets{8} = [2];
+
+% opt.FD_censor.nb = [1 3 5]; % FD threshold to censor points (in mm)
+sets{9} = 3;
 
 % opt.spher_cor = {'AR1' 'FAST' 'none'}; 
-sets{9} = 2;
+sets{10} = [2];
     
 end

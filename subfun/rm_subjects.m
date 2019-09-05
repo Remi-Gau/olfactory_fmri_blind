@@ -20,11 +20,13 @@ else
 end
 
 % Remove excluded subjects
-to_rm = ismember(ppp.participant_id, subj_to_exclude);
-grp_id(to_rm) = [];
-ppp.participant_id(to_rm) = [];
-ppp.sex(to_rm) = [];
-ppp.age(to_rm) = [];
+if ~isempty(ppp)
+    to_rm = ismember(ppp.participant_id, subj_to_exclude);
+    grp_id(to_rm) = [];
+    ppp.participant_id(to_rm) = [];
+    ppp.sex(to_rm) = [];
+    ppp.age(to_rm) = [];
+end
 
 if ~isempty(folder_subj)
     to_rm = ismember(folder_subj, subj_to_exclude);

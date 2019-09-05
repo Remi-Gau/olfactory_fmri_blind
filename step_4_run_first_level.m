@@ -10,19 +10,27 @@
 
 
 %% parameters
-clear
 clc
 
-debug_mode = 1;
+debug_mode = 0;
 
-machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
+if ~exist('machine_id', 'var')
+    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+end
 
 % 'MNI' or  'T1w' (native)
-space = 'T1w';
+if ~exist('space', 'var')
+    space = 'MNI';
+end
+space
+
+if ~exist('estimate_GLM', 'var')
+    estimate_GLM = 1;
+end
 
 if debug_mode
-    smoothing_prefix = '';
-    filter =  '.*.nii$';
+    space = 'MNI';
+    estimate_GLM = 1;
 end
 
 switch space
@@ -36,6 +44,7 @@ end
 
 %% set options
 opt.task = {'olfid' 'olfloc'};
+opt.nb_vol = 295;
 
 %%
 opt.contrast_ls = {
@@ -52,14 +61,8 @@ opt.contrast_ls = {
 % setting up directories
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
 
-spm('defaults','fmri')
-
 % get date info
 bids =  spm_BIDS(fullfile(data_dir, 'raw'));
-
-if debug_mode
-    output_dir = data_dir;
-end
 
 data_dir %#ok<*NOPTS>
 code_dir
@@ -68,6 +71,7 @@ output_dir
 % listing subjects
 folder_subj = get_subj_list(output_dir);
 folder_subj = cellstr(char({folder_subj.name}')); % turn subject folders into a cellstr
+[~, ~, folder_subj] = rm_subjects([], [], folder_subj, 1)
 nb_subjects = numel(folder_subj);
 
 if debug_mode
@@ -148,9 +152,6 @@ for isubj = 1:nb_subjects
                 subj_dir, ...
                 ['^' bold_filename '.*confounds.*.tsv$'] );
             confounds{iSes, 1} = spm_load(confound_file); %#ok<*SAGROW>
-            if debug_mode
-                confounds{iSes, 1} = '';
-            end
             
             iSes = iSes +1;
         end
@@ -205,39 +206,43 @@ for isubj = 1:nb_subjects
             
             % adds run specific parameters
             matlabbatch = ...
-                set_session_GLM_batch(matlabbatch, 1, data, events, iRun, cfg);
+                set_session_GLM_batch(matlabbatch, 1, data, events, iRun, cfg, opt);
             
             % adds extra regressors (RT param mod, movement, ...) for this
             % run
             matlabbatch = ...
-                set_extra_regress_batch(matlabbatch, 1, iRun, cfg, confounds);
+                set_extra_regress_batch(matlabbatch, 1, iRun, cfg, confounds, opt);
             
         end
         
         % estimate design
-        matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
-        matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
-        if  strcmp(space,'MNI')
-            matlabbatch{end}.spm.stats.fmri_est.write_residuals = 1;
+        if estimate_GLM
+            matlabbatch{end+1}.spm.stats.fmri_est.spmmat{1,1} = fullfile(analysis_dir, 'SPM.mat');
+            matlabbatch{end}.spm.stats.fmri_est.method.Classical = 1;
+            if  strcmp(space,'MNI')
+                matlabbatch{end}.spm.stats.fmri_est.write_residuals = 1;
+            end
         end
         
         save(fullfile(analysis_dir,'jobs','GLM_matlabbatch.mat'), 'matlabbatch')
         
         spm_jobman('run', matlabbatch)
         
-        if  strcmp(space,'MNI')
-            plot_power_spectra_of_GLM_residuals(...
-                analysis_dir, ...
-                opt.TR, 1/cfg.HPF, 12, 24)
+        if estimate_GLM
+            if  strcmp(space,'MNI')
+                plot_power_spectra_of_GLM_residuals(...
+                    analysis_dir, ...
+                    opt.TR, 1/cfg.HPF, 12, 24)
+            end
+            
+            %  estimate contrasts
+            matlabbatch = [];
+            matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
+            
+            spm_jobman('run', matlabbatch)
+            
+            save(fullfile(analysis_dir,'jobs','contrast_matlabbatch.mat'), 'matlabbatch')
         end
-        
-        % estimate contrasts
-        matlabbatch = [];
-        matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
-        
-        spm_jobman('run', matlabbatch)
-        
-        save(fullfile(analysis_dir,'jobs','contrast_matlabbatch.mat'), 'matlabbatch')
         
         toc
         

@@ -6,13 +6,16 @@ clear
 clc
 
 if ~exist('machine_id', 'var')
-    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+    machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
 end
+
 % setting up directories
 [data_dir, code_dir] = set_dir(machine_id);
 
 tgt_dir = fullfile(data_dir, 'raw');
+
 out_dir = fullfile(code_dir, 'output', 'figures', 'beh_qc');
+
 
 visible = 'off';
 
@@ -23,18 +26,19 @@ RT = opt.RT;
 samp_freq = opt.samp_freq;
 trial_type = opt.trial_type;
 stim_color = opt.stim_color;
+
 Legend = opt.stim_legend;
 Legend{end+1} = 'resp_1';
 Legend{end+1} = 'resp_2';
 Legend{end+1} = 'respiration';
 
-% get date info
+% get data info
 bids =  spm_BIDS(tgt_dir);
 subjects = spm_BIDS(bids, 'subjects');
 tasks = spm_BIDS(bids, 'tasks');
 
 % number of time points to remove from phsyio to align with beh
-physio_crop = 1:RT*nb_dummies*samp_freq;
+physio_crop = 1:RT * nb_dummies * samp_freq;
 
 mkdir(out_dir)
 
@@ -90,7 +94,7 @@ for iSub = 1:numel(subjects)
             % crop the time courses of the responses and trial types to
             % match that of the respiration
             fprintf('respiration file longer by: %02.1f seconds\n', ...
-                (length(respiration)-size(trial_courses,2)) / samp_freq );
+                ( length(respiration) - size(trial_courses,2) ) / samp_freq );
             trial_courses(:,length(respiration)+1:end) = [];
             
             % some sanity checks for later

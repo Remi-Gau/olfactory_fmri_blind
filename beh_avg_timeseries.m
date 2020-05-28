@@ -12,9 +12,12 @@
 clear
 clc
 
+% if needed add spm to the path
+% spm_path = '/home/remi-gau/Documents/SPM/spm12';
+% addpath(spm_path)
 
 if ~exist('machine_id', 'var')
-    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+    machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
 end
 % setting up directories
 [data_dir, code_dir] = set_dir(machine_id);
@@ -27,9 +30,9 @@ tgt_dir = fullfile(data_dir, 'raw');
 bids =  spm_BIDS(tgt_dir);
 
 %% plotting
-opt.bin_size = 20; % number of data point to bin. e.g. 25: means 1 sec of responses are summed 
+opt.bin_size = 25; % number of data point to bin. e.g. 25: means 1 sec of responses are summed 
 
-opt.plot_subj = 0; % plot subjects - usualluy not pretty
+opt.plot_subj = 0; % plot subjects - usually not pretty
 
 opt.mov_mean_resp = 1; % use a moving window to average
 opt.moving_win_size = 20; % width of the moving window
@@ -87,6 +90,7 @@ for iTask = 1:numel(tasks)
                 all_stim{iTrialType,1},  ...
                 all_stim{iTrialType,2}), ...
                 3); %#ok<SAGROW>
+            
             % keep a copy for plotting both groups later
             bothgrp_avg_all_stim{iTrialType,iGroup} = ...
                 mean( ...
@@ -102,18 +106,24 @@ for iTask = 1:numel(tasks)
             
             % plot the 2 runs separately
             prefix = 'beh_grp-';
+            
             make_figure(all_stim, task, opt)
+            
             mtit(sprintf('Group: %s ; Task: %s ; Row norm: %i', ...
                 opt.group, tasks{iTask}, opt.norm_resp), ....
                 'fontsize', 14, 'xoff', 0,'yoff',0.05);
+            
             print_fig(prefix, out_dir, group(iGroup).name, task, iNorm)
             
             % plot the run averages
             prefix = 'beh_runavg_grp-';
+            
             make_figure(avg_all_stim, task, opt)
+            
             mtit(sprintf('Run avg ; Group: %s ; Task: %s ; Row norm: %i', ...
                 opt.group, tasks{iTask}, opt.norm_resp), ....
                 'fontsize', 14, 'xoff', 0,'yoff',0.05);
+            
             print_fig(prefix, out_dir, group(iGroup).name, task, iNorm)
         end
 
@@ -128,10 +138,13 @@ for iTask = 1:numel(tasks)
         
         % plot the 2 groups separately
         prefix = 'beh_bothgrp-';
+        
         make_figure(bothgrp_avg_all_stim, task, opt)
+        
         mtit(sprintf('Group: %s ; Task: %s ; Row norm: %i', ...
             'both', tasks{iTask}, opt.norm_resp), ....
             'fontsize', 14, 'xoff', 0,'yoff',0.05);
+        
         print_fig(prefix, out_dir, group(iGroup).name, task, iNorm)
         
     end

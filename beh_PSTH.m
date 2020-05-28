@@ -12,13 +12,14 @@ clear
 clc
 
 if ~exist('machine_id', 'var')
-    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+    machine_id = 1;% 0: container ;  1: Remi ;  2: Beast
 end
 % setting up directories
 [data_dir, code_dir] = set_dir(machine_id);
 
 % mention where the BIDS data set is (can get the behavioral from OSF)
 tgt_dir = fullfile(data_dir, 'raw');
+
 
 
 baseline_dur = 20;

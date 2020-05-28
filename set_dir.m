@@ -13,7 +13,7 @@ switch machine_id
         code_dir = '/code';
         output_dir = '/output/derivatives/spm12';
         addpath(fullfile('/opt/spm12'));
-    case 1 % windows matlab/octave : Remi
+    case 1 % Remi
         code_dir = '/home/remi/github/chem_sens_blind';
         data_dir = '/home/remi/BIDS/olf_blind';
         output_dir = fullfile(data_dir, 'derivatives', 'spm12');

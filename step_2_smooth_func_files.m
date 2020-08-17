@@ -1,9 +1,9 @@
 % script to smooth the functional fmriprep preprocessed data
 
-clc
+clc;
 
 if ~exist('machine_id', 'var')
-    machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
+    machine_id = 2; % 0: container ;  1: Remi ;  2: Beast
 end
 
 % 'MNI' or  'T1w' (native)
@@ -22,9 +22,8 @@ switch space
         filter =  'sub-.*space-T1w_desc-preproc'; % for the files in native space
 end
 
-
 % setting up directories
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
 
 % smooth
-smooth_batch(FWHM, prefix, output_dir, filter)
+smooth_batch(FWHM, prefix, output_dir, filter);

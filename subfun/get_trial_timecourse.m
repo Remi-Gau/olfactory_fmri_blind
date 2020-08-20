@@ -3,9 +3,9 @@ function trial_courses = get_trial_timecourse(event_file)
     %
     % returns time course
     % trial_courses  of size [numel(trial_type), timecourse_dur * samp_freq]
-    % 
+    %
     % onsets are equal to 1 and offet to -1
-    % 
+    %
 
     opt = get_option;
 

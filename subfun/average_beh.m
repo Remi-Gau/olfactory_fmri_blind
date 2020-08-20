@@ -7,8 +7,8 @@ function [all_stim, task] = average_beh(bids, task, subjects)
     trial_type = opt.trial_type;
 
     % create template matrix to collect responses, stim, ...
-    template = zeros(numel(subjects), timecourse_dur * samp_freq); % seconds * sampling frequency
-
+    % seconds * sampling frequency
+    template = zeros(numel(subjects), timecourse_dur * samp_freq); 
     for iTrial_type = 1:numel(trial_type)
         all_stim{iTrial_type, 1} = template; %#ok<*AGROW>
         all_stim{iTrial_type, 2} = template;

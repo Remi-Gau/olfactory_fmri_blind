@@ -15,7 +15,7 @@ function [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id)
             addpath(fullfile('/opt/spm12'));
         case 1 % Remi
             code_dir = '/home/remi/github/chem_sens_blind';
-            data_dir = '/home/remi/BIDS/olf_blind';
+            data_dir = '/home/remi/gin/olfaction_blind';
             output_dir = fullfile(data_dir, 'derivatives', 'spm12');
         case 2 % beast
             code_dir = '/mnt/data/christine/olf_blind/chem_sens_blind';
@@ -26,6 +26,7 @@ function [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id)
 
     % add subfunctions to path
     [~]  = addpath(genpath(fullfile(code_dir, 'subfun')));
+    [~]  = addpath(genpath(fullfile(code_dir, 'lib')));
 
     % define derivatives fMRIprep dir
     fMRIprep_DIR = fullfile(data_dir, 'derivatives', 'fmriprep');

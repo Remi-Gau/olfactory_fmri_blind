@@ -1,4 +1,11 @@
 function trial_courses = get_trial_timecourse(event_file)
+    % trial_courses = get_trial_timecourse(event_file)
+    %
+    % returns time course
+    % trial_courses  of size [numel(trial_type), timecourse_dur * samp_freq]
+    % 
+    % onsets are equal to 1 and offet to -1
+    % 
 
     opt = get_option;
 
@@ -10,15 +17,15 @@ function trial_courses = get_trial_timecourse(event_file)
 
     % get events file
     disp(event_file);
-    x = spm_load(event_file{1}, '', false(1));
+    x = spm_load(event_file{1});
 
     % we collect the stim / resp onsets and offsets
     for iTrial_type = 1:numel(trial_type)
 
-        idx = strcmp(x.Var3, trial_type{iTrial_type});
+        idx = strcmp(x.trial_type, trial_type{iTrial_type});
 
-        event_onsets = str2double(x.Var1(idx));
-        event_offsets = event_onsets + str2double(x.Var2(idx));
+        event_onsets = x.onset(idx);
+        event_offsets = event_onsets + x.duration(idx);
 
         % we round as we need to use those values as indices in a time
         % course

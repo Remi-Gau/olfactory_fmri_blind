@@ -108,9 +108,6 @@ close all;
 pre_stim = pre_stim * opt.samp_freq;
 stim_dur = stim_dur * opt.samp_freq;
 
-stim_color_mat = opt.stim_color_mat;
-stim_color_mat(stim_color_mat == 0) = .8;
-stim_linestyle = opt.stim_linestyle;
 stim_legend = opt.stim_legend;
 samp_freq = opt.samp_freq;
 
@@ -120,8 +117,8 @@ black = [0 0 0];
 
 bin_duration  = 1 / samp_freq * opt.bin_size;
 
-x1_patch = pre_stim / opt.bin_size;
-x2_patch = (pre_stim + stim_dur) / opt.bin_size;
+stim_onset = pre_stim / opt.bin_size;
+stim_offset = (pre_stim + stim_dur) / opt.bin_size;
 
 for iGroup = 1:2
 
@@ -151,18 +148,15 @@ for iGroup = 1:2
 
                 nb_bins = round(length(to_plot) / opt.bin_size);
                 x_tick = round(linspace(0, nb_bins, 10));
-                x_label = round(linspace(0, nb_bins * bin_duration, 10)) - pre_stim / samp_freq;
+                x_label = round(linspace(0, nb_bins * bin_duration, 10)) - ...
+                    pre_stim / samp_freq;
 
                 [to_plot, sem, all_subjs] = process_timeSeries(to_plot, nb_bins, opt);
 
                 subplot(2, 4, iSubplot);
                 hold on;
-
-                patch( ...
-                    [x1_patch x1_patch x2_patch x2_patch], ...
-                    [0 opt.max_y_axis(1) opt.max_y_axis(1) 0], ...
-                    stim_color_mat(iTrialtype, :), ...
-                    'linestyle', stim_linestyle{iTrialtype});
+                
+                draw_stim(stim_onset, stim_offset, opt.max_y_axis(1), opt);
 
                 do_plot(to_plot, sem, all_subjs, Color, 1, opt);
 
@@ -210,8 +204,6 @@ end
 clc;
 close all;
 
-stim_color_mat = opt.stim_color_mat;
-stim_linestyle = opt.stim_linestyle;
 stim_legend = opt.stim_legend;
 Colors(1, :) = opt.blnd_color;
 Colors(2, :) = opt.sighted_color;

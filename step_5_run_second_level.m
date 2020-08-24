@@ -12,7 +12,9 @@ debug_mode = 0;
 machine_id = 2; % 0: container ;  1: Remi ;  2: Beast
 
 % to randomize between groups analysis (for blinding purposes)
-randomize = 1;
+randomize = 0;
+
+space = 'MNI';
 
 opt.task = {'olfid' 'olfloc'};
 opt.grp_name = {'blnd', 'ctrl'};
@@ -21,28 +23,34 @@ opt.p = 0.05;
 opt.k = 0;
 
 % contrast name / directory name / ROI for inclusive mask
-opt.ctrsts = { ...
-    'resp-03 > 0', 'resp-03', 'ROI_hand_Z_.1_k_10.nii'; ...
-    'resp-12 > 0', 'resp-12', 'ROI_hand_Z_.1_k_10.nii'; ...
-    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0', 'all', 'ROI-AllVisual_space-MNI.nii'
+opt.ctrsts = {...
+    'resp-03 + resp-12 > 0', 'resp-03 + resp-12', 'ROI-hand_Z_.1_k_10_space-MNI.nii'; ...
+    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0', 'all (in visual ROIS)', 'ROI-AllVisual_space-MNI.nii'; ... 
+    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0', 'all (in olfactory ROIS)', 'ROI-olfactory_Z_.1_k_10_space-MNI.nii' 
     };
 
 %%
 contrast_ls = {
-    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0';
+    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0'
     'Euc-Left + Alm-Left + Euc-Right + Alm-Right < 0'
-    'Euc-Left > 0';
-    'Euc-Left < 0';
-    'Alm-Left > 0';
-    'Alm-Left < 0';
-    'Euc-Right > 0';
-    'Euc-Right < 0';
-    'Alm-Right > 0';
-    'Alm-Right < 0';
-    'resp-03 > 0';
-    'resp-03 < 0';
-    'resp-12 > 0';
-    'resp-12 < 0'};
+    'Alm-Left + Alm-Right > 0'
+    'Alm-Left + Alm-Right < 0'
+    'Euc-Left + Euc-Right > 0'
+    'Euc-Left + Euc-Right < 0'
+    'Euc-Right + Alm-Right > 0'
+    'Euc-Right + Alm-Right < 0'
+    'Euc-Left + Alm-Left > 0'
+    'Euc-Left + Alm-Left < 0'
+    'Euc-Left > 0'
+    'Euc-Left < 0'
+    'Alm-Left > 0'
+    'Alm-Left < 0'
+    'Euc-Right > 0'
+    'Euc-Right < 0'
+    'Alm-Right > 0'
+    'Alm-Right < 0'
+    'resp-03 + resp-12 > 0'
+    'resp-03 + resp-12 < 0'};
 
 %% setting up
 % setting up directories
@@ -111,17 +119,19 @@ for iGLM = 1:size(all_GLMs)
         end
 
     end
-
-    for i_ttest = size(opt.ctrsts, 1)
-
-        ctrsts = opt.ctrsts(i_ttest, 1);
-
-        disp(ctrsts);
-
-        subdir_name = opt.ctrsts{i_ttest, 2};
-
-        mask = fullfile(code_dir, 'inputs', opt.ctrsts{i_ttest, 3});
-
+    
+    
+    
+    for i_ttest = 1:size(opt.ctrsts,1)
+        
+        ctrsts = opt.ctrsts(i_ttest,1);
+        
+        disp(ctrsts)
+        
+        subdir_name = opt.ctrsts{i_ttest,2};
+        
+        mask = fullfile(code_dir, 'inputs', opt.ctrsts{i_ttest,3})
+        
         %% ttest
         for iGroup = 1:numel(opt.grp_name)
 
@@ -138,15 +148,15 @@ for iGLM = 1:size(all_GLMs)
             disp(scans');
 
             matlabbatch = [];
-            %             matlabbatch = set_ttest_batch(matlabbatch, ...
-            %                 fullfile(grp_lvl_dir, grp_name), ...
-            %                 scans, ...
-            %                 {subdir_name}, ...
-            %                 {'>'}, ...
-            %                 mask, opt);
-
-            %             spm_jobman('run', matlabbatch)
-
+            matlabbatch = set_ttest_batch(matlabbatch, ...
+                fullfile(grp_lvl_dir, grp_name), ...
+                scans, ...
+                {subdir_name}, ...
+                {'>'}, ...
+                mask, opt);
+            
+%             spm_jobman('run', matlabbatch)
+            
             % rename NIDM output file
             %             NIDM_file = spm_select('FPList', ...
             %                 matlabbatch{1}.spm.stats.factorial_design.dir{1}, ...

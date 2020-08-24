@@ -9,9 +9,12 @@
 %  - get_cfg_GLMS_to_run.m: sets the GLM that will actually be run
 
 %% parameters
-clc;
+clear
+clc
 
 debug_mode = 0;
+
+space = 'MNI';
 
 if ~exist('machine_id', 'var')
     machine_id = 2; % 0: container ;  1: Remi ;  2: Beast
@@ -21,7 +24,6 @@ end
 if ~exist('space', 'var')
     space = 'MNI';
 end
-space;
 
 if ~exist('estimate_GLM', 'var')
     estimate_GLM = 1;
@@ -45,16 +47,6 @@ end
 opt.task = {'olfid' 'olfloc'};
 opt.nb_vol = 295;
 
-%%
-opt.contrast_ls = {
-    {'Euc-Left', 'Alm-Left', 'Euc-Right', 'Alm-Right'}; ...
-    {'Euc-Left'}; ...
-    {'Alm-Left'}; ...
-    {'Euc-Right'}; ...
-    {'Alm-Right'}; ...
-    {'resp-03'}; ...
-    {'resp-12'}};
-
 %% setting up
 % setting up directories
 [data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
@@ -76,7 +68,7 @@ if debug_mode
     nb_subjects = 1;
 end
 
-% get metadate from BIDS
+% get metadata from BIDS
 metadata = spm_BIDS(bids, 'metadata', ...
     'type', 'bold');
 opt.nb_slices = numel(unique(metadata{1}.SliceTiming));
@@ -95,16 +87,22 @@ opt.suffix = filter;
 
 %% for each subject
 
-for isubj = 1:nb_subjects
-
-    fprintf('running %s\n', folder_subj{isubj});
-
-    subj_dir = fullfile(output_dir, [folder_subj{isubj}], 'func');
-
+for isubj = 1 %3:nb_subjects
+    
+    fprintf('running %s\n', folder_subj{isubj})
+    
+    subj_dir = fullfile(output_dir, [folder_subj{isubj}], 'func')
+    
+    
     %% get explicit mask
-    fprintf(' getting mask\n');
-    explicit_mask = create_mask(subj_dir, folder_subj{isubj});
-
+    fprintf(' getting mask\n')
+    
+    if strcmp(space, 'T1w')
+        explicit_mask = create_mask(subj_dir, folder_subj{isubj}, space);
+    else
+        explicit_mask = fullfile(spm('dir'), 'tpm', 'mask_ICV.nii'); 
+    end
+    
     %%  get data onsets and confounds for each run
     fprintf(' getting data, onsets and confounds\n');
 
@@ -226,14 +224,6 @@ for isubj = 1:nb_subjects
                     analysis_dir, ...
                     opt.TR, 1 / cfg.HPF, 12, 24);
             end
-
-            %  estimate contrasts
-            matlabbatch = [];
-            matlabbatch = set_t_contrasts(analysis_dir, opt.contrast_ls);
-
-            spm_jobman('run', matlabbatch);
-
-            save(fullfile(analysis_dir, 'jobs', 'contrast_matlabbatch.mat'), 'matlabbatch');
         end
 
         toc;

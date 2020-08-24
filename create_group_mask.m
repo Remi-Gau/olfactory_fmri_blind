@@ -5,7 +5,7 @@ clear;
 clc;
 
 %% set up
-machine_id = 1; % 0: container ;  1: Remi ;  2: Beast
+machine_id = 2;% 0: container ;  1: Remi ;  2: Beast
 [data_dir, code_dir, output_dir] = set_dir(machine_id);
 
 target_file = fullfile(code_dir, 'output', 'images', 'group_mask.nii');

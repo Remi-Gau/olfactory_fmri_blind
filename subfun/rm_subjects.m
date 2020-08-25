@@ -11,13 +11,13 @@ function [ppp, grp_id, folder_subj] = rm_subjects(ppp, grp_id, folder_subj, rm_d
         folder_subj = [];
     end
 
-if rm_do
-    % Remove outliers in terms of fMRI or behavior
-    subj_to_exclude = {
-     'sub-blnd04', 'sub-ctrl04', 'sub-ctrl07'}'; %sub-056 seems to have buttons switched.
-else
-    subj_to_exclude = '';
-end
+    if rm_do
+        % Remove outliers in terms of fMRI or behavior
+        subj_to_exclude = {
+         'sub-blnd04', 'sub-ctrl04', 'sub-ctrl07'}'; % sub-056 seems to have buttons switched.
+    else
+        subj_to_exclude = '';
+    end
 
     % Remove excluded subjects
     if ~isempty(ppp)

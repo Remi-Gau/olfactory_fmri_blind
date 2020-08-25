@@ -1,5 +1,5 @@
 function explicit_mask = create_mask(subj_dir, folder_subj, space)
-% creates an inclusive mask based on the fmriprep brain mask for all the tasks of this subject
+    % creates an inclusive mask based on the fmriprep brain mask for all the tasks of this subject
 
     if strcmp(space, 'T1w')
         space_suffix = 'T1w';
@@ -10,8 +10,8 @@ function explicit_mask = create_mask(subj_dir, folder_subj, space)
     explicit_mask = spm_select('FPList', ...
         subj_dir, ...
         ['^' folder_subj ...
-        '.*task-olf.*space-' space_suffix '_desc-brain_mask.nii$'] );
-    
+        '.*task-olf.*space-' space_suffix '_desc-brain_mask.nii$']);
+
     hdr = spm_vol(explicit_mask);
     mask = any(spm_read_vols(hdr), 4);
 

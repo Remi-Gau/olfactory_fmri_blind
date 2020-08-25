@@ -9,8 +9,8 @@
 %  - get_cfg_GLMS_to_run.m: sets the GLM that will actually be run
 
 %% parameters
-clear
-clc
+clear;
+clc;
 
 debug_mode = 0;
 
@@ -87,22 +87,21 @@ opt.suffix = filter;
 
 %% for each subject
 
-for isubj = 1 %3:nb_subjects
-    
-    fprintf('running %s\n', folder_subj{isubj})
-    
-    subj_dir = fullfile(output_dir, [folder_subj{isubj}], 'func')
-    
-    
+for isubj = 1 % 3:nb_subjects
+
+    fprintf('running %s\n', folder_subj{isubj});
+
+    subj_dir = fullfile(output_dir, [folder_subj{isubj}], 'func');
+
     %% get explicit mask
-    fprintf(' getting mask\n')
-    
+    fprintf(' getting mask\n');
+
     if strcmp(space, 'T1w')
         explicit_mask = create_mask(subj_dir, folder_subj{isubj}, space);
     else
-        explicit_mask = fullfile(spm('dir'), 'tpm', 'mask_ICV.nii'); 
+        explicit_mask = fullfile(spm('dir'), 'tpm', 'mask_ICV.nii');
     end
-    
+
     %%  get data onsets and confounds for each run
     fprintf(' getting data, onsets and confounds\n');
 

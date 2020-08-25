@@ -1,3 +1,11 @@
+[![](https://img.shields.io/badge/Octave-CI-blue?logo=Octave&logoColor=white)](https://github.com/Remi-Gau/chem_sens_blind/actions)
+![](https://github.com/Remi-Gau/chem_sens_blind/workflows/CI/badge.svg) 
+
+[![codecov](https://codecov.io/gh/Remi-Gau/chem_sens_blind/branch/master/graph/badge.svg)](https://codecov.io/gh/Remi-Gau/chem_sens_blind)
+
+[![Build Status](https://travis-ci.com/Remi-Gau/chem_sens_blind.svg?branch=master)](https://travis-ci.com/Remi-Gau/chem_sens_blind)
+
+
 <!-- vscode-markdown-toc -->
 * 1. [Dependencies](#Dependencies)
 	* 1.1. [Other Dependencies](#OtherDependencies)
@@ -25,7 +33,6 @@
 	autoSave=true
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc --># code base for the analysis of olfaction fMRI experiment in blind and sighted control
-
 
 
 ##  1. <a name='Dependencies'></a>Dependencies

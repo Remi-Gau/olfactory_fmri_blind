@@ -23,10 +23,10 @@ opt.p = 0.05;
 opt.k = 0;
 
 % contrast name / directory name / ROI for inclusive mask
-opt.ctrsts = {...
+opt.ctrsts = { ...
     'resp-03 + resp-12 > 0', 'resp-03 + resp-12', 'ROI-hand_Z_.1_k_10_space-MNI.nii'; ...
-    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0', 'all (in visual ROIS)', 'ROI-AllVisual_space-MNI.nii'; ... 
-    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0', 'all (in olfactory ROIS)', 'ROI-olfactory_Z_.1_k_10_space-MNI.nii' 
+    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0', 'all (in visual ROIS)', 'ROI-AllVisual_space-MNI.nii'; ...
+    'Euc-Left + Alm-Left + Euc-Right + Alm-Right > 0', 'all (in olfactory ROIS)', 'ROI-olfactory_Z_.1_k_10_space-MNI.nii'
     };
 
 %%
@@ -119,19 +119,17 @@ for iGLM = 1:size(all_GLMs)
         end
 
     end
-    
-    
-    
-    for i_ttest = 1:size(opt.ctrsts,1)
-        
-        ctrsts = opt.ctrsts(i_ttest,1);
-        
-        disp(ctrsts)
-        
-        subdir_name = opt.ctrsts{i_ttest,2};
-        
-        mask = fullfile(code_dir, 'inputs', opt.ctrsts{i_ttest,3})
-        
+
+    for i_ttest = 1:size(opt.ctrsts, 1)
+
+        ctrsts = opt.ctrsts(i_ttest, 1);
+
+        disp(ctrsts);
+
+        subdir_name = opt.ctrsts{i_ttest, 2};
+
+        mask = fullfile(code_dir, 'inputs', opt.ctrsts{i_ttest, 3});
+
         %% ttest
         for iGroup = 1:numel(opt.grp_name)
 
@@ -154,9 +152,9 @@ for iGLM = 1:size(all_GLMs)
                 {subdir_name}, ...
                 {'>'}, ...
                 mask, opt);
-            
-%             spm_jobman('run', matlabbatch)
-            
+
+            %             spm_jobman('run', matlabbatch)
+
             % rename NIDM output file
             %             NIDM_file = spm_select('FPList', ...
             %                 matlabbatch{1}.spm.stats.factorial_design.dir{1}, ...

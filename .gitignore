@@ -8,3 +8,5 @@
 *.nii.gz
 *.dset
 .DS_Store
+
+check_my_code_report.txt

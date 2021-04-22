@@ -35,7 +35,7 @@
 <!-- /vscode-markdown-toc --># code base for the analysis of olfaction fMRI experiment in blind and sighted control
 
 
-##  1. <a name='Dependencies'></a>Dependencies
+## Dependencies
 
 | Dependencies                                                                                                              | Used version |
 |---------------------------------------------------------------------------------------------------------------------------|--------------|
@@ -49,13 +49,13 @@
 
 This has not been tried on Octave. Sorry open-science friends... :see_no_evil:
 
-###  1.1. <a name='OtherDependencies'></a>Other Dependencies
+### Other Dependencies
 
 ... are included in the `subfun/matlab_exchange` to make your life easier.
 
 But might be worth using this in the future: https://github.com/mobeets/mpm
 
-##  2. <a name='Dockerimages'></a>Docker images
+## Docker images
 
 | Image                                                  | Used version                |
 |--------------------------------------------------------|-----------------------------|
@@ -65,7 +65,7 @@ But might be worth using this in the future: https://github.com/mobeets/mpm
 
 
 
-##  3. <a name='fMRIQCandpreprocessing'></a>fMRI QC and preprocessing
+## fMRI QC and preprocessing
 
 
 To make docker run, make sure you the docker daemon is running (may require admin rights)
@@ -73,7 +73,7 @@ To make docker run, make sure you the docker daemon is running (may require admi
 sudo dockerd
 ```
 
-###  3.1. <a name='MRIQC'></a>MRIQC
+### MRIQC
 
 ```bash
 data_dir=~/mnt/data/christine/olf_blind/ # define where the data is
@@ -81,7 +81,7 @@ data_dir=~/mnt/data/christine/olf_blind/ # define where the data is
 docker run -it --rm -v $data_dir/raw:/data:ro -v $data_dir:/out poldracklab/mriqc:0.15.0 /data /out/derivatives/mriqc participant --verbose-reports --mem_gb 50 --n_procs 16 -m bold
 ```
 
-###  3.2. <a name='fmriprep'></a>fmriprep
+### fmriprep
 
 Preprocessing done with [fMRIprep](https://fmriprep.readthedocs.io/en/stable/) and outputs data in both native and MNI space.  
 
@@ -91,22 +91,22 @@ data_dir=~/mnt/data/christine/olf_blind/ # define where the data is
 docker run -it --rm -v $data_dir:/data:ro -v $data_dir:/out poldracklab/fmriprep:1.4.0 /data/raw /out/derivatives/ participant --participant_label ctrl02 ctrl06 ctrl07 ctrl08 ctrl09 --fs-license-file /data/freesurfer/license.txt --output-spaces T1w:res-native MNI152NLin2009cAsym:res-native --nthreads 10 --use-aroma
 ```
 
-####  3.2.1. <a name='Problematicanatorfuncdata'></a>Problematic anat or func data
+#### Problematic anat or func data
 
 The `quality_control_fmriprep_FD.m` script uses the `confounds.tsv` report from fmriprep to estimate the number of timepoints in framewise displacement timeseries with values superior to a threshold.
 
 This script also allows to estimate how many points are lost through scrubbing depending on the framewise displacement threshold and the number of points to scrub after an outlier
 
 
-##  4. <a name='Behavioralanalysis'></a>Behavioral analysis
+## Behavioral analysis
 
-###  4.1. <a name='Qualitycontrol'></a>Quality control
+### Quality control
 
 `quality_control_beh` plots stimulation epochs, responses and respirations.
 
 `quality_control_physio` plots the respiratory data from each subject / run and shows when the acquisition was started.
 
-###  4.2. <a name='Results'></a>Results
+### Results
 
 `beh_avg_timeseries` plots the average across subjects of:
 -   stimulus onsets / offsets (to make sure that there is not too much variation between subjects)
@@ -118,7 +118,7 @@ This script also allows to estimate how many points are lost through scrubbing d
 `beh_PSTH` plots data with PSTH for each stimulus (averaged across runs) and also plots the mean +/- SEM (and distribution) of the number of responses.
 
 
-##  5. <a name='fMRIanalysis'></a>fMRI analysis
+## fMRI analysis
 
 For those you might need to edit the `set_dir` function to specify where the code is, the folder containing the BIDS raw data and the target directory where the SPM analysis should go.
 
@@ -139,7 +139,7 @@ You can also decide all the GLMs you want to try in the `get_cfg_GLMS_to_run` fi
 
 
 
-###  5.1. <a name='ConvertingROIstonativespaceusingANTs'></a>Converting ROIs to native space using ANTs
+### Converting ROIs to native space using ANTs
 
 If you want to convert the ROIS created above into their native space equivalent we used ANTs and the transformation file created by fMRIprep to do that.
 

@@ -1,0 +1,7 @@
+matplotlib
+joblib
+numpy
+scipy==1.3.3
+pandas
+pyyawt
+rsHRF

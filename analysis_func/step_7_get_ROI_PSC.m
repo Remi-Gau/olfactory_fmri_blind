@@ -3,9 +3,10 @@
 % a percent signal change for each ROI and subject
 
 clc;
+clear;
 
 if ~exist('machine_id', 'var')
-    machine_id = 2; % 0: container ;  1: Remi ;  2: Beast
+    machine_id = 1; % 0: container ;  1: Remi ;  2: Beast
 end
 
 space = 'MNI';

@@ -3,7 +3,7 @@ function opt = blind_olf_get_option()
   % returns a structure that contains the options chosen by the user to run
   % slice timing correction, pre-processing, FFX, RFX.
   %
-  % (C) Copyright 2020 CPP_SPM developers
+  % (C) Copyright 2021 Remi Gau
 
   if nargin < 1
     opt = [];

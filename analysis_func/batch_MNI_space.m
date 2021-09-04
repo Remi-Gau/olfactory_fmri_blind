@@ -1,3 +1,6 @@
+%
+% (C) Copyright 2021 Remi Gau
+
 clear;
 clc;
 

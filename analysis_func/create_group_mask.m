@@ -1,5 +1,7 @@
 % create a group mask that only inlcudes the voxels that are present in the
 % masks of at least 80% the subjects' GLMs masks
+%
+% (C) Copyright 2021 Remi Gau
 
 clear;
 clc;
@@ -11,6 +13,8 @@ machine_id = 2; % 0: container ;  1: Remi ;  2: Beast
 target_file = fullfile(code_dir, 'output', 'images', 'group_mask.nii');
 
 %%
+% (C) Copyright 2021 Remi Gau
+
 mkdir(fullfile(code_dir, 'output', 'images'));
 
 % get all the GLM masks

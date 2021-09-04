@@ -1,0 +1,85 @@
+{
+    "STC_referenceSlice": [],
+    "anatReference": {
+        "type": "T1w",
+        "session": ""
+    },
+    "contrastList": [],
+    "dir": {
+        "derivatives": "/home/remi/gin/olfaction_blind/derivatives",
+        "input": "/home/remi/gin/olfaction_blind/derivatives/fmriprep",
+        "output": "",
+        "preproc": "/home/remi/gin/olfaction_blind/derivatives/cpp_spm-rshrf",
+        "raw": "",
+        "stats": "",
+        "jobs": "/home/remi/gin/olfaction_blind/derivatives/cpp_spm-rshrf/jobs/rest"
+    },
+    "funcVoxelDims": [],
+    "glm": {
+        "QA": {
+            "do": true
+        },
+        "roibased": {
+            "do": false
+        }
+    },
+    "groups": [""],
+    "model": {
+        "file": "",
+        "hrfDerivatives": [0,0]
+    },
+    "parallelize": {
+        "do": false,
+        "nbWorkers": 3,
+        "killOnExit": false
+    },
+    "pipeline": {
+        "name": "cpp_spm-rshrf",
+        "type": "preproc"
+    },
+    "query": {
+        "modality": [
+            "anat",
+            "func",
+            "dwi"
+        ]
+    },
+    "realign": {
+        "useUnwarp": true
+    },
+    "result": {
+        "Steps": {
+            "Level": "",
+            "Contrasts": {
+                "Name": "",
+                "useMask": false,
+                "MC": "FWE",
+                "p": 0.05,
+                "k": 0
+            },
+            "Output": {
+                "png": false,
+                "csv": false,
+                "thresh_spm": false,
+                "binary": false,
+                "montage": {
+                    "do": false,
+                    "slices": [],
+                    "orientation": "axial",
+                    "background": "/home/remi/matlab/SPM/spm12/canonical/avg152T1.nii,1"
+                },
+                "NIDM_results": false
+            }
+        }
+    },
+    "skullstrip": {
+        "threshold": 0.75,
+        "mean": false
+    },
+    "sliceOrder": [],
+    "space": "MNI152NLin2009cAsym",
+    "subjects": [[]],
+    "taskName": "rest",
+    "useFieldmaps": true,
+    "zeropad": 2
+}

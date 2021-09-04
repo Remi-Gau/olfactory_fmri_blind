@@ -1,6 +1,4 @@
-% (C) Copyright 2021 CPP_SPM developers
-
-% blind olfaction
+% (C) Copyright 2021 Remi Gau
 
 clear;
 clc;
@@ -8,7 +6,7 @@ clc;
 % Smoothing to apply
 FWHM = 6;
 
-run ../../initCppSpm.m;
+run(fullfile(pwd, '..', 'initEnv.m'));
 
 %% Set options
 opt = blind_olf_get_option();

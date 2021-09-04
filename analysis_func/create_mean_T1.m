@@ -1,4 +1,5 @@
 % script to create mean structural (normalized smoothed and masked)
+% (C) Copyright 2021 Remi Gau
 
 % TO DO:
 % make one for each group???
@@ -43,7 +44,7 @@ spm_write_vol(hdr, vol);
 flag.which = 1;
 flag.mean = false;
 flag.prefix = '';
-spm_reslice({mask_file;target_file}, flag);
+spm_reslice({mask_file; target_file}, flag);
 
 % mask mean image
 hdr = spm_vol(target_file);

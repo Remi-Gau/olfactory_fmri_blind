@@ -1,46 +1,47 @@
 function [prestim, stim, poststim, group, tasks] = get_and_epoch_data(tgt_dir, opt)
+  %
+  % (C) Copyright 2021 Remi Gau
+  %% get data
 
-    %% get data
+  % loads bids data
+  bids =  spm_BIDS(tgt_dir);
 
-    % loads bids data
-    bids =  spm_BIDS(tgt_dir);
+  tasks = spm_BIDS(bids, 'tasks');
+  if numel(tasks) == 3
+    tasks(3) = [];
+  end
 
-    tasks = spm_BIDS(bids, 'tasks');
-    if numel(tasks) == 3
-        tasks(3) = [];
-    end
+  group(1).name = 'blnd';
+  group(2).name = 'ctrl';
 
-    group(1).name = 'blnd';
-    group(2).name = 'ctrl';
+  for iTask = 1:numel(tasks)
 
-    for iTask = 1:numel(tasks)
+    for iGroup = 1:numel(group)
 
-        for iGroup = 1:numel(group)
+      subjects = spm_BIDS(bids, 'subjects', ...
+                          'task', tasks{iTask});
 
-            subjects = spm_BIDS(bids, 'subjects', ...
-                'task', tasks{iTask});
+      idx = strfind(subjects, {group(iGroup).name});
+      idx = find(~cellfun('isempty', idx)); %#ok<STRCL1>
 
-            idx = strfind(subjects, {group(iGroup).name});
-            idx = find(~cellfun('isempty', idx)); %#ok<STRCL1>
+      subjects(idx);
 
-            subjects(idx);
+      group(iGroup).subjects = subjects(idx);
 
-            group(iGroup).subjects = subjects(idx);
+      all_stim = average_beh(bids, tasks{iTask}, subjects(idx));
 
-            all_stim = average_beh(bids, tasks{iTask}, subjects(idx));
-
-            for iTrialType = 1:size(all_stim, 1)
-                for iRun = 1:2
-                    all_time_courses{iTrialType, iRun, iGroup, iTask} = ...
-                        all_stim{iTrialType, iRun}; %#ok<*SAGROW>
-                end
-            end
-
+      for iTrialType = 1:size(all_stim, 1)
+        for iRun = 1:2
+          all_time_courses{iTrialType, iRun, iGroup, iTask} = ...
+              all_stim{iTrialType, iRun}; %#ok<*SAGROW>
         end
+      end
+
     end
+  end
 
-    %% epoch the data
+  %% epoch the data
 
-    [prestim, stim, poststim] = epoch_data(tasks, group, all_time_courses, opt);
+  [prestim, stim, poststim] = epoch_data(tasks, group, all_time_courses, opt);
 
 end

@@ -1,5 +1,8 @@
+% (C) Copyright 2021 Remi Gau
+
 global defaults
 defaults.stats.maxmem = 2^28;
+%
 
 %
 % function spm_defaults

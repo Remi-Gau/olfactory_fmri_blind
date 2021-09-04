@@ -1,7 +1,6 @@
-matplotlib
-joblib
-numpy
-scipy==1.3.3
-pandas
-pyyawt
-rsHRF
+Sphinx
+sphinxcontrib-matlabdomain
+sphinxcontrib-napoleon
+sphinx_rtd_theme
+miss_hit==0.9.22
+pre-commit

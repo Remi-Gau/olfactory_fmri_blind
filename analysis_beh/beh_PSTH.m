@@ -12,7 +12,7 @@ clear;
 clc;
 
 if ~exist('machine_id', 'var')
-    machine_id = 1; % 0: container ;  1: Remi ;  2: Beast
+  machine_id = 1; % 0: container ;  1: Remi ;  2: Beast
 end
 % setting up directories
 [data_dir, code_dir] = set_dir(machine_id);
@@ -72,112 +72,112 @@ stim_offset = (pre_stim + stim_dur) / opt.bin_size;
 
 for iGroup = 1:2
 
-    if iGroup == 1
-        Color = blnd_color / 255;
-    else
-        Color = sighted_color / 255;
+  if iGroup == 1
+    Color = blnd_color / 255;
+  else
+    Color = sighted_color / 255;
+  end
+
+  for iTask = 1:2
+
+    %% get data to plot
+    for iResp = 1:2
+      for iTrialtype = 1:4
+
+        data = cat(2, ...
+                   prestim_epoch{iResp, iGroup, iTask}(:, :, iTrialtype), ...
+                   stim_epoch{iResp, iGroup, iTask}(:, :, iTrialtype), ...
+                   poststim_epoch{iResp, iGroup, iTask}(:, :, iTrialtype));
+
+        epoched_data{iResp, iTrialtype} = data;
+
+      end
     end
 
-    for iTask = 1:2
+    %% Average across trial depending on task
 
-        %% get data to plot
-        for iResp = 1:2
-            for iTrialtype = 1:4
+    switch tasks{iTask}
+      case 'olfid'
 
-                data = cat(2, ...
-                    prestim_epoch{iResp, iGroup, iTask}(:, :, iTrialtype), ...
-                    stim_epoch{iResp, iGroup, iTask}(:, :, iTrialtype), ...
-                    poststim_epoch{iResp, iGroup, iTask}(:, :, iTrialtype));
-
-                epoched_data{iResp, iTrialtype} = data;
-
-            end
-        end
-
-        %% Average across trial depending on task
-
-        switch tasks{iTask}
-            case 'olfid'
-
-                stim_legend;
-
-        end
-
-        %% bin and smooth data
-        opt.nb_subj = size(data, 2);
-        nb_bins = round(length(data) / opt.bin_size);
-        for iResp = 1:2
-            for iTrialtype = 1:4
-
-                [mean_to_plot{iResp, iTrialtype}, ...
-                    sem_to_plot{iResp, iTrialtype}, ...
-                    all_subjs{iResp, iTrialtype}] = ...
-                    process_timeSeries(epoched_data{iResp, iTrialtype}, nb_bins, opt);
-
-            end
-        end
-
-        %% plot
-
-        x_tick = round(linspace(0, nb_bins, 10));
-        x_label = round(linspace(0, nb_bins * bin_duration, 10)) - ...
-            pre_stim / samp_freq;
-
-        figure('name', ['PSTH - ' tasks{iTask}], ...
-            'position', [50 50 1300 700], ...
-            'visible', opt.visible);
-
-        iSubplot = 1;
-
-        for iResp = 1:size(mean_to_plot, 1)
-            for iTrialtype = 1:size(mean_to_plot, 2)
-
-                data_to_plot = mean_to_plot{iResp, iTrialtype};
-                sem = sem_to_plot{iResp, iTrialtype};
-
-                subplot(size(mean_to_plot, 1), size(mean_to_plot, 2), iSubplot);
-                hold on;
-
-                draw_stim(stim_onset, stim_offset, opt.max_y_axis(1), opt);
-
-                do_plot(data_to_plot, sem, all_subjs{iResp, iTrialtype}, Color, 1, opt);
-
-                plot([0 numel(data_to_plot)], [0 0], 'k');
-
-                label_your_axes(fontsize, x_tick, x_label, opt);
-
-                axis tight;
-                ax = axis;
-                axis([ax(1) ax(2) ax(3) opt.max_y_axis(1)]);
-
-                iSubplot = iSubplot + 1;
-            end
-
-        end
-
-        subplot(2, 4, 1);
-        t = ylabel('Resp 1  - [A U]');
-        set(t, 'fontsize', fontsize);
-
-        subplot(2, 4, 5);
-        t = ylabel('Resp 2 - [A U]');
-        set(t, 'fontsize', fontsize);
-
-        for iTrialtype = 1:4
-            subplot(2, 4, iTrialtype);
-            title(stim_legend{iTrialtype});
-        end
-
-        mtit(sprintf('Group: %s ; Task: %s ; Bin size: %i ; Mov win size: %i', ...
-            group(iGroup).name, tasks{iTask}, opt.bin_size, opt.moving_win_size), ....
-            'fontsize', 14, 'xoff', 0, 'yoff', 0.05);
-
-        print(gcf, fullfile(out_dir, ...
-            ['PSTH_' ...
-            group(iGroup).name ...
-            '_task-' tasks{iTask} ...
-            '_rmbase-' num2str(opt.rm_baseline) ...
-            '.jpg']), '-djpeg');
+        stim_legend;
 
     end
+
+    %% bin and smooth data
+    opt.nb_subj = size(data, 2);
+    nb_bins = round(length(data) / opt.bin_size);
+    for iResp = 1:2
+      for iTrialtype = 1:4
+
+        [mean_to_plot{iResp, iTrialtype}, ...
+            sem_to_plot{iResp, iTrialtype}, ...
+            all_subjs{iResp, iTrialtype}] = ...
+            process_timeSeries(epoched_data{iResp, iTrialtype}, nb_bins, opt);
+
+      end
+    end
+
+    %% plot
+
+    x_tick = round(linspace(0, nb_bins, 10));
+    x_label = round(linspace(0, nb_bins * bin_duration, 10)) - ...
+        pre_stim / samp_freq;
+
+    figure('name', ['PSTH - ' tasks{iTask}], ...
+           'position', [50 50 1300 700], ...
+           'visible', opt.visible);
+
+    iSubplot = 1;
+
+    for iResp = 1:size(mean_to_plot, 1)
+      for iTrialtype = 1:size(mean_to_plot, 2)
+
+        data_to_plot = mean_to_plot{iResp, iTrialtype};
+        sem = sem_to_plot{iResp, iTrialtype};
+
+        subplot(size(mean_to_plot, 1), size(mean_to_plot, 2), iSubplot);
+        hold on;
+
+        draw_stim(stim_onset, stim_offset, opt.max_y_axis(1), opt);
+
+        do_plot(data_to_plot, sem, all_subjs{iResp, iTrialtype}, Color, 1, opt);
+
+        plot([0 numel(data_to_plot)], [0 0], 'k');
+
+        label_your_axes(fontsize, x_tick, x_label, opt);
+
+        axis tight;
+        ax = axis;
+        axis([ax(1) ax(2) ax(3) opt.max_y_axis(1)]);
+
+        iSubplot = iSubplot + 1;
+      end
+
+    end
+
+    subplot(2, 4, 1);
+    t = ylabel('Resp 1  - [A U]');
+    set(t, 'fontsize', fontsize);
+
+    subplot(2, 4, 5);
+    t = ylabel('Resp 2 - [A U]');
+    set(t, 'fontsize', fontsize);
+
+    for iTrialtype = 1:4
+      subplot(2, 4, iTrialtype);
+      title(stim_legend{iTrialtype});
+    end
+
+    mtit(sprintf('Group: %s ; Task: %s ; Bin size: %i ; Mov win size: %i', ...
+                 group(iGroup).name, tasks{iTask}, opt.bin_size, opt.moving_win_size), ....
+         'fontsize', 14, 'xoff', 0, 'yoff', 0.05);
+
+    print(gcf, fullfile(out_dir, ...
+                        ['PSTH_' ...
+                     group(iGroup).name ...
+                     '_task-' tasks{iTask} ...
+                     '_rmbase-' num2str(opt.rm_baseline) ...
+                     '.jpg']), '-djpeg');
+
+  end
 end

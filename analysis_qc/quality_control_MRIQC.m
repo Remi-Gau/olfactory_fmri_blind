@@ -94,22 +94,22 @@ field_names(end).unilateral = false;
 % check robust outliers for each MRIQC metric
 for i_field = 1:numel(field_names)
 
-    % get the values for each metric of interest
-    tmp = getfield(T1w, field_names(i_field).name);
+  % get the values for each metric of interest
+  tmp = getfield(T1w, field_names(i_field).name);
 
-    % flips it if higher values mean better
-    if field_names(i_field).flip
-        tmp = tmp * -1;
-    end
-    % determines if threshold is unilateral or bilateral
-    if field_names(i_field).unilateral
-        unilat = 2;
-    else
-        unilat = 1;
-    end
+  % flips it if higher values mean better
+  if field_names(i_field).flip
+    tmp = tmp * -1;
+  end
+  % determines if threshold is unilateral or bilateral
+  if field_names(i_field).unilateral
+    unilat = 2;
+  else
+    unilat = 1;
+  end
 
-    % identifies outliers.
-    [outliers_T1w(:, i_field)] = iqr_method(tmp, unilat); %#ok<SAGROW>
+  % identifies outliers.
+  [outliers_T1w(:, i_field)] = iqr_method(tmp, unilat); %#ok<SAGROW>
 end
 
 % print subjects' names that are outlier for at least 1 metric
@@ -185,18 +185,18 @@ field_names(end).unilateral = true;
 % check robust outliers for each MRIQC metric
 for i_field = 1:numel(field_names)
 
-    tmp = getfield(BOLD, field_names(i_field).name);
+  tmp = getfield(BOLD, field_names(i_field).name);
 
-    if field_names(i_field).flip
-        tmp = tmp * -1;
-    end
-    if field_names(i_field).unilateral
-        unilat = 2;
-    else
-        unilat = 1;
-    end
+  if field_names(i_field).flip
+    tmp = tmp * -1;
+  end
+  if field_names(i_field).unilateral
+    unilat = 2;
+  else
+    unilat = 1;
+  end
 
-    [outliers_BOLD(:, i_field)] = iqr_method(tmp, unilat);
+  [outliers_BOLD(:, i_field)] = iqr_method(tmp, unilat);
 end
 
 % print subjects' list that are outlier for at least 1 metric

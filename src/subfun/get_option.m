@@ -4,12 +4,12 @@ function opt = get_option(opt)
   % (C) Copyright 2021 Remi Gau
 
   % sampling frequency of the physio file for breathing
-  
+
   opt.dir.code = spm_file(fullfile(fileparts(mfilename('fullpath')), '..', '..'), 'cpath');
   opt.dir.data = spm_file(fullfile(opt.dir.code, '..', '..'), 'cpath');
   opt.dir.output_dir = fullfile(opt.dir.data, 'derivatives');
   opt.dir.fmriprep = fullfile(opt.dir.output_dir, 'derivatives', 'fmriprep');
-    
+
   opt.samp_freq = 25;
   opt.timecourse_dur = 280;
 

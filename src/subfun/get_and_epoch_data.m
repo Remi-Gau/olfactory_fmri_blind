@@ -18,7 +18,7 @@ function [prestim, stim, poststim, group, tasks] = get_and_epoch_data(tgt_dir, o
     for iGroup = 1:numel(group)
 
       subjects = bids.query(BIDS, 'subjects', ...
-                          'task', tasks{iTask});
+                            'task', tasks{iTask});
 
       idx = strfind(subjects, {group(iGroup).name});
       idx = find(~cellfun('isempty', idx)); %#ok<STRCL1>
@@ -40,7 +40,7 @@ function [prestim, stim, poststim, group, tasks] = get_and_epoch_data(tgt_dir, o
   end
 
   %% epoch the data
-    
+
   [prestim, stim, poststim] = epoch_data(tasks, group, all_time_courses, opt);
 
 end

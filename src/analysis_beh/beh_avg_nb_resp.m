@@ -1,6 +1,6 @@
 % Plots the average number of response during stimulus period
-% 
-% 
+%
+%
 % Some subjects have weird onsets for some stimuli so we replace them by
 % the average onset from the rest of the group
 %

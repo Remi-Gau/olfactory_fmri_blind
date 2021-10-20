@@ -1,11 +1,11 @@
 % Plots data with PSTH for each stimulus (averaged across runs)
-% 
+%
 %
 % Some subjects have weird onsets for some stimuli so we replace them by
 % the average onset from the rest of the group
-% 
+%
 % Assumes a fixed 16 seconds stimulation duration
-% 
+%
 %
 % (C) Copyright 2021 Remi Gau
 
@@ -37,7 +37,6 @@ opt.norm_resp = 1;
 
 out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
 spm_mkdir(out_dir);
-
 
 [prestim_epoch, stim_epoch, poststim_epoch, group, tasks] = get_and_epoch_data(opt.dir.data, opt);
 

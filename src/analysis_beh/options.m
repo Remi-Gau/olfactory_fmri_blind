@@ -1,6 +1,6 @@
 function opt = options()
-    %
-    % (C) Copyright 2021 Remi Gau
+  %
+  % (C) Copyright 2021 Remi Gau
 
   opt.baseline_dur = 20;
   opt.pre_stim = 16;

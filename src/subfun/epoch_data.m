@@ -1,6 +1,12 @@
 function [prestim_e, stim_e, poststim_e] = epoch_data(tasks, group, all_time_courses, opt)
   %
+  % avg_run: boolean to average across run
+  %
   % (C) Copyright 2021 Remi Gau
+  if nargin < 5 || isempty(avg_run)
+    avg_run = true;
+  end
+
   baseline_dur = opt.baseline_dur * opt.samp_freq;
   pre_stim = opt.pre_stim * opt.samp_freq;
   stim_dur = opt.stim_dur * opt.samp_freq;
@@ -100,10 +106,12 @@ function [prestim_e, stim_e, poststim_e] = epoch_data(tasks, group, all_time_cou
       end
 
       % average across runs
-      for iResp = 1:2
-        prestim_e{iResp, iGroup, iTask} = mean(poststim_e{iResp, iGroup, iTask}, 4);
-        stim_e{iResp, iGroup, iTask} = mean(stim_e{iResp, iGroup, iTask}, 4);
-        poststim_e{iResp, iGroup, iTask} = mean(poststim_e{iResp, iGroup, iTask}, 4);
+      if isfield(opt, 'avg_run') && opt.avg_run
+        for iResp = 1:2
+          prestim_e{iResp, iGroup, iTask} = mean(poststim_e{iResp, iGroup, iTask}, 4);
+          stim_e{iResp, iGroup, iTask} = mean(stim_e{iResp, iGroup, iTask}, 4);
+          poststim_e{iResp, iGroup, iTask} = mean(poststim_e{iResp, iGroup, iTask}, 4);
+        end
       end
     end
 

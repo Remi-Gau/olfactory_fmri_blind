@@ -37,10 +37,10 @@ end
 max_y_axis = [ ...
               0.105; ... % with no row normalization
               0.015] * 1.55; % with row normalization
-          
-          opt.plot = 'Group';
-          opt.max_y_axis = max_y_axis;
-          
+
+opt.plot = 'Group';
+opt.max_y_axis = max_y_axis;
+
 group(1).name = 'blnd';
 group(2).name = 'ctrl';
 
@@ -66,7 +66,7 @@ for iTask = 1:numel(tasks)
     opt.max_y_axis = [];
 
     subjects = bids.query(BIDS, 'subjects', ...
-                        'task', tasks{iTask});
+                          'task', tasks{iTask});
 
     idx = strfind(subjects, {group(iGroup).name});
     idx = find(~cellfun('isempty', idx)); %#ok<STRCL1>

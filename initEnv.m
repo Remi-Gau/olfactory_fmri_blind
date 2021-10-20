@@ -19,52 +19,63 @@ function initEnv()
   % 2 - Add libraries to the Octave/Matlab path
   %
 
-  octaveVersion = '4.0.3';
-  matlabVersion = '8.6.0';
+  global ENV_INITIALIZED
 
-  installlist = {'io', 'statistics', 'image'};
+  if isempty(ENV_INITIALIZED)
 
-  if isOctave
+    octaveVersion = '4.0.3';
+    matlabVersion = '8.6.0';
 
-    % Exit if min version is not satisfied
-    if ~compare_versions(OCTAVE_VERSION, octaveVersion, '>=')
-      error('Minimum required Octave version: %s', octaveVersion);
-    end
+    installlist = {'io', 'statistics', 'image'};
 
-    for ii = 1:length(installlist)
+    if isOctave
 
-      packageName = installlist{ii};
-
-      try
-        % Try loading Octave packages
-        disp(['loading ' packageName]);
-        pkg('load', packageName);
-
-      catch
-
-        tryInstallFromForge(packageName);
-
+      % Exit if min version is not satisfied
+      if ~compare_versions(OCTAVE_VERSION, octaveVersion, '>=')
+        error('Minimum required Octave version: %s', octaveVersion);
       end
+
+      for ii = 1:length(installlist)
+
+        packageName = installlist{ii};
+
+        try
+          % Try loading Octave packages
+          disp(['loading ' packageName]);
+          pkg('load', packageName);
+
+        catch
+
+          tryInstallFromForge(packageName);
+
+        end
+      end
+
+    else % MATLAB ----------------------------
+
+      if verLessThan('matlab', matlabVersion)
+        error('Sorry, minimum required version is R2015b. :(');
+      end
+
     end
 
-  else % MATLAB ----------------------------
+    disp('Correct matlab/octave verions and added to the path!');
 
-    if verLessThan('matlab', matlabVersion)
-      error('Sorry, minimum required version is R2015b. :(');
-    end
+    % If external dir is empty throw an exception
+    % and ask user to update submodules.
+    libDirectory = fullfile(fileparts(mfilename('fullpath')), 'lib');
+
+    run(fullfile(libDirectory, 'CPP_SPM', 'initCppSpm'));
+
+    addpath(genpath(fullfile(libDirectory, 'matlab_exchange')));
+    addpath(genpath(fullfile(fileparts(mfilename('fullpath')), 'src', 'subfun')));
+
+    ENV_INITIALIZED = true();
+
+  else
+    printToScreen('\n\nEnvironment already initialized\n\n');
 
   end
-
-  disp('Correct matlab/octave verions and added to the path!');
-
-  % If external dir is empty throw an exception
-  % and ask user to update submodules.
-  libDirectory = fullfile(fileparts(mfilename('fullpath')), 'lib');
-
-  run(fullfile(libDirectory, 'CPP_SPM', 'initCppSpm'));
-
-  addpath(genpath(fullfile(libDirectory, 'matlab_exchange')));
-  addpath(genpath(fullfile(fileparts(mfilename('fullpath')), 'src', 'subfun')));
 
 end
 

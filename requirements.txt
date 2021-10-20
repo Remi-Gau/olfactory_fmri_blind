@@ -5,4 +5,3 @@ sphinx_rtd_theme
 miss_hit==0.9.22
 pre-commit
 -r docs/requirements.txt
--r analysis_rshrf/requirements.txt

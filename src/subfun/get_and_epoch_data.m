@@ -1,12 +1,11 @@
 function [prestim, stim, poststim, group, tasks] = get_and_epoch_data(tgt_dir, opt)
   %
   % (C) Copyright 2021 Remi Gau
+
   %% get data
+  BIDS =  bids.layout(tgt_dir);
 
-  % loads bids data
-  bids =  spm_BIDS(tgt_dir);
-
-  tasks = spm_BIDS(bids, 'tasks');
+  tasks = bids.query(BIDS, 'tasks');
   if numel(tasks) == 3
     tasks(3) = [];
   end
@@ -18,7 +17,7 @@ function [prestim, stim, poststim, group, tasks] = get_and_epoch_data(tgt_dir, o
 
     for iGroup = 1:numel(group)
 
-      subjects = spm_BIDS(bids, 'subjects', ...
+      subjects = bids.query(BIDS, 'subjects', ...
                           'task', tasks{iTask});
 
       idx = strfind(subjects, {group(iGroup).name});
@@ -28,7 +27,7 @@ function [prestim, stim, poststim, group, tasks] = get_and_epoch_data(tgt_dir, o
 
       group(iGroup).subjects = subjects(idx);
 
-      all_stim = average_beh(bids, tasks{iTask}, subjects(idx));
+      all_stim = average_beh(BIDS, tasks{iTask}, subjects(idx));
 
       for iTrialType = 1:size(all_stim, 1)
         for iRun = 1:2
@@ -41,7 +40,7 @@ function [prestim, stim, poststim, group, tasks] = get_and_epoch_data(tgt_dir, o
   end
 
   %% epoch the data
-
+    
   [prestim, stim, poststim] = epoch_data(tasks, group, all_time_courses, opt);
 
 end

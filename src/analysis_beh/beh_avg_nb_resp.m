@@ -13,39 +13,21 @@ close all;
 clear;
 clc;
 
-if ~exist('machine_id', 'var')
-  machine_id = 1; % 0: container ;  1: Remi ;  2: Beast
-end
-% setting up directories
-[data_dir, code_dir] = set_dir(machine_id);
+run ../../initEnv.m;
+
+opt = options();
 
 % mention where the BIDS data set is (can get the behavioral from OSF)
-tgt_dir = fullfile(data_dir, 'raw');
+tgt_dir = fullfile(opt.dir.data, 'raw');
 
-out_dir = fullfile(pwd, 'output', 'figures', 'beh_avg');
-mkdir(out_dir);
-
-opt.baseline_dur = 20;
-opt.pre_stim = 16;
-opt.stim_dur = 16;
-opt.post_stim = 16;
-
-% offset time courses by the pre stimulus baseline level of response
-opt.rm_baseline = 0;
+out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
+spm_mkdir(out_dir);
 
 % some settings for the figures
 max_y_axis = 25;
-
-opt.visible = 'on';
-
 fontsize = 12;
 
-% just to prevent label_your_axes from trying to give a meaningful scale
-% opt.norm_resp = 1;
-
-opt = get_option(opt);
-
-[~, stim_epoch, ~, group, tasks] = get_and_epoch_data(tgt_dir, opt);
+[~, stim_epoch, ~, group, tasks] = get_and_epoch_data(opt.dir.data, opt);
 
 %% Plots the average number of response during stimulus period
 
@@ -146,8 +128,5 @@ mtit(sprintf('Mean number of responses during stim epoch '), ....
      'fontsize', 14, 'xoff', 0, 'yoff', 0.05);
 
 print(gcf, fullfile(out_dir, ...
-                    ['Avg_Resp_' ...
-                     group(iGroup).name ...
-                     '_task-' tasks{iTask} ...
-                     '_rmbase-' num2str(opt.rm_baseline) ...
-                     '.jpg']), '-djpeg');
+                    ['AvgResp_rmbase-' num2str(opt.rm_baseline) ...
+                     '_plot.jpg']), '-djpeg');

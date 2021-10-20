@@ -17,7 +17,6 @@ function trial_courses = get_trial_timecourse(event_file)
   trial_courses = zeros(numel(trial_type), timecourse_dur * samp_freq);
 
   % get events file
-  disp(event_file);
   x = spm_load(event_file{1});
 
   % we collect the stim / resp onsets and offsets

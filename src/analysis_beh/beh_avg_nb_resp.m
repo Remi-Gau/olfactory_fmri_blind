@@ -1,13 +1,12 @@
-% behavioral results
+% Plots the average number of response during stimulus period
+% 
+% 
+% Some subjects have weird onsets for some stimuli so we replace them by
+% the average onset from the rest of the group
+%
+% Assumes a fixed 16 seconds stimulation duration
 %
 % (C) Copyright 2021 Remi Gau
-
-% Plots the average number of response during stimulus period
-
-% some subjects have weird onsets for some stimuli so we replace them by
-% the average onset from the rest of the group
-
-% assumes a fixed 16 seconds stimulation duration
 
 close all;
 clear;
@@ -16,9 +15,6 @@ clc;
 run ../../initEnv.m;
 
 opt = options();
-
-% mention where the BIDS data set is (can get the behavioral from OSF)
-tgt_dir = fullfile(opt.dir.data, 'raw');
 
 out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
 spm_mkdir(out_dir);
@@ -128,5 +124,5 @@ mtit(sprintf('Mean number of responses during stim epoch '), ....
      'fontsize', 14, 'xoff', 0, 'yoff', 0.05);
 
 print(gcf, fullfile(out_dir, ...
-                    ['AvgResp_rmbase-' num2str(opt.rm_baseline) ...
+                    ['grp-AvgResp_rmbase-' num2str(opt.rm_baseline) ...
                      '_plot.jpg']), '-djpeg');

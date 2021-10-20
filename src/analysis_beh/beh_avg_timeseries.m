@@ -1,36 +1,25 @@
 % plots the average across subjects of:
+%
 % - stimulus onsets / offsets (to make sure that there is not too much
-% variation between subjects
+%    variation between subjects
 % - average across subject of the time course of each response type.
 % - this can be row normalized for each subject (by the sum of response for
-% that subject on that run - gives more weight to subjects with more SNR in their
-% response)
+%    that subject on that run - gives more weight to subjects with more SNR in their
+%    response)
 % - it is possible to bin the responses from their original 25 Hz sampling
-% frequency.
+%    frequency.
 % - responses can be passed through a moving with window size
 %
 % (C) Copyright 2021 Remi Gau
 
+close all;
 clear;
 clc;
 
-% if needed add spm to the path
-% spm_path = '/home/remi-gau/Documents/SPM/spm12';
-% addpath(spm_path)
+run ../../initEnv.m;
 
-if ~exist('machine_id', 'var')
-  machine_id = 1; % 0: container ;  1: Remi ;  2: Beast
-end
-% setting up directories
-[data_dir, code_dir] = set_dir(machine_id);
+opt = options();
 
-% mention where the BIDS data set is (can get the behavioral from OSF)
-tgt_dir = fullfile(data_dir, 'raw');
-
-% loads bids data
-bids =  spm_BIDS(tgt_dir);
-
-%% plotting
 opt.bin_size = 25; % number of data point to bin. e.g. 25: means 1 sec of responses are summed
 
 opt.plot_subj = 0; % plot subjects - usually not pretty
@@ -38,29 +27,30 @@ opt.plot_subj = 0; % plot subjects - usually not pretty
 opt.mov_mean_resp = 1; % use a moving window to average
 opt.moving_win_size = 20; % width of the moving window
 
+if ~opt.mov_mean_resp
+  opt.moving_win_size = 0;
+end
+
 % limit of y axis when plotting both groups
 max_y_axis = [ ...
               0.105; ... % with no row normalization
               0.015] * 1.55; % with row normalization
-
-% do the loading of the data and plot
-close all;
-
-out_dir = fullfile('output', 'figures', 'beh_avg');
-mkdir(out_dir);
-
-tasks = spm_BIDS(bids, 'tasks');
-if numel(tasks) == 3
-  tasks(3) = [];
-end
-
+          
+          opt.plot = 'Group';
+          opt.max_y_axis = max_y_axis;
+          
 group(1).name = 'blnd';
 group(2).name = 'ctrl';
 
-opt.visible = 'on';
+out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
+spm_mkdir(out_dir);
 
-if ~opt.mov_mean_resp
-  opt.moving_win_size = 0;
+% loads bids data
+BIDS =  bids.layout(opt.dir.data);
+
+tasks = bids.query(BIDS, 'tasks');
+if numel(tasks) == 3
+  tasks(3) = [];
 end
 
 for iTask = 1:numel(tasks)
@@ -73,7 +63,7 @@ for iTask = 1:numel(tasks)
     opt.plot = 'Run';
     opt.max_y_axis = [];
 
-    subjects = spm_BIDS(bids, 'subjects', ...
+    subjects = bids.query(BIDS, 'subjects', ...
                         'task', tasks{iTask});
 
     idx = strfind(subjects, {group(iGroup).name});
@@ -81,7 +71,7 @@ for iTask = 1:numel(tasks)
 
     subjects(idx);
 
-    [all_stim, task] = average_beh(bids, tasks{iTask}, subjects(idx));
+    [all_stim, task] = average_beh(BIDS, tasks{iTask}, subjects(idx));
 
     % average data across runs
     for iTrialType = 1:size(all_stim, 1)
@@ -106,7 +96,7 @@ for iTask = 1:numel(tasks)
       opt.norm_resp = iNorm;
 
       % plot the 2 runs separately
-      prefix = 'beh_grp-';
+      prefix = 'grp-';
 
       make_figure(all_stim, task, opt);
 
@@ -114,10 +104,10 @@ for iTask = 1:numel(tasks)
                    opt.group, tasks{iTask}, opt.norm_resp), ....
            'fontsize', 14, 'xoff', 0, 'yoff', 0.05);
 
-      print_fig(prefix, out_dir, group(iGroup).name, task, iNorm);
+      print_fig(prefix, out_dir, group(iGroup).name, task, iNorm, 'runSep');
 
       % plot the run averages
-      prefix = 'beh_runavg_grp-';
+      prefix = 'grp-';
 
       make_figure(avg_all_stim, task, opt);
 
@@ -125,34 +115,32 @@ for iTask = 1:numel(tasks)
                    opt.group, tasks{iTask}, opt.norm_resp), ....
            'fontsize', 14, 'xoff', 0, 'yoff', 0.05);
 
-      print_fig(prefix, out_dir, group(iGroup).name, task, iNorm);
+      print_fig(prefix, out_dir, group(iGroup).name, task, iNorm, 'runAvg');
     end
 
   end
-
-  opt.plot = 'Group';
-  opt.max_y_axis = max_y_axis;
 
   % plot both groups with and without row normalization
   for iNorm = 0:1
     opt.norm_resp = iNorm;
 
     % plot the 2 groups separately
-    prefix = 'beh_bothgrp-';
+    prefix = 'grp-';
 
+    % TODO: this only plots one group
     make_figure(bothgrp_avg_all_stim, task, opt);
 
     mtit(sprintf('Group: %s ; Task: %s ; Row norm: %i', ...
                  'both', tasks{iTask}, opt.norm_resp), ....
          'fontsize', 14, 'xoff', 0, 'yoff', 0.05);
 
-    print_fig(prefix, out_dir, group(iGroup).name, task, iNorm);
+    print_fig(prefix, out_dir, 'bthGrp', task, iNorm, 'oneGrp');
 
   end
 
 end
 
-function print_fig(prefix, out_dir, group_name, task, iNorm)
+function print_fig(prefix, out_dir, group_name, task, iNorm, desc)
   print(gcf, fullfile(out_dir, ...
-                      [prefix group_name '_task-' task '_norm-' num2str(iNorm) '.jpg']), '-djpeg');
+                      [prefix group_name '_desc-' desc '_task-' task '_norm-' num2str(iNorm) '_plot.jpg']), '-djpeg');
 end

@@ -16,8 +16,7 @@ function make_figure(all_stim, tasks, opt)
 
   samp_freq = opt.samp_freq;
 
-  % take latest offset of the last stim to set the end of the run for
-  % plottingg
+  % take latest offset of the last stim to set the end of the run for plotting
   run_length = find(any(all_stim{4, 1} == -1), 1, 'last');
 
   nb_bins = floor(run_length / opt.bin_size);

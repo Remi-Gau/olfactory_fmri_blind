@@ -6,6 +6,7 @@
 %
 % Assumes a fixed 16 seconds stimulation duration
 %
+%
 % (C) Copyright 2021 Remi Gau
 
 close all;

@@ -1,4 +1,5 @@
-% plots the average across subjects of:
+% Plots the average across subjects of:
+%
 %
 % - stimulus onsets / offsets (to make sure that there is not too much
 %    variation between subjects
@@ -9,6 +10,7 @@
 % - it is possible to bin the responses from their original 25 Hz sampling
 %    frequency.
 % - responses can be passed through a moving with window size
+%
 %
 % (C) Copyright 2021 Remi Gau
 

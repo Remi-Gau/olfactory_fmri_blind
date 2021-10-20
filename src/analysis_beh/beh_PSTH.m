@@ -1,40 +1,24 @@
-% behavioral results
+% Plots data with PSTH for each stimulus (averaged across runs)
+% 
+%
+% Some subjects have weird onsets for some stimuli so we replace them by
+% the average onset from the rest of the group
+% 
+% Assumes a fixed 16 seconds stimulation duration
+% 
 %
 % (C) Copyright 2021 Remi Gau
-
-% plots data with PSTH for each stimulus (averaged across runs)
-
-% some subjects have weird onsets for some stimuli so we replace them by
-% the average onset from the rest of the group
-
-% assumes a fixed 16 seconds stimulation duration
 
 close all;
 clear;
 clc;
 
-if ~exist('machine_id', 'var')
-  machine_id = 1; % 0: container ;  1: Remi ;  2: Beast
-end
-% setting up directories
-[data_dir, code_dir] = set_dir(machine_id);
+run ../../initEnv.m;
 
-% mention where the BIDS data set is (can get the behavioral from OSF)
-tgt_dir = fullfile(data_dir, 'raw');
-
-out_dir = fullfile(pwd, 'output', 'figures', 'beh_avg');
-mkdir(out_dir);
-
-opt.baseline_dur = 20;
-opt.pre_stim = 16;
-opt.stim_dur = 16;
-opt.post_stim = 16;
+opt = options();
 
 % offset time courses by the pre stimulus baseline level of response
 opt.rm_baseline = 0;
-
-% some settings for the figures
-max_y_axis = 6.5;
 
 opt.bin_size = 20;
 
@@ -45,16 +29,17 @@ opt.max_y_axis = ones(2, 1) * .15;
 
 opt.plot_subj = 0;
 opt.normalize = 0;
-opt.visible = 'on';
 
 fontsize = 12;
 
 % just to prevent label_your_axes from trying to give a meaningful scale
 opt.norm_resp = 1;
 
-opt = get_option(opt);
+out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
+spm_mkdir(out_dir);
 
-[prestim_epoch, stim_epoch, poststim_epoch, group, tasks] = get_and_epoch_data(tgt_dir, opt);
+
+[prestim_epoch, stim_epoch, poststim_epoch, group, tasks] = get_and_epoch_data(opt.dir.data, opt);
 
 %% Plots the PSTH
 pre_stim = opt.pre_stim * opt.samp_freq;

@@ -64,7 +64,7 @@ function initEnv()
   run(fullfile(libDirectory, 'CPP_SPM', 'initCppSpm'));
 
   addpath(genpath(fullfile(libDirectory, 'matlab_exchange')));
-  addpath(genpath(fullfile(fileparts(mfilename('fullpath')), 'subfun')));
+  addpath(genpath(fullfile(fileparts(mfilename('fullpath')), 'src', 'subfun')));
 
 end
 

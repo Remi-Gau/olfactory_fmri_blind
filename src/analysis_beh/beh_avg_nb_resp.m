@@ -17,14 +17,19 @@ run ../../initEnv.m;
 
 opt = options();
 
+input_file = fullfile(opt.dir.output_dir, 'beh', 'group', 'sum_responses_over_stim_epoch_.tsv');
+
 out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
 spm_mkdir(out_dir);
 
 % some settings for the figures
-max_y_axis = 25;
+max_y_axis = 6;
 fontsize = 12;
 
-[~, stim_epoch, ~, group, tasks] = get_and_epoch_data(opt.dir.data, opt);
+data = bids.util.tsvread(input_file);
+
+tasks = unique(data.task_id);
+groups = unique(data.group_id);
 
 %% Plots the average number of response during stimulus period
 
@@ -37,39 +42,27 @@ figure('name', 'Both tasks', 'position', [50 50 1300 700], 'visible', opt.visibl
 
 for iTask = 1:2
 
-  %% prepare data
+  is_task = ismember(data.task_id,  tasks(iTask));
 
   for iGroup = 1:2
 
-    switch tasks{iTask}
-      case 'olfid'
+    is_in_group = ismember(data.group_id,  groups(iGroup));
 
-        % Good responses
-        temp_1 = cat(2, ...
-                     stim_epoch{1, iGroup, iTask}(:, :, [1, 3]), ... % left finger for eucalyptus
-                     stim_epoch{2, iGroup, iTask}(:, :, [2, 4])); % right finger for almond
+    rows_to_keep = all([is_task, is_in_group], 2);
 
-        % Bad responses
-        temp_2 = cat(2, ...
-                     stim_epoch{2, iGroup, iTask}(:, :, [1, 3]), ... % right finger for eucalyptus
-                     stim_epoch{1, iGroup, iTask}(:, :, [2, 4])); % left finger for almond
+    subjects = unique(data.sub_id(rows_to_keep));
 
-      case 'olfloc'
+    for iSubject = 1:numel(subjects)
 
-        % Good responses (left finger for left nostril)
-        temp_1 = cat(2, ...
-                     stim_epoch{1, iGroup, iTask}(:, :, [1, 2]), ... % left finger for left nostril
-                     stim_epoch{2, iGroup, iTask}(:, :, [3, 4])); % right finger for right nostril
+      is_subject = ismember(data.sub_id,  subjects(iSubject));
 
-        % Bad responses
-        temp_2 = cat(2, ...
-                     stim_epoch{2, iGroup, iTask}(:, :, [1, 2]), ... % left finger for right nostril
-                     stim_epoch{1, iGroup, iTask}(:, :, [3, 4])); % right finger for left nostril
+      rows_to_keep = all([is_task, is_in_group, is_subject], 2);
+
+      % we mean over trials and runs
+      good_responses{iGroup}(iSubject) = mean(data.good_response(rows_to_keep));
+      bad_responses{iGroup}(iSubject) = mean(data.bad_response(rows_to_keep));
 
     end
-
-    good_responses{iGroup} = sum(sum(temp_1, 3), 2);
-    bad_responses{iGroup} = sum(sum(temp_2, 3), 2);
 
   end
 
@@ -106,7 +99,7 @@ for iTask = 1:2
 
   set(gca, 'fontsize', fontsize, ...
       'ytick', -25:5:25, 'yticklabel', -25:5:25, ...
-      'xtick', 1:2, 'xticklabel', {group.name}, ...
+      'xtick', 1:2, 'xticklabel', groups, ...
       'ticklength', [.02 .02], 'tickdir', 'out');
 
   title(['task: ' tasks{iTask}]);

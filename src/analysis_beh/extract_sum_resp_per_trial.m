@@ -51,8 +51,8 @@ for iTask = 1:2
         for trial_id = 1:4
 
           % finger for responses
-          right = 1;
-          left = 2;
+          right = 2;
+          left = 1;
 
           if strcmp(tasks{iTask}, 'olfid')
 

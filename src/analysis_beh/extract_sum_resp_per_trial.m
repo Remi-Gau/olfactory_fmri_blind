@@ -28,7 +28,7 @@ output = struct( ...
                 'sub_id', {''}, ...
                 'task_id', {''}, ...
                 'run_id', [], ...
-                'trial_id', [], ...
+                'trial_id', {''}, ...
                 'good_response', [], ...
                 'bad_response', []);
 
@@ -48,7 +48,7 @@ for iTask = 1:2
 
       for run_id = 1:2
 
-        for trial_id = 1:4
+        for trial_nb = 1:4
 
           % finger for responses
           right = 2;
@@ -58,36 +58,40 @@ for iTask = 1:2
 
             % trials
             eucalyptus = [1, 3];
-            is_eucalyptus = ismember(trial_id, eucalyptus);
+            is_eucalyptus = ismember(trial_nb, eucalyptus);
 
             if is_eucalyptus
+              trial_id = 'eucalyptus';
               % good: left finger for eucalyptus
               % bad: right finger for eucalyptus
-              good_response = stim_epoch{left, iGroup, iTask}(iSub, :, trial_id, run_id);
-              bad_response = stim_epoch{right, iGroup, iTask}(iSub, :, trial_id, run_id);
+              good_response = stim_epoch{left, iGroup, iTask}(iSub, :, trial_nb, run_id);
+              bad_response = stim_epoch{right, iGroup, iTask}(iSub, :, trial_nb, run_id);
             else
+              trial_id = 'almond';
               % good: right finger for almond
               % bad: left finger for almond
-              good_response = stim_epoch{right, iGroup, iTask}(iSub, :, trial_id, run_id);
-              bad_response = stim_epoch{left, iGroup, iTask}(iSub, :, trial_id, run_id);
+              good_response = stim_epoch{right, iGroup, iTask}(iSub, :, trial_nb, run_id);
+              bad_response = stim_epoch{left, iGroup, iTask}(iSub, :, trial_nb, run_id);
             end
 
           elseif strcmp(tasks{iTask}, 'olfloc')
 
             % trials
             left_nostril = [1, 2];
-            is_left_nostril = ismember(trial_id, left_nostril);
+            is_left_nostril = ismember(trial_nb, left_nostril);
 
             if is_left_nostril
+              trial_id = 'left_nostril';
               % good: left finger for left_nostril
-              % bad: right finger for right_nostril
-              good_response = stim_epoch{left, iGroup, iTask}(iSub, :, trial_id, run_id);
-              bad_response = stim_epoch{right, iGroup, iTask}(iSub, :, trial_id, run_id);
+              % bad: right finger for left_nostril
+              good_response = stim_epoch{left, iGroup, iTask}(iSub, :, trial_nb, run_id);
+              bad_response = stim_epoch{right, iGroup, iTask}(iSub, :, trial_nb, run_id);
             else
-              % good: right finger for left_nostril
+              trial_id = 'right_nostril';
+              % good: right finger for right_nostril
               % bad: left finger for right_nostril
-              good_response = stim_epoch{right, iGroup, iTask}(iSub, :, trial_id, run_id);
-              bad_response = stim_epoch{left, iGroup, iTask}(iSub, :, trial_id, run_id);
+              good_response = stim_epoch{right, iGroup, iTask}(iSub, :, trial_nb, run_id);
+              bad_response = stim_epoch{left, iGroup, iTask}(iSub, :, trial_nb, run_id);
             end
 
           end
@@ -96,7 +100,7 @@ for iTask = 1:2
           output.sub_id{row} = sub_id;
           output.task_id{row} = task_id;
           output.run_id(row) = run_id;
-          output.trial_id(row) = trial_id;
+          output.trial_id{row} = trial_id;
           output.good_response(row) = sum(good_response);
           output.bad_response(row) = sum(bad_response);
 
@@ -112,5 +116,6 @@ for iTask = 1:2
 
 end
 
-bids.util.tsvwrite(fullfile(out_dir, 'sum_responses_over_stim_epoch_.tsv'), ...
+bids.util.tsvwrite(fullfile(out_dir, ...
+                            ['sum_responses_over_stim_epoch_rmbase-' num2str(opt.rm_baseline) '.tsv']), ...
                    output);

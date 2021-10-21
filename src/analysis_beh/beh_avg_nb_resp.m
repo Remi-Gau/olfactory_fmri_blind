@@ -17,7 +17,10 @@ run ../../initEnv.m;
 
 opt = options();
 
-input_file = fullfile(opt.dir.output_dir, 'beh', 'group', 'sum_responses_over_stim_epoch_.tsv');
+input_file = fullfile(opt.dir.output_dir, ...
+                      'beh', ...
+                      'group', ...
+                      ['sum_responses_over_stim_epoch_rmbase-' num2str(opt.rm_baseline) '.tsv']);
 
 out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
 spm_mkdir(out_dir);

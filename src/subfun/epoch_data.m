@@ -3,9 +3,6 @@ function [prestim_e, stim_e, poststim_e] = epoch_data(tasks, group, all_time_cou
   % avg_run: boolean to average across run
   %
   % (C) Copyright 2021 Remi Gau
-  if nargin < 5 || isempty(avg_run)
-    avg_run = true;
-  end
 
   baseline_dur = opt.baseline_dur * opt.samp_freq;
   pre_stim = opt.pre_stim * opt.samp_freq;

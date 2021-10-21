@@ -1,7 +1,23 @@
+# doc
 Sphinx
 sphinxcontrib-matlabdomain
 sphinxcontrib-napoleon
 sphinx_rtd_theme
-miss_hit==0.9.22
+
+# lint
+miss_hit==0.9.29
 pre-commit
--r docs/requirements.txt
+nb_black==1.0.7 # black in jupyter notebooks
+black
+
+#
+jupyterlab
+pandas
+numpy
+matplotlib
+seaborn
+
+# neuroimaging
+nilearn==0.7.1
+nibabel
+pybids==0.11.1 # to query bids datasets

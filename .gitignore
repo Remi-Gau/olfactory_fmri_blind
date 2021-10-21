@@ -51,3 +51,6 @@ codegen/
 
 # Octave session info
 octave-workspace
+
+# Python
+.ipynb_checkpoints

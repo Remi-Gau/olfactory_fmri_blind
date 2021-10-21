@@ -8,7 +8,7 @@ function opt = options()
   opt.post_stim = 16;
 
   % offset time courses by the pre stimulus baseline level of response
-  opt.rm_baseline = 1;
+  opt.rm_baseline = 0;
 
   opt.visible = 'on';
 

@@ -31,22 +31,27 @@ out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
 spm_mkdir(out_dir);
 
 % some settings for the figures
-max_y_axis = 6;
+max_y_axis = [-4, 6];
+
+x_values_for_mean = [0.75, 2.25];
+
 fontsize = 12;
+
+spaghetti_plot =  true;
+
+Colors(1, :) = opt.blnd_color;
+Colors(2, :) = opt.sighted_color;
+Colors = Colors / 255;
+
+stim_legend = opt.stim_legend;
+
+%% Create summary table
 
 data = bids.util.tsvread(input_file);
 
 tasks = unique(data.task_id);
 groups = unique(data.group_id);
 
-%% Plots the average number of response during stimulus period
-
-stim_legend = opt.stim_legend;
-Colors(1, :) = opt.blnd_color;
-Colors(2, :) = opt.sighted_color;
-Colors = Colors / 255;
-
-%% Create summary table
 summary = struct();
 row = 1;
 
@@ -90,7 +95,7 @@ end
 
 bids.util.tsvwrite(output_tsv_file, summary);
 
-%%
+%% Plots the average number of response during stimulus period
 clear data;
 
 data = bids.util.tsvread(output_tsv_file);
@@ -105,6 +110,8 @@ for iGroup = 1:2
   subplot(1, 2, iGroup);
   hold on;
 
+  spaghetti = [];
+
   for iTask = 1:2
 
     is_task = ismember(data.task_id,  tasks(iTask));
@@ -114,26 +121,41 @@ for iGroup = 1:2
 
     to_plot = data.good_minus_bad(rows_to_keep);
 
-    h = plotSpread(to_plot, 'distributionIdx', ones(size(to_plot)), ...
-                   'distributionMarkers', {'o'}, ...
-                   'distributionColors', Colors(iGroup, :), ...
-                   'xValues', iTask, ...
-                   'showMM', 0, ...
-                   'binWidth', .1, 'spreadWidth', 1);
+    if ~spaghetti_plot
+      h = plotSpread(to_plot, 'distributionIdx', ones(size(to_plot)), ...
+                     'distributionMarkers', {'o'}, ...
+                     'distributionColors', Colors(iGroup, :), ...
+                     'xValues', iTask, ...
+                     'showMM', 0, ...
+                     'binWidth', .1, 'spreadWidth', 1);
 
-    set(h{1}, 'MarkerSize', 7, 'MarkerEdgeColor', 'k', ...
-        'MarkerFaceColor', Colors(iGroup, :), ...
-        'LineWidth', 2);
+      set(h{1}, 'MarkerSize', 7, 'MarkerEdgeColor', 'k', ...
+          'MarkerFaceColor', Colors(iGroup, :), ...
+          'LineWidth', 2);
+    else
+      spaghetti(iTask, :) = to_plot;
 
-    h = errorbar(iTask - .5, ...
-                 nanmean(to_plot), ...
-                 nanstd(to_plot) / numel(to_plot)^.5, ...
-                 'o', ...
-                 'color', Colors(iGroup, :), 'linewidth', 2, ...
-                 'MarkerSize', 5, ...
-                 'MarkerEdgeColor', 'k', ...
-                 'MarkerFaceColor', Colors(iGroup, :));
+    end
 
+    errorbar(x_values_for_mean(iTask), ...
+             nanmean(to_plot), ...
+             nanstd(to_plot) / numel(to_plot)^.5, ...
+             'o', ...
+             'color', Colors(iGroup, :), 'linewidth', 2, ...
+             'MarkerSize', 5, ...
+             'MarkerEdgeColor', 'k', ...
+             'MarkerFaceColor', Colors(iGroup, :));
+
+  end
+
+  if spaghetti_plot
+    h = plot(1:2, spaghetti, 'o-');
+    for i = 1:numel(h)
+      set(h(i), 'color', Colors(iGroup, :), 'linewidth', 1, ...
+          'MarkerSize', 5, ...
+          'MarkerEdgeColor', 'k', ...
+          'MarkerFaceColor', 'k');
+    end
   end
 
   plot([0 3], [0 0], 'k');
@@ -145,7 +167,7 @@ for iGroup = 1:2
 
   title(groups(iGroup));
 
-  axis([0.2 2.5 -max_y_axis max_y_axis]);
+  axis([x_values_for_mean(1) - 0.2, x_values_for_mean(2) + 0.2,  max_y_axis]);
 
   subplot(1, 2, 1);
   t = ylabel(sprintf( ...

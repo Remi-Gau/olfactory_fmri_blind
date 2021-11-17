@@ -25,6 +25,10 @@ function opt = get_option(opt)
                     'resp_03', ...
                     'resp_12'};
 
+  opt.rm_subjects.do = true;
+  % sub-056 seems to have buttons switched.
+  opt.rm_subjects.list = {'blnd04', 'ctrl04', 'ctrl07'}';
+
   opt.stim_color = { ...
                     '-g'; ...  % Eucalyptus Left
                     '-r'; ... % Almond Left

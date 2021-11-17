@@ -1,38 +1,15 @@
-function [ppp, grp_id, folder_subj] = rm_subjects(ppp, grp_id, folder_subj, rm_do)
+function subjects = rm_subjects(subjects, opt)
+  %
   % Removes the particpants from the subject listing that have been
   % excluded because of their func/anat/beh data
-  % ppp = participants structure resulting from loading the participant.tsv
-  % file
   %
   % (C) Copyright 2021 Remi Gau
 
-  if ~exist('rm_do', 'var')
-    rm_do = false;
-  end
-  if ~exist('rm_do', 'var')
-    folder_subj = [];
+  if  ~opt.rm_subjects.do
+    return
   end
 
-  if rm_do
-    % Remove outliers in terms of fMRI or behavior
-    subj_to_exclude = {
-                       'sub-blnd04', 'sub-ctrl04', 'sub-ctrl07'}'; % sub-056 seems to have buttons switched.
-  else
-    subj_to_exclude = '';
-  end
-
-  % Remove excluded subjects
-  if ~isempty(ppp)
-    to_rm = ismember(ppp.participant_id, subj_to_exclude);
-    grp_id(to_rm) = [];
-    ppp.participant_id(to_rm) = [];
-    ppp.sex(to_rm) = [];
-    ppp.age(to_rm) = [];
-  end
-
-  if ~isempty(folder_subj)
-    to_rm = ismember(folder_subj, subj_to_exclude);
-    folder_subj(to_rm) = [];
-  end
+  to_rm = ismember(subjects, opt.rm_subjects.list);
+  subjects(to_rm) = [];
 
 end

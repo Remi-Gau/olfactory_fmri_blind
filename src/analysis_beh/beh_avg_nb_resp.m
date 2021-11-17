@@ -27,6 +27,11 @@ output_tsv_file = fullfile(opt.dir.output_dir, ...
                            'group', ...
                            ['summary_responses_over_stim_epoch_rmbase-' num2str(opt.rm_baseline) '.tsv']);
 
+group_tsv_file = fullfile(opt.dir.output_dir, ...
+                          'beh', ...
+                          'group', ...
+                          ['group_responses_over_stim_epoch_rmbase-' num2str(opt.rm_baseline) '.tsv']);
+
 out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
 spm_mkdir(out_dir);
 
@@ -105,6 +110,10 @@ figure('name', 'Both tasks', 'position', [50 50 1300 700], 'visible', opt.visibl
 tasks = unique(data.task_id);
 groups = unique(data.group_id);
 
+row = 1;
+
+summary = struct();
+
 for iGroup = 1:2
 
   subplot(1, 2, iGroup);
@@ -146,6 +155,13 @@ for iGroup = 1:2
              'MarkerEdgeColor', 'k', ...
              'MarkerFaceColor', Colors(iGroup, :));
 
+    summary.group_id(row) = groups(iGroup);
+    summary.task_id(row) = tasks(iTask);
+    summary.mean(row) = nanmean(to_plot);
+    summary.std(row) = nanstd(to_plot);
+
+    row = row + 1;
+
   end
 
   if spaghetti_plot
@@ -176,6 +192,8 @@ for iGroup = 1:2
   set(t, 'fontsize', fontsize);
 
 end
+
+bids.util.tsvwrite(group_tsv_file, summary);
 
 mtit(sprintf('Mean number of responses during stim epoch '), ....
      'fontsize', 14, 'xoff', 0, 'yoff', 0.05);

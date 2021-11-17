@@ -22,6 +22,11 @@ input_file = fullfile(opt.dir.output_dir, ...
                       'group', ...
                       ['sum_responses_over_stim_epoch_rmbase-' num2str(opt.rm_baseline) '.tsv']);
 
+output_tsv_file = fullfile(opt.dir.output_dir, ...
+                           'beh', ...
+                           'group', ...
+                           ['summary_responses_over_stim_epoch_rmbase-' num2str(opt.rm_baseline) '.tsv']);
+
 out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
 spm_mkdir(out_dir);
 
@@ -41,7 +46,9 @@ Colors(1, :) = opt.blnd_color;
 Colors(2, :) = opt.sighted_color;
 Colors = Colors / 255;
 
-figure('name', 'Both tasks', 'position', [50 50 1300 700], 'visible', opt.visible);
+%% Create summary table
+summary = struct();
+row = 1;
 
 for iTask = 1:2
 
@@ -55,6 +62,8 @@ for iTask = 1:2
 
     subjects = unique(data.sub_id(rows_to_keep));
 
+    subjects = rm_subjects(subjects, opt);
+
     for iSubject = 1:numel(subjects)
 
       is_subject = ismember(data.sub_id,  subjects(iSubject));
@@ -62,24 +71,53 @@ for iTask = 1:2
       rows_to_keep = all([is_task, is_in_group, is_subject], 2);
 
       % we mean over trials and runs
-      good_responses{iGroup}(iSubject) = mean(data.good_response(rows_to_keep));
+      good_responses{iGroup}(iSubject) = mean(data.good_response(rows_to_keep)); %#ok<*SAGROW>
       bad_responses{iGroup}(iSubject) = mean(data.bad_response(rows_to_keep));
+
+      summary.sub_id(row) = subjects(iSubject);
+      summary.group_id(row) = groups(iGroup);
+      summary.task_id(row) = tasks(iTask);
+      summary.good_minus_bad(row) = mean(data.good_response(rows_to_keep)) - ...
+          mean(data.bad_response(rows_to_keep));
+
+      row = row + 1;
 
     end
 
   end
 
-  subplot(1, 2, iTask);
+end
+
+bids.util.tsvwrite(output_tsv_file, summary);
+
+%%
+clear data;
+
+data = bids.util.tsvread(output_tsv_file);
+
+figure('name', 'Both tasks', 'position', [50 50 1300 700], 'visible', opt.visible);
+
+tasks = unique(data.task_id);
+groups = unique(data.group_id);
+
+for iGroup = 1:2
+
+  subplot(1, 2, iGroup);
   hold on;
 
-  for iGroup = 1:2
+  for iTask = 1:2
 
-    to_plot = good_responses{iGroup} - bad_responses{iGroup};
+    is_task = ismember(data.task_id,  tasks(iTask));
+    is_in_group = ismember(data.group_id,  groups(iGroup));
+
+    rows_to_keep = all([is_task, is_in_group], 2);
+
+    to_plot = data.good_minus_bad(rows_to_keep);
 
     h = plotSpread(to_plot, 'distributionIdx', ones(size(to_plot)), ...
                    'distributionMarkers', {'o'}, ...
                    'distributionColors', Colors(iGroup, :), ...
-                   'xValues', iGroup, ...
+                   'xValues', iTask, ...
                    'showMM', 0, ...
                    'binWidth', .1, 'spreadWidth', 1);
 
@@ -87,7 +125,7 @@ for iTask = 1:2
         'MarkerFaceColor', Colors(iGroup, :), ...
         'LineWidth', 2);
 
-    h = errorbar(iGroup - .5, ...
+    h = errorbar(iTask - .5, ...
                  nanmean(to_plot), ...
                  nanstd(to_plot) / numel(to_plot)^.5, ...
                  'o', ...
@@ -101,11 +139,11 @@ for iTask = 1:2
   plot([0 3], [0 0], 'k');
 
   set(gca, 'fontsize', fontsize, ...
-      'ytick', -25:5:25, 'yticklabel', -25:5:25, ...
-      'xtick', 1:2, 'xticklabel', groups, ...
+      'ytick', -25:2.5:25, 'yticklabel', -25:2.5:25, ...
+      'xtick', 1:2, 'xticklabel', tasks, ...
       'ticklength', [.02 .02], 'tickdir', 'out');
 
-  title(['task: ' tasks{iTask}]);
+  title(groups(iGroup));
 
   axis([0.2 2.5 -max_y_axis max_y_axis]);
 

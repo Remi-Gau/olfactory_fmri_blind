@@ -3,7 +3,7 @@ function opt = opt_preproc()
   % returns a structure that contains the options chosen by the user to run
   % slice timing correction, pre-processing, FFX, RFX...
   %
-  % (C) Copyright 2019 Remi Gau
+  % (C) Copyright 2021 Remi Gau
 
   opt = [];
 
@@ -22,6 +22,7 @@ function opt = opt_preproc()
 
   opt.fwhm.func = 6;
 
+  %% DO NOT TOUCH
   raw = bids.layout(opt.dir.raw);
   opt.subjects = bids.query(raw, 'subjects');
 
@@ -29,7 +30,6 @@ function opt = opt_preproc()
 
   opt.subjects = rm_subjects(opt.subjects, opt);
 
-  %% DO NOT TOUCH
   opt = checkOptions(opt);
   saveOptions(opt);
 

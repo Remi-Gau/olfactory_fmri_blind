@@ -1,0 +1,127 @@
+{
+  "Name": "olfid olfloc",
+  "Description": "default model for olfidolfloc",
+  "Input": {
+    "task": [
+      "olfid",
+      "olfloc"
+    ]
+  },
+  "Steps": [
+    {
+      "Level": "run",
+      "Transformations": [
+        {
+          "Name": "Factor",
+          "Inputs": ["trial_type"]
+        },
+        {
+          "Name": "Convolve",
+          "Model": "spm",
+          "Inputs": [" "]
+        }
+      ],
+      "Model": {
+        "X": [
+          "trial_type.ch1",
+          "trial_type.ch3",
+          "trial_type.ch5",
+          "trial_type.ch7",
+          "trial_type.resp_03",
+          "trial_type.resp_12",
+          "trans_x",
+          "trans_y",
+          "trans_z",
+          "rot_x",
+          "rot_y",
+          "rot_z"
+        ],
+        "Options": {
+          "high_pass_filter_cutoff_secs": 128
+        },
+        "Software": {
+          "SPM": {
+            "whitening": "FAST"
+          }
+        },
+        "Mask": " "
+      },
+      "AutoContrasts": [
+        "trial_type.ch1",
+        "trial_type.ch3",
+        "trial_type.ch5",
+        "trial_type.ch7",
+        "trial_type.resp_03",
+        "trial_type.resp_12"
+      ]
+    },
+    {
+      "Level": "subject",
+      "Transformations": [
+        {
+          "Name": "Factor",
+          "Inputs": ["trial_type"]
+        },
+        {
+          "Name": "Convolve",
+          "Model": "spm",
+          "Inputs": [" "]
+        }
+      ],
+      "Model": {
+        "X": [
+          "trial_type.ch1",
+          "trial_type.ch3",
+          "trial_type.ch5",
+          "trial_type.ch7",
+          "trial_type.resp_03",
+          "trial_type.resp_12",
+          "trans_x",
+          "trans_y",
+          "trans_z",
+          "rot_x",
+          "rot_y",
+          "rot_z"
+        ],
+        "Options": {
+          "high_pass_filter_cutoff_secs": 128
+        },
+        "Software": {
+          "SPM": {
+            "whitening": "FAST"
+          }
+        },
+        "Mask": " "
+      },
+      "AutoContrasts": [
+        "trial_type.ch1",
+        "trial_type.ch3",
+        "trial_type.ch5",
+        "trial_type.ch7",
+        "trial_type.resp_03",
+        "trial_type.resp_12"
+      ]
+    },
+    {
+      "Level": "dataset",
+      "Model": {
+        "X": [" "],
+        "Options": {
+        },
+        "Software": {
+          "SPM": {
+          }
+        },
+        "Mask": " "
+      },
+      "AutoContrasts": [
+        "trial_type.ch1",
+        "trial_type.ch3",
+        "trial_type.ch5",
+        "trial_type.ch7",
+        "trial_type.resp_03",
+        "trial_type.resp_12"
+      ]
+    }
+  ]
+}

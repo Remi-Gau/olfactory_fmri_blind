@@ -1,4 +1,4 @@
-function opt = option_preproc()
+function opt = opt_preproc()
   %
   % returns a structure that contains the options chosen by the user to run
   % slice timing correction, pre-processing, FFX, RFX.
@@ -19,7 +19,7 @@ function opt = option_preproc()
   % The directory where the data are located
   opt.dir.raw = fullfile(opt.dir.dataset_root, 'inputs', 'raw');
   opt.dir.input = fullfile(opt.dir.dataset_root, 'inputs', 'fmriprep');
-  opt.dir.derivatives = fullfile(opt.dir.dataset_root, 'derivatives');
+  opt.dir.derivatives = fullfile(opt.dir.dataset_root, 'outputs', 'derivatives');
 
   %% DO NOT TOUCH
   opt = checkOptions(opt);

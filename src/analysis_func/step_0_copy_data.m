@@ -5,7 +5,7 @@ clc;
 
 run ../../initEnv.m;
 
-opt = option_preproc();
+opt = opt_preproc();
 
 % TODO add ability to copy filter several times on the same data set
 

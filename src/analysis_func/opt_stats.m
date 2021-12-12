@@ -84,7 +84,7 @@ function opt = opt_stats()
 
   opt.subjects = rm_subjects(opt.subjects, opt);
 
-  opt = createDefaultStatsModel(raw, opt);
+  % opt = createDefaultStatsModel(raw, opt);
 
   opt = checkOptions(opt);
   saveOptions(opt);

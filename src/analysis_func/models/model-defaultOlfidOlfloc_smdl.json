@@ -13,12 +13,16 @@
       "Transformations": [
         {
           "Name": "Factor",
-          "Inputs": ["trial_type"]
+          "Inputs": [
+            "trial_type"
+          ]
         },
         {
           "Name": "Convolve",
           "Model": "spm",
-          "Inputs": [" "]
+          "Inputs": [
+            " "
+          ]
         }
       ],
       "Model": {
@@ -45,27 +49,23 @@
           }
         },
         "Mask": " "
-      },
-      "AutoContrasts": [
-        "trial_type.ch1",
-        "trial_type.ch3",
-        "trial_type.ch5",
-        "trial_type.ch7",
-        "trial_type.resp_03",
-        "trial_type.resp_12"
-      ]
+      }
     },
     {
       "Level": "subject",
       "Transformations": [
         {
           "Name": "Factor",
-          "Inputs": ["trial_type"]
+          "Inputs": [
+            "trial_type"
+          ]
         },
         {
           "Name": "Convolve",
           "Model": "spm",
-          "Inputs": [" "]
+          "Inputs": [
+            " "
+          ]
         }
       ],
       "Model": {
@@ -93,35 +93,33 @@
         },
         "Mask": " "
       },
-      "AutoContrasts": [
-        "trial_type.ch1",
-        "trial_type.ch3",
-        "trial_type.ch5",
-        "trial_type.ch7",
-        "trial_type.resp_03",
-        "trial_type.resp_12"
+      "Contrasts": [
+        {
+          "Name": "Responses",
+          "ConditionList": [
+            "trial_type.resp_03",
+            "trial_type.resp_12"
+          ],
+          "weights": [
+            1,
+            1
+          ],
+          "type": "t"
+        }
       ]
     },
     {
       "Level": "dataset",
       "Model": {
-        "X": [" "],
-        "Options": {
-        },
+        "X": [
+          " "
+        ],
+        "Options": {},
         "Software": {
-          "SPM": {
-          }
+          "SPM": {}
         },
         "Mask": " "
-      },
-      "AutoContrasts": [
-        "trial_type.ch1",
-        "trial_type.ch3",
-        "trial_type.ch5",
-        "trial_type.ch7",
-        "trial_type.resp_03",
-        "trial_type.resp_12"
-      ]
+      }
     }
   ]
 }

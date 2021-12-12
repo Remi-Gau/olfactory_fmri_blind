@@ -1,7 +1,1 @@
-matplotlib
-joblib
-numpy
-scipy==1.3.3
-pandas
-pyyawt
-rsHRF
+../../../.git/annex/objects/fv/X9/MD5E-s57--f17f1f52449a1c7e55c6f4535237e485.txt/MD5E-s57--f17f1f52449a1c7e55c6f4535237e485.txt

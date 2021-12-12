@@ -1,9 +1,1 @@
-function opt = options()
-  %
-  % (C) Copyright 2021 Remi Gau
-
-  opt.visible = 'on';
-
-  opt = get_option(opt);
-
-end
+../../../.git/annex/objects/GX/jf/MD5E-s115--611d97955bf1d252559d4480be938db6.m/MD5E-s115--611d97955bf1d252559d4480be938db6.m

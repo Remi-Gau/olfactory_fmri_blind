@@ -1,4 +1,1 @@
-Sphinx
-sphinxcontrib-matlabdomain
-sphinxcontrib-napoleon
-sphinx_rtd_theme
+../../.git/annex/objects/54/v3/MD5E-s74--6d104f037a8137763dff855e663e4907.txt/MD5E-s74--6d104f037a8137763dff855e663e4907.txt

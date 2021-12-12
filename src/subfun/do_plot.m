@@ -1,16 +1,1 @@
-function do_plot(to_plot, sem, all_subjs, Color, iSubplot, opt)
-  % either plot mean and each subject or mean +/- sem
-  %
-  % (C) Copyright 2021 Remi Gau
-  if opt.plot_subj
-    for iSubj = 1:size(all_subjs, 1)
-      plot(1:length(to_plot), all_subjs(iSubj, :), ...
-           'color', Color(iSubplot, :) * .9, 'linewidth', .5);
-      plot(1:length(to_plot), to_plot, ...
-           'color', Color(iSubplot, :), 'linewidth', 2);
-    end
-  else
-    shadedErrorBar(1:length(to_plot), to_plot, sem, ...
-                   {'color', Color(iSubplot, :), 'linewidth', 2}, 1);
-  end
-end
+../../../.git/annex/objects/J0/0g/MD5E-s579--a6919c5e1d27063cf0fb7ec754c9c23c.m/MD5E-s579--a6919c5e1d27063cf0fb7ec754c9c23c.m

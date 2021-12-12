@@ -1,7 +1,1 @@
-histortysubject="blnd01"
-
-input_dir="/home/remi/gin/olfaction_blind/derivatives/fmriprep/"
-output_dir= "/home/remi/gin/olfaction_blind/derivatives/rshrf"
-
-
-rsHRF --input_file input.nii --atlas mask.nii --estimation canon2dd --output_dir results
+../../../.git/annex/objects/Zm/9z/MD5E-s245--b9a7996ea54412ae6178721becfef27a.py/MD5E-s245--b9a7996ea54412ae6178721becfef27a.py

@@ -5,6 +5,6 @@ clc;
 
 run ../../initEnv.m;
 
-opt = option_preproc();
+opt = opt_preproc();
 
 bidsSmoothing(opt);

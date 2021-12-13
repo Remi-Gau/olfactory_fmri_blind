@@ -32,8 +32,8 @@ function opt = opt_stats()
   opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
                             'models', ...
                             'model-defaultOlfidOlfloc_smdl.json');
-
-  opt.glm.QA.do = false;
+  opt.model.hrfDerivatives = [1 1];
+  opt.QA.glm.do = false;
 
   % Specify the result to compute
   opt.result.Steps(1) = returnDefaultResultsStructure();

@@ -49,7 +49,49 @@
           }
         },
         "Mask": " "
-      }
+      },
+      "Contrasts": [
+        {
+          "Name": "EucalyptusLeft",
+          "ConditionList": [
+            "trial_type.ch1"
+          ],
+          "weights": [
+            1
+          ],
+          "type": "t"
+        },
+        {
+          "Name": "AlmondLeft",
+          "ConditionList": [
+            "trial_type.ch3"
+          ],
+          "weights": [
+            1
+          ],
+          "type": "t"
+        },
+        {
+          "Name": "EucalyptusRight",
+          "ConditionList": [
+            "trial_type.ch5"
+          ],
+          "weights": [
+            1
+          ],
+          "type": "t"
+        },
+        {
+          "Name": "AlmondRight",
+          "ConditionList": [
+            "trial_type.ch7"
+          ],
+          "weights": [
+            1
+          ],
+          "type": "t"
+        }
+      ]
     },
     {
       "Level": "subject",

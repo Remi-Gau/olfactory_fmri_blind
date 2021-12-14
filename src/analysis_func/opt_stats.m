@@ -32,15 +32,14 @@ function opt = opt_stats()
   opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
                             'models', ...
                             'model-defaultOlfidOlfloc_smdl.json');
-  opt.model.hrfDerivatives = [1 1];
   opt.QA.glm.do = false;
 
   % Specify the result to compute
-  opt.result.Steps(1) = returnDefaultResultsStructure();
+  opt.result.Nodes(1) = returnDefaultResultsStructure();
 
-  opt.result.Steps(1).Level = 'subject';
+  opt.result.Nodes(1).Level = 'subject';
 
-  opt.result.Steps(1).Contrasts(1).Name = 'listening';
+  opt.result.Nodes(1).Contrasts(1).Name = 'listening';
 
   % For each contrats, you can adapt:
   %  - voxel level (p)
@@ -50,28 +49,28 @@ function opt = opt_stats()
   %    - 'FDR'
   %    - 'none'
   %
-  %   opt.result.Steps(1).Contrasts(2).Name = 'listening_inf_baseline';
-  %   opt.result.Steps(1).Contrasts(2).MC =  'none';
-  %   opt.result.Steps(1).Contrasts(2).p = 0.01;
-  %   opt.result.Steps(1).Contrasts(2).k = 0;
+  %   opt.result.Nodes(1).Contrasts(2).Name = 'listening_inf_baseline';
+  %   opt.result.Nodes(1).Contrasts(2).MC =  'none';
+  %   opt.result.Nodes(1).Contrasts(2).p = 0.01;
+  %   opt.result.Nodes(1).Contrasts(2).k = 0;
 
   % Specify how you want your output (all the following are on false by default)
-  opt.result.Steps(1).Output.png = true();
+  opt.result.Nodes(1).Output.png = true();
 
-  opt.result.Steps(1).Output.csv = false();
-  opt.result.Steps(1).Output.thresh_spm = false();
-  opt.result.Steps(1).Output.binary = false();
+  opt.result.Nodes(1).Output.csv = false();
+  opt.result.Nodes(1).Output.thresh_spm = false();
+  opt.result.Nodes(1).Output.binary = false();
 
   % MONTAGE FIGURE OPTIONS
-  opt.result.Steps(1).Output.montage.do = false();
-  opt.result.Steps(1).Output.montage.slices = -0:2:16; % in mm
+  opt.result.Nodes(1).Output.montage.do = false();
+  opt.result.Nodes(1).Output.montage.slices = -0:2:16; % in mm
   % axial is default 'sagittal', 'coronal'
-  opt.result.Steps(1).Output.montage.orientation = 'axial';
+  opt.result.Nodes(1).Output.montage.orientation = 'axial';
   % will use the MNI T1 template by default but the underlay image can be changed.
-  opt.result.Steps(1).Output.montage.background = ...
+  opt.result.Nodes(1).Output.montage.background = ...
       fullfile(spm('dir'), 'canonical', 'avg152T1.nii,1');
 
-  opt.result.Steps(1).Output.NIDM_results = false();
+  opt.result.Nodes(1).Output.NIDM_results = false();
 
   %% DO NOT TOUCH
 

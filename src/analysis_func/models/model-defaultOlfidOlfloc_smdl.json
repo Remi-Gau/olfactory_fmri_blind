@@ -1,5 +1,6 @@
 {
   "Name": "olfid olfloc",
+  "BIDSModelVersion": "1.0.0",
   "Description": "default model for olfidolfloc",
   "Input": {
     "task": [
@@ -7,24 +8,10 @@
       "olfloc"
     ]
   },
-  "Steps": [
+  "Nodes": [
     {
-      "Level": "run",
-      "Transformations": [
-        {
-          "Name": "Factor",
-          "Inputs": [
-            "trial_type"
-          ]
-        },
-        {
-          "Name": "Convolve",
-          "Model": "spm",
-          "Inputs": [
-            " "
-          ]
-        }
-      ],
+      "Level": "Run",
+      "Name": "run_level",
       "Model": {
         "X": [
           "trial_type.ch1",
@@ -40,15 +27,24 @@
           "rot_y",
           "rot_z"
         ],
+        "HRF": {
+          "Variables": [
+            "trial_type.VisMot",
+            "trial_type.VisStat"
+          ],
+          "Model": "DoubleGamma"
+        },
+        "Type": "glm",
         "Options": {
-          "high_pass_filter_cutoff_secs": 128
+          "HighPassFilterCutoffHz": 0.0078,
+          "Mask": " "
         },
         "Software": {
           "SPM": {
-            "whitening": "FAST"
+            "SerialCorrelation": "FAST",
+            "HRFderivatives": "TemporalDispersion"
           }
-        },
-        "Mask": " "
+        }
       },
       "Contrasts": [
         {
@@ -56,45 +52,46 @@
           "ConditionList": [
             "trial_type.ch1"
           ],
-          "weights": [
+          "Weights": [
             1
           ],
-          "type": "t"
+          "Test": "t"
         },
         {
           "Name": "AlmondLeft",
           "ConditionList": [
             "trial_type.ch3"
           ],
-          "weights": [
+          "Weights": [
             1
           ],
-          "type": "t"
+          "Test": "t"
         },
         {
           "Name": "EucalyptusRight",
           "ConditionList": [
             "trial_type.ch5"
           ],
-          "weights": [
+          "Weights": [
             1
           ],
-          "type": "t"
+          "Test": "t"
         },
         {
           "Name": "AlmondRight",
           "ConditionList": [
             "trial_type.ch7"
           ],
-          "weights": [
+          "Weights": [
             1
           ],
-          "type": "t"
+          "Test": "t"
         }
       ]
     },
     {
-      "Level": "subject",
+      "Level": "Subject",
+      "Name": "subject_level",
       "Transformations": [
         {
           "Name": "Factor",
@@ -125,15 +122,24 @@
           "rot_y",
           "rot_z"
         ],
+        "HRF": {
+          "Variables": [
+            "trial_type.VisMot",
+            "trial_type.VisStat"
+          ],
+          "Model": "DoubleGamma"
+        },
+        "Type": "glm",
         "Options": {
-          "high_pass_filter_cutoff_secs": 128
+          "HighPassFilterCutoffHz": 0.0078,
+          "Mask": " "
         },
         "Software": {
           "SPM": {
-            "whitening": "FAST"
+            "SerialCorrelation": "FAST",
+            "HRFderivatives": "TemporalDispersion"
           }
-        },
-        "Mask": " "
+        }
       },
       "Contrasts": [
         {
@@ -142,26 +148,13 @@
             "trial_type.resp_03",
             "trial_type.resp_12"
           ],
-          "weights": [
+          "Weights": [
             1,
             1
           ],
-          "type": "t"
+          "Test": "t"
         }
       ]
-    },
-    {
-      "Level": "dataset",
-      "Model": {
-        "X": [
-          " "
-        ],
-        "Options": {},
-        "Software": {
-          "SPM": {}
-        },
-        "Mask": " "
-      }
     }
   ]
 }

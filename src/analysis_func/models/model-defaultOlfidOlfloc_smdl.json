@@ -14,10 +14,14 @@
       "Name": "run_level",
       "Model": {
         "X": [
-          "trial_type.ch1",
-          "trial_type.ch3",
-          "trial_type.ch5",
-          "trial_type.ch7",
+          "trial_type.olfid_eucalyptus_left",
+          "trial_type.olfid_eucalyptus_right",
+          "trial_type.olfid_almond_left",
+          "trial_type.olfid_almond_right",
+          "trial_type.olfloc_eucalyptus_left",
+          "trial_type.olfloc_eucalyptus_right",
+          "trial_type.olfloc_almond_left",
+          "trial_type.olfloc_almond_right",
           "trial_type.resp_03",
           "trial_type.resp_12",
           "trans_x",
@@ -29,8 +33,16 @@
         ],
         "HRF": {
           "Variables": [
-            "trial_type.VisMot",
-            "trial_type.VisStat"
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_almond_left",
+            "trial_type.olfid_almond_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_almond_left",
+            "trial_type.olfloc_almond_right",
+            "trial_type.resp_03",
+            "trial_type.resp_12"
           ],
           "Model": "DoubleGamma"
         },
@@ -46,48 +58,19 @@
           }
         }
       },
-      "Contrasts": [
-        {
-          "Name": "EucalyptusLeft",
-          "ConditionList": [
-            "trial_type.ch1"
-          ],
-          "Weights": [
-            1
-          ],
-          "Test": "t"
-        },
-        {
-          "Name": "AlmondLeft",
-          "ConditionList": [
-            "trial_type.ch3"
-          ],
-          "Weights": [
-            1
-          ],
-          "Test": "t"
-        },
-        {
-          "Name": "EucalyptusRight",
-          "ConditionList": [
-            "trial_type.ch5"
-          ],
-          "Weights": [
-            1
-          ],
-          "Test": "t"
-        },
-        {
-          "Name": "AlmondRight",
-          "ConditionList": [
-            "trial_type.ch7"
-          ],
-          "Weights": [
-            1
-          ],
-          "Test": "t"
-        }
-      ]
+      "DummyContrasts": {
+        "Contrasts": [
+          "trial_type.olfid_eucalyptus_left",
+          "trial_type.olfid_eucalyptus_right",
+          "trial_type.olfid_almond_left",
+          "trial_type.olfid_almond_right",
+          "trial_type.olfloc_eucalyptus_left",
+          "trial_type.olfloc_eucalyptus_right",
+          "trial_type.olfloc_almond_left",
+          "trial_type.olfloc_almond_right"
+        ],
+        "Test": "t"
+      }
     },
     {
       "Level": "Subject",
@@ -109,10 +92,14 @@
       ],
       "Model": {
         "X": [
-          "trial_type.ch1",
-          "trial_type.ch3",
-          "trial_type.ch5",
-          "trial_type.ch7",
+          "trial_type.olfid_eucalyptus_left",
+          "trial_type.olfid_eucalyptus_right",
+          "trial_type.olfid_almond_left",
+          "trial_type.olfid_almond_right",
+          "trial_type.olfloc_eucalyptus_left",
+          "trial_type.olfloc_eucalyptus_right",
+          "trial_type.olfloc_almond_left",
+          "trial_type.olfloc_almond_right",
           "trial_type.resp_03",
           "trial_type.resp_12",
           "trans_x",
@@ -124,8 +111,16 @@
         ],
         "HRF": {
           "Variables": [
-            "trial_type.VisMot",
-            "trial_type.VisStat"
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_almond_left",
+            "trial_type.olfid_almond_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_almond_left",
+            "trial_type.olfloc_almond_right",
+            "trial_type.resp_03",
+            "trial_type.resp_12"
           ],
           "Model": "DoubleGamma"
         },
@@ -141,6 +136,19 @@
           }
         }
       },
+      "DummyContrasts": {
+        "Contrasts": [
+          "trial_type.olfid_eucalyptus_left",
+          "trial_type.olfid_eucalyptus_right",
+          "trial_type.olfid_almond_left",
+          "trial_type.olfid_almond_right",
+          "trial_type.olfloc_eucalyptus_left",
+          "trial_type.olfloc_eucalyptus_right",
+          "trial_type.olfloc_almond_left",
+          "trial_type.olfloc_almond_right"
+        ],
+        "Test": "t"
+      },
       "Contrasts": [
         {
           "Name": "Responses",
@@ -149,6 +157,62 @@
             "trial_type.resp_12"
           ],
           "Weights": [
+            1,
+            1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "all_olfid",
+          "ConditionList": [
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_almond_left",
+            "trial_type.olfid_almond_right"
+          ],
+          "Weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "all_olfloc",
+          "ConditionList": [
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_almond_left",
+            "trial_type.olfloc_almond_right"
+          ],
+          "Weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "all_olf",
+          "ConditionList": [
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_almond_left",
+            "trial_type.olfid_almond_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_almond_left",
+            "trial_type.olfloc_almond_right"
+          ],
+          "Weights": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
             1,
             1
           ],

@@ -16,6 +16,7 @@ function opt = opt_stats()
   opt.dir.derivatives = fullfile(opt.dir.dataset_root, 'outputs', 'derivatives');
   opt.dir.preproc = fullfile(opt.dir.derivatives, 'cpp_spm-preproc');
   opt.dir.stats = fullfile(opt.dir.derivatives, 'cpp_spm-stats');
+  opt.dir.roi = fullfile(opt.dir.derivatives, 'cpp_spm-roi');
   opt.dir.input = opt.dir.preproc;
 
   % task to analyze

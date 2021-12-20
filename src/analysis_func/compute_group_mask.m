@@ -37,8 +37,8 @@ mask_files = bids.query(preproc, 'data', ...
 hdr = spm_vol(char(mask_files));
 vol = spm_read_vols(hdr);
 
-% only includes voxels that are present in all subjects
-vol = all(vol, 4);
+% only includes voxels that are present in >50% subjects / runs
+vol = sum(vol, 4)/size(vol,4)>0.5;
 
 hdr = hdr(1);
 hdr.fname = mask_file;

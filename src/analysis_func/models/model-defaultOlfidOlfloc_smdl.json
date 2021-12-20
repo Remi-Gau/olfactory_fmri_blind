@@ -6,7 +6,8 @@
     "task": [
       "olfid",
       "olfloc"
-    ]
+    ],
+    "space": "MNI152NLin2009cAsym"
   },
   "Nodes": [
     {
@@ -49,7 +50,7 @@
         "Type": "glm",
         "Options": {
           "HighPassFilterCutoffHz": 0.0078,
-          "Mask": " "
+          "Mask": ""
         },
         "Software": {
           "SPM": {
@@ -114,7 +115,7 @@
         "Type": "glm",
         "Options": {
           "HighPassFilterCutoffHz": 0.0078,
-          "Mask": " "
+          "Mask": ""
         },
         "Software": {
           "SPM": {
@@ -206,6 +207,26 @@
           "Test": "t"
         }
       ]
+    },
+    {
+      "Level": "Dataset",
+      "Name": "dataset_level",
+      "Model": {
+        "X": [
+          "all_olf"
+        ],
+        "Type": "glm",
+        "Options": {
+          "Mask": ""
+        }
+      },
+      "DummyContrasts": {
+        "Contrasts": [
+          "all_olf",
+          "Responses"
+        ],
+        "Test": "t"
+      }
     }
   ]
 }

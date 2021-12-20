@@ -1,4 +1,4 @@
-function opt = opt_stats()
+function opt = opt_stats_group_level()
     %
     % returns a structure that contains the options chosen by the user to run
     % slice timing correction, pre-processing, FFX, RFX...
@@ -34,27 +34,18 @@ function opt = opt_stats()
     opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
         'models', ...
         'model-defaultOlfidOlfloc_smdl.json');
-    opt.QA.glm.do = false;
     
-    alpha = 0.01;
+    alpha = 0.05;
     minimum_cluster_size = 10;
     
     % Specify the result to compute
     opt.result.Nodes(1) = returnDefaultResultsStructure();
-    opt.result.Nodes(1).Level = 'Subject';
+    opt.result.Nodes(1).Level = 'Dataset';
     opt.result.Nodes(1).Contrasts(1).Name = 'Responses';
     opt.result.Nodes(1).Contrasts(1).MC =  'none';
     opt.result.Nodes(1).Contrasts(1).p = alpha;
     opt.result.Nodes(1).Contrasts(1).k = minimum_cluster_size;
     opt.result.Nodes(1).Output = default_output(opt);
-    
-    opt.result.Nodes(2) = returnDefaultResultsStructure();
-    opt.result.Nodes(2).Level = 'Subject';
-    opt.result.Nodes(2).Contrasts(1).Name = 'all_olf';
-    opt.result.Nodes(2).Contrasts(1).MC =  'none';
-    opt.result.Nodes(2).Contrasts(1).p = alpha;
-    opt.result.Nodes(2).Contrasts(1).k = minimum_cluster_size;
-    opt.result.Nodes(2).Output = default_output(opt);
     
     % post setup
     raw = bids.layout(opt.dir.raw);

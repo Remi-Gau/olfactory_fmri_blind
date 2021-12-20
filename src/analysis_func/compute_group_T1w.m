@@ -6,9 +6,14 @@ clc;
 
 opt = opt_stats();
 
+% reslice flags
+flag.which = 1;
+flag.mean = false;
+flag.prefix = '';
+
 spm_mkdir(fullfile(opt.dir.stats, 'group', 'images'));
 
-p = struct( ...
+T1w_mean_spec = struct( ...
            'suffix', 'T1w', ...
            'entities', struct( ...
                               'sub', 'group', ...
@@ -16,9 +21,7 @@ p = struct( ...
                               'desc', 'mean'), ...
            'ext', '.nii');
 
-bf = bids.File(p, false);
-T1w_average = fullfile(opt.dir.stats, 'group', 'images', bf.filename);
-
+p = T1w_mean_spec;
 p.suffix = 'mask';
 p.entities.desc = 'brain';
 bf = bids.File(p, false);
@@ -42,23 +45,39 @@ vol = spm_read_vols(hdr);
 hdr_mask = spm_vol(mask_file);
 mask = spm_read_vols(hdr_mask);
 
-% average and smooth
+hdr = hdr(1);
+
+% average 
+vol = mean(vol, 4);
+
+bf = bids.File(T1w_mean_spec, false);
+T1w_average = fullfile(opt.dir.stats, 'group', 'images', bf.filename);
+hdr.fname = T1w_average;
+
+spm_write_vol(hdr, vol);
+spm_reslice({mask_file; hdr.fname}, flag);
+
+% smooth
+vol = spm_read_vols(hdr);
 vol = mean(vol, 4);
 spm_smooth(vol, vol, opt.fwhm.func);
 
-% save
-hdr = hdr(1);
-hdr.fname = T1w_average;
-spm_write_vol(hdr, vol);
+T1w_mean_spec.entities.desc = ['meanSmth' num2str(opt.fwhm.func)];
+bf = bids.File(T1w_mean_spec, false);
+hdr.fname = fullfile(opt.dir.stats, 'group', 'images', bf.filename);
 
-% reslice to mask resolution
-flag.which = 1;
-flag.mean = false;
-flag.prefix = '';
-spm_reslice({mask_file; T1w_average}, flag);
+spm_write_vol(hdr, vol);
+spm_reslice({mask_file; hdr.fname}, flag);
 
 % mask mean image
-hdr = spm_vol(T1w_average);
 vol = spm_read_vols(hdr);
+vol = mean(vol, 4);
+spm_smooth(vol, vol, opt.fwhm.func);
 vol(mask == 0) = 0;
+
+T1w_mean_spec.entities.desc = ['meanSmth' num2str(opt.fwhm.func) 'Masked'];
+bf = bids.File(T1w_mean_spec, false);
+hdr.fname = fullfile(opt.dir.stats, 'group', 'images', bf.filename);
+
 spm_write_vol(hdr, vol);
+spm_reslice({mask_file; hdr.fname}, flag);

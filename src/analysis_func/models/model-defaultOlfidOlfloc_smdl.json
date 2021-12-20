@@ -57,19 +57,6 @@
             "HRFderivatives": "TemporalDispersion"
           }
         }
-      },
-      "DummyContrasts": {
-        "Contrasts": [
-          "trial_type.olfid_eucalyptus_left",
-          "trial_type.olfid_eucalyptus_right",
-          "trial_type.olfid_almond_left",
-          "trial_type.olfid_almond_right",
-          "trial_type.olfloc_eucalyptus_left",
-          "trial_type.olfloc_eucalyptus_right",
-          "trial_type.olfloc_almond_left",
-          "trial_type.olfloc_almond_right"
-        ],
-        "Test": "t"
       }
     },
     {

@@ -34,59 +34,54 @@ function opt = opt_stats()
                             'models', ...
                             'model-defaultOlfidOlfloc_smdl.json');
   opt.QA.glm.do = false;
+  
+  alpha = 0.01;
+  minimum_cluster_size = 10;
 
   % Specify the result to compute
   opt.result.Nodes(1) = returnDefaultResultsStructure();
+  opt.result.Nodes(1).Level = 'Subject';
+  opt.result.Nodes(1).Contrasts(1).Name = 'Responses';
+  opt.result.Nodes(1).Contrasts(1).MC =  'none';
+  opt.result.Nodes(1).Contrasts(1).p = alpha;
+  opt.result.Nodes(1).Contrasts(1).k = minimum_cluster_size;
+  opt.result.Nodes(1).Output = default_output(opt);
 
-  opt.result.Nodes(1).Level = 'subject';
+  opt.result.Nodes(2) = returnDefaultResultsStructure();
+  opt.result.Nodes(2).Level = 'Subject';
+  opt.result.Nodes(2).Contrasts(1).Name = 'all_olf';
+  opt.result.Nodes(2).Contrasts(1).MC =  'none';
+  opt.result.Nodes(2).Contrasts(1).p = alpha;
+  opt.result.Nodes(2).Contrasts(1).k = minimum_cluster_size;
+  opt.result.Nodes(2).Output = default_output(opt);
 
-  opt.result.Nodes(1).Contrasts(1).Name = 'listening';
-
-  % For each contrats, you can adapt:
-  %  - voxel level (p)
-  %  - cluster (k) level threshold
-  %  - type of multiple comparison:
-  %    - 'FWE' is the defaut
-  %    - 'FDR'
-  %    - 'none'
-  %
-  %   opt.result.Nodes(1).Contrasts(2).Name = 'listening_inf_baseline';
-  %   opt.result.Nodes(1).Contrasts(2).MC =  'none';
-  %   opt.result.Nodes(1).Contrasts(2).p = 0.01;
-  %   opt.result.Nodes(1).Contrasts(2).k = 0;
-
-  % Specify how you want your output (all the following are on false by default)
-  opt.result.Nodes(1).Output.png = true();
-
-  opt.result.Nodes(1).Output.csv = false();
-  opt.result.Nodes(1).Output.thresh_spm = false();
-  opt.result.Nodes(1).Output.binary = false();
-
-  % MONTAGE FIGURE OPTIONS
-  opt.result.Nodes(1).Output.montage.do = false();
-  opt.result.Nodes(1).Output.montage.slices = -0:2:16; % in mm
-  % axial is default 'sagittal', 'coronal'
-  opt.result.Nodes(1).Output.montage.orientation = 'axial';
-  % will use the MNI T1 template by default but the underlay image can be changed.
-  opt.result.Nodes(1).Output.montage.background = ...
-      fullfile(spm('dir'), 'canonical', 'avg152T1.nii,1');
-
-  opt.result.Nodes(1).Output.NIDM_results = false();
-
-  %% DO NOT TOUCH
-
+  % post setup
   raw = bids.layout(opt.dir.raw);
   opt.subjects = bids.query(raw, 'subjects');
 
-  opt.subjects = cellstr("blnd01");
+  opt.subjects =  cellstr({'blnd01', 'blnd02', 'ctrl01', 'ctrl02'});
 
   opt = get_options(opt);
 
   opt.subjects = rm_subjects(opt.subjects, opt);
 
-  % opt = createDefaultStatsModel(raw, opt);
-
   opt = checkOptions(opt);
   saveOptions(opt);
 
+end
+
+
+function Output = default_output(opt)
+  Output = struct('png', true, ...
+  'csv', false,...
+  'thresh_spm', false,...
+  'binary', false,...
+  'NIDM_results', false);
+Output.montage.do = true();
+Output.montage.slices = -27:3:48; % in mm
+Output.montage.orientation = 'axial';
+Output.montage.background = ...
+spm_select('FPList', ...
+ fullfile(opt.dir.stats, 'group', 'images'), ...
+ '.*desc-mean_T1w.nii');
 end

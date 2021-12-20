@@ -22,7 +22,7 @@ function opt = opt_preproc()
 
   opt.fwhm.func = 6;
 
-  %% DO NOT TOUCH
+  % post setup
   raw = bids.layout(opt.dir.raw);
   opt.subjects = bids.query(raw, 'subjects');
 

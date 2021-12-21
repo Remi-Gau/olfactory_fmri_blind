@@ -13,7 +13,6 @@ bidsFFX('contrasts', opt);
 
 bidsResults(opt);
 
-
 % FOR INFO: old contrasts computed previously
 % contrast_ls = {
 %     'Alm-Left + Alm-Right > 0'

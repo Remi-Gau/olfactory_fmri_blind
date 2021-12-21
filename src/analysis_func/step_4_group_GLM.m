@@ -11,11 +11,10 @@ opt = opt_stats_group_level();
 bidsRFX('RFX', opt);
 bidsResults(opt);
 
-
 % TODO
 % 2 samples ttest
 
-% 
+%
 % %%
 % contrast_ls = {
 %                'Alm-Left + Alm-Right > 0'

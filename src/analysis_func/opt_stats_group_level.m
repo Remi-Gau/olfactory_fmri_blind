@@ -47,11 +47,17 @@ function opt = opt_stats_group_level()
     opt.result.Nodes(1).Contrasts(1).k = minimum_cluster_size;
     opt.result.Nodes(1).Output = default_output(opt);
     
+    opt.result.Nodes(2) = returnDefaultResultsStructure();
+    opt.result.Nodes(2).Level = 'Dataset';
+    opt.result.Nodes(2).Contrasts(1).Name = 'all_olf';
+    opt.result.Nodes(2).Contrasts(1).MC =  'none';
+    opt.result.Nodes(2).Contrasts(1).p = alpha;
+    opt.result.Nodes(2).Contrasts(1).k = minimum_cluster_size;
+    opt.result.Nodes(2).Output = default_output(opt);    
+    
     % post setup
     raw = bids.layout(opt.dir.raw);
     opt.subjects = bids.query(raw, 'subjects');
-    
-    opt.subjects =  cellstr({'blnd01', 'blnd02', 'ctrl01', 'ctrl02'});
     
     opt = get_options(opt);
     
@@ -70,7 +76,7 @@ function Output = default_output(opt)
         'binary', false,...
         'NIDM_results', false);
     Output.montage.do = true();
-    Output.montage.slices = -27:3:48; % in mm
+    Output.montage.slices = -27:3:58; % in mm
     Output.montage.orientation = 'axial';
     Output.montage.background = ...
         spm_select('FPList', ...

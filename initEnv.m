@@ -59,13 +59,13 @@ function initEnv()
     end
 
     disp('Correct matlab/octave verions and added to the path!');
-
+    
     % If external dir is empty throw an exception
     % and ask user to update submodules.
     libDirectory = fullfile(fileparts(mfilename('fullpath')), 'lib');
-
+    
     run(fullfile(libDirectory, 'CPP_SPM', 'initCppSpm'));
-
+    
     addpath(genpath(fullfile(libDirectory, 'matlab_exchange')));
     addpath(genpath(fullfile(fileparts(mfilename('fullpath')), 'src', 'subfun')));
 

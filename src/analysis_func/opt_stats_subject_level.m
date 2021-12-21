@@ -1,4 +1,4 @@
-function opt = opt_stats()
+function opt = opt_stats_subject_level()
     %
     % returns a structure that contains the options chosen by the user to run
     % slice timing correction, pre-processing, FFX, RFX...
@@ -6,10 +6,7 @@ function opt = opt_stats()
     % (C) Copyright 2021 Remi Gau
     
     opt = [];
-    
-    %   opt.dryRun = true;
-    %   opt.model.designOnly = true;
-    
+   
     % The directory where the data are located
     opt.dir.dataset_root = fullfile(fileparts(mfilename('fullpath')), '..', '..', '..');
     opt.dir.raw = fullfile(opt.dir.dataset_root, 'inputs', 'raw');
@@ -36,6 +33,11 @@ function opt = opt_stats()
         'model-defaultOlfidOlfloc_smdl.json');
     opt.QA.glm.do = false;
     
+    % TODO 
+    % limiting number of scans crashes because of associated number 
+    % of time points in confounds regressors.
+    %   opt.glm.maxNbVols = 300;
+    
     alpha = 0.01;
     minimum_cluster_size = 10;
     
@@ -59,8 +61,6 @@ function opt = opt_stats()
     % post setup
     raw = bids.layout(opt.dir.raw);
     opt.subjects = bids.query(raw, 'subjects');
-    
-    opt.subjects =  cellstr({'blnd01', 'blnd02', 'ctrl01', 'ctrl02'});
     
     opt = get_options(opt);
     

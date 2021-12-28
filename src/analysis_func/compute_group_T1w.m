@@ -4,14 +4,18 @@
 clear;
 clc;
 
-opt = opt_stats();
+run ../../initEnv.m;
+
+opt = opt_stats_group_level();
+
+opt.dir.output = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats');
 
 % reslice flags
 flag.which = 1;
 flag.mean = false;
 flag.prefix = '';
 
-spm_mkdir(fullfile(opt.dir.stats, 'group', 'images'));
+spm_mkdir(opt.dir.output);
 
 T1w_mean_spec = struct( ...
                        'suffix', 'T1w', ...
@@ -25,7 +29,7 @@ p = T1w_mean_spec;
 p.suffix = 'mask';
 p.entities.desc = 'brain';
 bf = bids.File(p, false);
-mask_file = fullfile(opt.dir.stats, 'group', 'images', bf.filename);
+mask_file = fullfile(opt.dir.output, bf.filename);
 
 %% get all the GLM masks
 preproc = bids.layout(opt.dir.preproc, false);
@@ -51,7 +55,7 @@ hdr = hdr(1);
 vol = mean(vol, 4);
 
 bf = bids.File(T1w_mean_spec, false);
-T1w_average = fullfile(opt.dir.stats, 'group', 'images', bf.filename);
+T1w_average = fullfile(opt.dir.output, bf.filename);
 hdr.fname = T1w_average;
 
 spm_write_vol(hdr, vol);
@@ -64,7 +68,7 @@ spm_smooth(vol, vol, opt.fwhm.func);
 
 T1w_mean_spec.entities.desc = ['meanSmth' num2str(opt.fwhm.func)];
 bf = bids.File(T1w_mean_spec, false);
-hdr.fname = fullfile(opt.dir.stats, 'group', 'images', bf.filename);
+hdr.fname = fullfile(opt.dir.output, bf.filename);
 
 spm_write_vol(hdr, vol);
 spm_reslice({mask_file; hdr.fname}, flag);
@@ -77,7 +81,7 @@ vol(mask == 0) = 0;
 
 T1w_mean_spec.entities.desc = ['meanSmth' num2str(opt.fwhm.func) 'Masked'];
 bf = bids.File(T1w_mean_spec, false);
-hdr.fname = fullfile(opt.dir.stats, 'group', 'images', bf.filename);
+hdr.fname = fullfile(opt.dir.output, bf.filename);
 
 spm_write_vol(hdr, vol);
 spm_reslice({mask_file; hdr.fname}, flag);

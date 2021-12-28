@@ -6,9 +6,13 @@
 clear;
 clc;
 
-opt = opt_stats();
+run ../../initEnv.m;
 
-spm_mkdir(fullfile(opt.dir.stats, 'group', 'images'));
+opt = opt_stats_group_level();
+
+opt.dir.output = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats');
+
+spm_mkdir(opt.dir.output);
 
 p = struct( ...
            'suffix', 'mask', ...
@@ -20,7 +24,7 @@ p = struct( ...
 
 bf = bids.File(p, false);
 
-mask_file = fullfile(opt.dir.stats, 'group', 'images', bf.filename);
+mask_file = fullfile(opt.dir.output, bf.filename);
 
 %% get all the GLM masks
 preproc = bids.layout(opt.dir.preproc, false);

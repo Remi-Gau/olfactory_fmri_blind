@@ -33,10 +33,7 @@ function opt = opt_stats_subject_level()
                             'model-defaultOlfidOlfloc_smdl.json');
   opt.QA.glm.do = false;
 
-  % TODO
-  % limiting number of scans crashes because of associated number
-  % of time points in confounds regressors.
-  %   opt.glm.maxNbVols = 300;
+  opt.glm.maxNbVols = 300;
 
   alpha = 0.01;
   minimum_cluster_size = 10;
@@ -82,6 +79,6 @@ function output = default_output(opt)
   output.montage.orientation = 'axial';
   output.montage.background = ...
       spm_select('FPList', ...
-                 fullfile(opt.dir.stats, 'group', 'images'), ...
+                 fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats'), ...
                  '.*desc-meanSmth6Masked_T1w.nii');
 end

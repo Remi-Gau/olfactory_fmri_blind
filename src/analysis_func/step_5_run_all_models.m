@@ -6,6 +6,7 @@ clc;
 run ../../initEnv.m;
 
 models = {'Hrf'; 'HrfTemp'; 'HrfTempDisp'};
+% models = {'HrfNoTissueConfounds'; 'HrfTempNoTissueConfounds'; 'HrfTempDispNoTissueConfounds'};
 
 for i = 1:numel(models)
 
@@ -33,36 +34,6 @@ end
 return
 
 %% parameters
-clc;
-clear;
-
-space = 'MNI';
-
-if ~exist('machine_id', 'var')
-  machine_id = 2; % 0: container ;  1: Remi ;  2: Beast
-end
-
-% 'MNI' or  'T1w' (native)
-if ~exist('space', 'var')
-  space = 'MNI';
-end
-
-%% setting up
-% setting up directories
-[data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
-
-% get date info
-bids =  spm_BIDS(fullfile(data_dir, 'raw'));
-
-data_dir; %#ok<*NOPTS>
-code_dir;
-output_dir;
-
-% listing subjects
-folder_subj = get_subj_list(output_dir);
-folder_subj = cellstr(char({folder_subj.name}')); % turn subject folders into a cellstr
-[~, ~, folder_subj] = rm_subjects([], [], folder_subj, 1);
-nb_subjects = numel(folder_subj);
 
 %% figure out which GLMs to run
 % set up all the possible of comb   inations of GLM possible given the

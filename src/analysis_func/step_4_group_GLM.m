@@ -6,8 +6,8 @@ clc;
 run ../../initEnv.m;
 
 opt = opt_stats_group_level();
-
-% bidsRFX('meanAnatAndMask', opt);
+                
+bidsRFX('meanAnatAndMask', opt);
 bidsRFX('RFX', opt);
 bidsResults(opt);
 

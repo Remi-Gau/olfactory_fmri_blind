@@ -1,7 +1,7 @@
 {
-  "Name": "olfid olfloc",
+  "Name": "hrf no tissue confounds",
   "BIDSModelVersion": "1.0.0",
-  "Description": "default model for olfidolfloc",
+  "Description": "hrf only, include all voxels in SPM ICV mask",
   "Input": {
     "task": [
       "olfid",
@@ -26,9 +26,7 @@
           "trial_type.resp_03",
           "trial_type.resp_12",
           "trans_?",
-          "rot_?",
-          "non_steady_state_outlier*",
-          "motion_outlier*"
+          "rot_?"
         ],
         "HRF": {
           "Variables": [
@@ -53,7 +51,7 @@
         "Software": {
           "SPM": {
             "SerialCorrelation": "FAST",
-            "HRFderivatives": "TemporlDispersion",
+            "HRFderivatives": "none",
             "InclusiveMaskingThreshold": "-Inf"
           }
         }
@@ -90,9 +88,7 @@
           "trial_type.resp_03",
           "trial_type.resp_12",
           "trans_?",
-          "rot_?",
-          "non_steady_state_outlier*",
-          "motion_outlier*"
+          "rot_?"
         ],
         "HRF": {
           "Variables": [
@@ -117,7 +113,7 @@
         "Software": {
           "SPM": {
             "SerialCorrelation": "FAST",
-            "HRFderivatives": "TemporalDispersion"
+            "HRFderivatives": "none"
           }
         }
       },

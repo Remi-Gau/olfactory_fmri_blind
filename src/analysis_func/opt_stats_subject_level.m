@@ -16,17 +16,10 @@ function opt = opt_stats_subject_level()
   opt.dir.roi = fullfile(opt.dir.derivatives, 'cpp_spm-roi');
   opt.dir.input = opt.dir.preproc;
 
-  % task to analyze
-  opt.taskName = {'olfid', 'olfloc'};
-
   opt.verbosity = 1;
-
-  opt.space = {'MNI152NLin2009cAsym'};
 
   opt.fwhm.func = 6;
   opt.fwhm.contrast = 0;
-
-  opt.pipeline.type = 'stats';
 
   opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
                             'models', ...

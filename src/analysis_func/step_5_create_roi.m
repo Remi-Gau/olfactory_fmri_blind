@@ -5,7 +5,7 @@ clc;
 
 run ../../initEnv.m;
 
-opt = opt_stats();
+opt = opt_stats_subject_level();
 
 gunzip(fullfile(opt.dir.roi, 'group', '*.gz'));
 

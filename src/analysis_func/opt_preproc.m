@@ -18,8 +18,6 @@ function opt = opt_preproc()
 
   opt.verbosity = 1;
 
-  opt.space = {'MNI152NLin2009cAsym'};
-
   opt.fwhm.func = 6;
 
   % post setup

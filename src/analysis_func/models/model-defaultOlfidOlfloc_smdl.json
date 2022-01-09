@@ -53,7 +53,7 @@
         "Software": {
           "SPM": {
             "SerialCorrelation": "FAST",
-            "HRFderivatives": "TemporlDispersion",
+            "HRFderivatives": "temporal",
             "InclusiveMaskingThreshold": "-Inf"
           }
         }
@@ -117,7 +117,7 @@
         "Software": {
           "SPM": {
             "SerialCorrelation": "FAST",
-            "HRFderivatives": "TemporalDispersion"
+            "HRFderivatives": "temporal"
           }
         }
       },

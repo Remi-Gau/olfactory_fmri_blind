@@ -1,3 +1,5 @@
+% (C) Copyright 2021 Remi Gau
+
 % write method description for dataset
 
 clear;

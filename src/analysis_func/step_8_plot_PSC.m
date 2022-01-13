@@ -2,7 +2,7 @@
 % based anaylisis using MarsBar to get a time course of the activations and
 % a percent signal change for each ROI and subject
 %
-% (C) Copyright 2020 CPP ROI developers
+% (C) Copyright 2021 Remi Gau
 
 % TODO
 % - refactor

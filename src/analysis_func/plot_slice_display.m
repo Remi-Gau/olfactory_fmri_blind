@@ -1,3 +1,5 @@
+% (C) Copyright 2021 Remi Gau
+
 clear;
 clc;
 
@@ -34,22 +36,22 @@ layers(1).color.map = gray(256);
 %% Contour of ROI
 
 layers(2).color.file = spm_select('FPList', fullfile(opt.dir.roi, 'group'), ...
-    'ROI-L-R-Amyg-mOC_space-MNI.nii');
+                                  'ROI-L-R-Amyg-mOC_space-MNI.nii');
 layers(2).color.map = [0 0 0];
 layers(2).color.line_width = 2;
 
 layers(3).color.file = spm_select('FPList', fullfile(opt.dir.roi, 'group'), ...
-    'ROI-L-R-Olfactory-Cortex-mOC_space-MNI.nii');
+                                  'ROI-L-R-Olfactory-Cortex-mOC_space-MNI.nii');
 layers(3).color.map = [1 1 1];
 layers(3).color.line_width = 2;
 
 layers(4).color.file = spm_select('FPList', fullfile(opt.dir.roi, 'group'), ...
-    'space-MNI_label-neurosynthOlfactory_desc-p05pt00_mask.nii');
+                                  'space-MNI_label-neurosynthOlfactory_desc-p05pt00_mask.nii');
 layers(4).color.map = [0.5 0.5 0.5];
 layers(4).color.line_width = 2;
 
 layers(5).color.file = spm_select('FPList', fullfile(opt.dir.roi, 'group'), ...
-    'hemi-R_space-MNI_label-V1d_desc-wang_mask.nii');
+                                  'hemi-R_space-MNI_label-V1d_desc-wang_mask.nii');
 layers(5).color.map = [0 1 0];
 layers(5).color.line_width = 2;
 
@@ -69,7 +71,6 @@ layers(6).color.label = '\beta_{allolf} - \beta_{baseline} (a.u.)';
 layers(6).opacity.file = spmTImage;
 layers(6).opacity.range = [2 3];
 layers(6).opacity.label = '| t |';
-
 
 %% Settings and display
 settings = sd_config_settings('init');

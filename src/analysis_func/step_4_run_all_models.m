@@ -1,12 +1,33 @@
+% Can either:
+%
+% - specify the models for different BIDS stats model to prepare for model selection 
+% - specify and estimate run the subject and dataset levels models 
+%
 % (C) Copyright 2019 Remi Gau
 
 clear;
 clc;
 
+%%
 run ../../initEnv.m;
 
-models = {'Hrf'; 'HrfTemp'; 'HrfTempDisp'; ...
-          'HrfNoTissueConfounds'; 'HrfTempNoTissueConfounds'; 'HrfTempDispNoTissueConfounds'};
+list_models_files = {
+    'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
+    'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
+    'model-NoDerivativeWithTissueConfoundsNoScrubbing_smdl.json'
+    'model-NoDerivativeWithTissueConfoundsWithScrubbing_smdl.json'
+    'model-TemporalDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
+    'model-TemporalDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
+    'model-TemporalDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
+    'model-TemporalDerivativesWithTissueConfoundsWithScrubbing_smdl.json'
+    'model-TemporalDispersionDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
+    'model-TemporalDispersionDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
+    'model-TemporalDispersionDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
+    'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
+  
+% subjects = '.*0[1-9]';
+
+models = {'HrfWithOutliers'};
 
 % Model selection of the next step does not need model to be estimated
 specify_only = true;
@@ -18,11 +39,19 @@ for i = 1:numel(models)
                         ['model-' models{i} '_smdl.json']);
 
   opt = opt_stats_subject_level();
-  opt.subjects = '.*0[1-5]';
+
+  % TODO: putting this might include subjects that have been excluded in the options
+  %   opt.subjects = subjects;
 
   opt.model.file = model_file;
 
   if specify_only
+
+    % TODO: probably should not have to be that heavy handed to save things in a
+    % different directory
+    % - getFFXDir seems to always create things in opt.dir.stats and not opt.dir.output
+    opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'cpp_spm-modelSelection'), 'cpath');
+    opt.dir.stats = opt.dir.output;
 
     opt.glm.useDummyRegressor = true;
 
@@ -35,7 +64,7 @@ for i = 1:numel(models)
     bidsResults(opt);
 
     opt = opt_stats_group_level();
-    opt.subjects = '.*0[1-5]';
+    opt.subjects = subjects;
 
     opt.model.file = model_file;
 

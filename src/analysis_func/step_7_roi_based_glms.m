@@ -16,4 +16,4 @@ opt.space = 'MNI';
 opt.verbosity = 1;
 
 bidsFFX('specify', opt);
-% bidsRoiBasedGLM(opt);
+bidsRoiBasedGLM(opt);

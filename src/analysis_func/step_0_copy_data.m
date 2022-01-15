@@ -7,8 +7,6 @@ run ../../initEnv.m;
 
 opt = opt_preproc();
 
-% TODO add ability to copy filter several times on the same data set
-
 opt.query.desc = {'confounds'};
 bidsCopyInputFolder(opt);
 

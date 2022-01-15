@@ -1,7 +1,7 @@
 {
-  "Name": "hrf",
+  "Name": "Temporal Dispersion Derivatives With Tissue Confounds With Scrubbing",
   "BIDSModelVersion": "1.0.0",
-  "Description": "hrf only, include all voxels in SPM ICV mask, includes white_matter and csf confounds",
+  "Description": "combined GLM for olfaction identification and localization tasks - HRF: temporal and dispersion derivatives - includes WM and CSF confounds - With Scrubbing - include all voxels in SPM ICV mask",
   "Input": {
     "task": [
       "olfid",
@@ -28,7 +28,8 @@
           "trans_?",
           "rot_?",
           "white_matter",
-          "csf"
+          "csf",
+          "*outlier*"
         ],
         "HRF": {
           "Variables": [
@@ -65,16 +66,12 @@
       "Transformations": [
         {
           "Name": "Factor",
-          "Inputs": [
-            "trial_type"
-          ]
+          "Inputs": ["trial_type"]
         },
         {
           "Name": "Convolve",
           "Model": "spm",
-          "Inputs": [
-            " "
-          ]
+          "Inputs": [" "]
         }
       ],
       "Model": {
@@ -92,7 +89,8 @@
           "trans_?",
           "rot_?",
           "white_matter",
-          "csf"
+          "csf",
+          "*outlier*"
         ],
         "HRF": {
           "Variables": [
@@ -117,7 +115,8 @@
         "Software": {
           "SPM": {
             "SerialCorrelation": "FAST",
-            "HRFderivatives": "none"
+            "HRFderivatives": "none",
+            "InclusiveMaskingThreshold": "-Inf"
           }
         }
       },
@@ -141,10 +140,7 @@
             "trial_type.resp_03",
             "trial_type.resp_12"
           ],
-          "Weights": [
-            1,
-            1
-          ],
+          "Weights": [1,1],
           "Test": "t"
         },
         {
@@ -155,12 +151,7 @@
             "trial_type.olfid_almond_left",
             "trial_type.olfid_almond_right"
           ],
-          "Weights": [
-            1,
-            1,
-            1,
-            1
-          ],
+          "Weights": [1,1,1,1],
           "Test": "t"
         },
         {
@@ -171,12 +162,7 @@
             "trial_type.olfloc_almond_left",
             "trial_type.olfloc_almond_right"
           ],
-          "Weights": [
-            1,
-            1,
-            1,
-            1
-          ],
+          "Weights": [1,1,1,1],
           "Test": "t"
         },
         {
@@ -191,16 +177,7 @@
             "trial_type.olfloc_almond_left",
             "trial_type.olfloc_almond_right"
           ],
-          "Weights": [
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            1
-          ],
+          "Weights": [1,1,1,1,1,1,1,1],
           "Test": "t"
         }
       ]
@@ -209,9 +186,7 @@
       "Level": "Dataset",
       "Name": "dataset_level",
       "Model": {
-        "X": [
-          "all_olf"
-        ],
+        "X": ["all_olf"],
         "Type": "glm",
         "Options": {
           "Mask": ""

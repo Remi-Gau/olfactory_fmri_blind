@@ -10,15 +10,24 @@ clc;
 
 run ../../initEnv.m;
 
-models = {  'Hrf'; ...
-          'HrfTemp'; ...
-          'HrfTempDisp'; ...
-          'HrfNoTissueConfounds'; ...
-          'HrfTempNoTissueConfounds'; ...
-          'HrfTempDispNoTissueConfounds'};
+subjects = '.*[^ctrl02]';
+
+list_models_files = {
+    'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
+    'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
+    'model-NoDerivativeWithTissueConfoundsNoScrubbing_smdl.json'
+    'model-NoDerivativeWithTissueConfoundsWithScrubbing_smdl.json'
+    'model-TemporalDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
+    'model-TemporalDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
+    'model-TemporalDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
+    'model-TemporalDerivativesWithTissueConfoundsWithScrubbing_smdl.json'
+    'model-TemporalDispersionDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
+    'model-TemporalDispersionDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
+    'model-TemporalDispersionDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
+    'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
 
 opt = opt_stats_subject_level();
-opt.subjects = 'ctrl0[3-5]';
+opt.subjects = subjects;
 
 for i = 1:numel(models)
 
@@ -28,4 +37,4 @@ for i = 1:numel(models)
 
 end
 
-bidsModelSelection(opt, 'action', 'cvLME');
+bidsModelSelection(opt, 'action', 'BMS');

@@ -7,52 +7,39 @@ run ../../initEnv.m;
 
 opt = opt_stats_subject_level();
 
+%% take care of neurosynth maps
+
 gunzip(fullfile(opt.dir.roi, 'group', '*.gz'));
+
+cluster_threshold = 50;
+
+z_threshold = 5;
 
 zMaps = spm_select('FPlist', ...
                    fullfile(opt.dir.roi, 'group'), ...
-                   '.*association-test.*.nii$');
+                   'olfactory.*association-test.*.nii$');
+thresholdAndSplitHemisphere(zMaps, z_threshold, cluster_threshold);
 
-for iROI = 1:size(zMaps, 1)
+cluster_threshold = 50;
 
-  zMap = renameNeuroSynth(deblank(zMaps(iROI, :)));
-  roiImage = thresholdToMask(zMap, 5);
+z_threshold = 8;
 
-  %%
-  leftRoiImage = keepHemisphere(roiImage, 'L');
+zMaps = spm_select('FPlist', ...
+                   fullfile(opt.dir.roi, 'group'), ...
+                   'hand.*association-test.*.nii$');
+thresholdAndSplitHemisphere(zMaps, z_threshold, cluster_threshold);
 
-  bf = bids.File(leftRoiImage, false);
-  bf.entity_order = {'hemi'
-                     'space'
-                     'label'
-                     'desc'
-                    };
-  bf.entities.label = strrep(bf.entities.label, 'neurosynth', 'ns');
-  bf = bf.reorder_entities();
-  bf = bf.create_filename();
+zMaps = spm_select('FPlist', ...
+                   fullfile(opt.dir.roi, 'group'), ...
+                   'auditory.*association-test.*.nii$');
+thresholdAndSplitHemisphere(zMaps, z_threshold, cluster_threshold);
 
-  movefile(leftRoiImage, fullfile(bf.pth, bf.filename));
+disp('Done');
 
-  %%
-  rightRoiImage = keepHemisphere(roiImage, 'R');
-
-  bf = bids.File(rightRoiImage, false);
-  bf.entity_order = {'hemi'
-                     'space'
-                     'label'
-                     'desc'
-                    };
-  bf.entities.label = strrep(bf.entities.label, 'neurosynth', 'ns');
-  bf = bf.reorder_entities();
-  bf = bf.create_filename();
-
-  movefile(rightRoiImage, fullfile(bf.pth, bf.filename));
-
-end
+%% Create visual ROIs from the wang atlas
 
 opt.roi.atlas = 'wang';
-opt.roi.name = { ...
-                'V1v'
+opt.roi.name = {'V1v'
                 'V1d'
                 'V2v'
                 'V2d'
@@ -68,3 +55,23 @@ opt.roi.name = { ...
 opt.roi.space = {'MNI'};
 
 bidsCreateROI(opt);
+
+%% merge ventral / dorsal ROIs
+opt.dir.roi = spm_file(fullfile(opt.dir.derivatives, 'cpp_spm-roi'), 'cpath');
+
+hemi = {'L', 'R'};
+
+for iHemi = 1:numel(hemi)
+
+  for iROI = 1:numel(opt.roi.name)
+
+    extractRoiFromAtlas(fullfile(opt.dir.roi, 'group'), ...
+                        opt.roi.atlas, ...
+                        opt.roi.name{iROI}, ...
+                        hemi{iHemi});
+
+  end
+
+end
+
+%% merge left and right

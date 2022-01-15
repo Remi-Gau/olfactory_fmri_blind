@@ -1,7 +1,7 @@
 % Can either:
 %
-% - specify the models for different BIDS stats model to prepare for model selection 
-% - specify and estimate run the subject and dataset levels models 
+% - specify the models for different BIDS stats model to prepare for model selection
+% - specify and estimate run the subject and dataset levels models
 %
 % (C) Copyright 2019 Remi Gau
 
@@ -12,19 +12,19 @@ clc;
 run ../../initEnv.m;
 
 list_models_files = {
-    'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
-    'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
-    'model-NoDerivativeWithTissueConfoundsNoScrubbing_smdl.json'
-    'model-NoDerivativeWithTissueConfoundsWithScrubbing_smdl.json'
-    'model-TemporalDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
-    'model-TemporalDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
-    'model-TemporalDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
-    'model-TemporalDerivativesWithTissueConfoundsWithScrubbing_smdl.json'
-    'model-TemporalDispersionDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
-    'model-TemporalDispersionDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
-    'model-TemporalDispersionDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
-    'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
-  
+                     'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
+                     'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
+                     'model-NoDerivativeWithTissueConfoundsNoScrubbing_smdl.json'
+                     'model-NoDerivativeWithTissueConfoundsWithScrubbing_smdl.json'
+                     'model-TemporalDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
+                     'model-TemporalDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
+                     'model-TemporalDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
+                     'model-TemporalDerivativesWithTissueConfoundsWithScrubbing_smdl.json'
+                     'model-TemporalDispersionDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
+                     'model-TemporalDispersionDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
+                     'model-TemporalDispersionDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
+                     'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
+
 % subjects = '.*0[1-9]';
 
 models = {'HrfWithOutliers'};

@@ -18,7 +18,7 @@ z_threshold = 5;
 zMaps = spm_select('FPlist', ...
                    fullfile(opt.dir.roi, 'group'), ...
                    'olfactory.*association-test.*.nii$');
-thresholdAndSplitHemisphere(zMaps, z_threshold, cluster_threshold);
+threshold_and_split_hemisphere(zMaps, z_threshold, cluster_threshold);
 
 cluster_threshold = 50;
 
@@ -27,12 +27,12 @@ z_threshold = 8;
 zMaps = spm_select('FPlist', ...
                    fullfile(opt.dir.roi, 'group'), ...
                    'hand.*association-test.*.nii$');
-thresholdAndSplitHemisphere(zMaps, z_threshold, cluster_threshold);
+threshold_and_split_hemisphere(zMaps, z_threshold, cluster_threshold);
 
 zMaps = spm_select('FPlist', ...
                    fullfile(opt.dir.roi, 'group'), ...
                    'auditory.*association-test.*.nii$');
-thresholdAndSplitHemisphere(zMaps, z_threshold, cluster_threshold);
+threshold_and_split_hemisphere(zMaps, z_threshold, cluster_threshold);
 
 disp('Done');
 
@@ -56,22 +56,34 @@ opt.roi.space = {'MNI'};
 
 bidsCreateROI(opt);
 
+disp('Done');
+
 %% merge ventral / dorsal ROIs
 opt.dir.roi = spm_file(fullfile(opt.dir.derivatives, 'cpp_spm-roi'), 'cpath');
 
 hemi = {'L', 'R'};
 
-for iHemi = 1:numel(hemi)
+for iRoi = 1:3
+  
+  for iHemi = 1:2
 
-  for iROI = 1:numel(opt.roi.name)
+    roi_name = sprintf('V%i', iRoi);
 
-    extractRoiFromAtlas(fullfile(opt.dir.roi, 'group'), ...
-                        opt.roi.atlas, ...
-                        opt.roi.name{iROI}, ...
-                        hemi{iHemi});
+    opt.roi.name = {['hemi-' hemi{iHemi} '.*' roi_name '.*']};
+    roiList = getROIs(opt);
+    merge_dorsal_ventral_rois(roiList, roi_name);
 
   end
 
 end
 
+disp('Done')
+
 %% merge left and right
+
+opt.roi.name = {'hemi-L.*V1v.*', 'hemi-R.*V1v.*'};
+roiList = getROIs(opt);
+
+%%
+
+

@@ -1,4 +1,4 @@
-function thresholdAndSplitHemisphere(zMaps, z_threshold, cluster_threshold)
+function threshold_and_split_hemisphere(zMaps, z_threshold, cluster_threshold)
   %
   % thresholdAndSplitHemisphere(zMaps, z_threshold)
   %

@@ -31,19 +31,18 @@ function opt = opt_stats_group_level()
   % Specify the result to compute
   opt.result.Nodes(1) = returnDefaultResultsStructure();
   opt.result.Nodes(1).Level = 'Dataset';
+  
   opt.result.Nodes(1).Contrasts(1).Name = 'Responses';
   opt.result.Nodes(1).Contrasts(1).MC =  'none';
   opt.result.Nodes(1).Contrasts(1).p = alpha;
   opt.result.Nodes(1).Contrasts(1).k = minimum_cluster_size;
-  opt.result.Nodes(1).Output = default_output(opt);
 
-  opt.result.Nodes(2) = returnDefaultResultsStructure();
-  opt.result.Nodes(2).Level = 'Dataset';
-  opt.result.Nodes(2).Contrasts(1).Name = 'all_olf';
-  opt.result.Nodes(2).Contrasts(1).MC =  'none';
-  opt.result.Nodes(2).Contrasts(1).p = alpha;
-  opt.result.Nodes(2).Contrasts(1).k = minimum_cluster_size;
-  opt.result.Nodes(2).Output = default_output(opt);
+  opt.result.Nodes(1).Contrasts(2).Name = 'all_olf';
+  opt.result.Nodes(1).Contrasts(2).MC =  'none';
+  opt.result.Nodes(1).Contrasts(2).p = alpha;
+  opt.result.Nodes(1).Contrasts(2).k = minimum_cluster_size;
+  
+  opt.result.Nodes(1).Output = default_output(opt);
 
   % post setup
   raw = bids.layout(opt.dir.raw);

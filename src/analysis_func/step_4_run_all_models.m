@@ -8,11 +8,12 @@
 clear;
 clc;
 
+dryRun = false;
+
 %%
 run ../../initEnv.m;
 
-list_models_files = {
-                     'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
+list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
                      'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
                      'model-NoDerivativeWithTissueConfoundsNoScrubbing_smdl.json'
                      'model-NoDerivativeWithTissueConfoundsWithScrubbing_smdl.json'
@@ -27,18 +28,16 @@ list_models_files = {
 
 % subjects = '.*0[1-9]';
 
-models = {'HrfWithOutliers'};
-
 % Model selection of the next step does not need model to be estimated
 specify_only = true;
 
-for i = 1:numel(models)
+for i = 1:4 %numel(list_models_files)
 
-  model_file = fullfile(fileparts(mfilename('fullpath')), ...
-                        'models', ...
-                        ['model-' models{i} '_smdl.json']);
+  model_file = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
 
   opt = opt_stats_subject_level();
+  
+  opt.dryRun = dryRun;
 
   % TODO: putting this might include subjects that have been excluded in the options
   %   opt.subjects = subjects;

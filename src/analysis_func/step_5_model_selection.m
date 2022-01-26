@@ -29,6 +29,12 @@ list_models_files = {
 opt = opt_stats_subject_level();
 % opt.subjects = subjects;
 
+% TODO: probably should not have to be that heavy handed to save things in a
+% different directory
+% - getFFXDir seems to always create things in opt.dir.stats and not opt.dir.output
+opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'cpp_spm-modelSelection'), 'cpath');
+opt.dir.stats = opt.dir.output;
+
 for i = 1 %:numel(list_models_files)
 
   opt.toolbox.MACS.model.files{i} = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});

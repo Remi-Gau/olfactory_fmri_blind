@@ -12,8 +12,7 @@ run ../../initEnv.m;
 
 subjects = '.*[^ctrl02]';
 
-list_models_files = {
-                     'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
+list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
                      'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
                      'model-NoDerivativeWithTissueConfoundsNoScrubbing_smdl.json'
                      'model-NoDerivativeWithTissueConfoundsWithScrubbing_smdl.json'
@@ -37,7 +36,7 @@ opt.dir.stats = opt.dir.output;
 
 for i = 2:4 %:numel(list_models_files)
 
-  opt.toolbox.MACS.model.files{i} = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
+  opt.toolbox.MACS.model.files{end+1} = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
 
 end
 

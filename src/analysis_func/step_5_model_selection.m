@@ -35,7 +35,7 @@ opt.subjects = subjects;
 opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'cpp_spm-modelSelection'), 'cpath');
 opt.dir.stats = opt.dir.output;
 
-for i = 1 %:numel(list_models_files)
+for i = 2:4 %:numel(list_models_files)
 
   opt.toolbox.MACS.model.files{i} = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
 

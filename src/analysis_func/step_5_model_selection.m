@@ -10,7 +10,7 @@ clc;
 
 run ../../initEnv.m;
 
-% subjects = '.*[^ctrl02]';
+subjects = '.*[^ctrl02]';
 
 list_models_files = {
                      'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
@@ -27,7 +27,7 @@ list_models_files = {
                      'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
 
 opt = opt_stats_subject_level();
-% opt.subjects = subjects;
+opt.subjects = subjects;
 
 % TODO: probably should not have to be that heavy handed to save things in a
 % different directory

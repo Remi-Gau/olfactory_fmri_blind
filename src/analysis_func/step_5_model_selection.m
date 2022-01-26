@@ -10,7 +10,7 @@ clc;
 
 run ../../initEnv.m;
 
-subjects = '.*[^ctrl02]';
+% subjects = '.*[^ctrl02]';
 
 list_models_files = {
                      'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
@@ -27,14 +27,13 @@ list_models_files = {
                      'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
 
 opt = opt_stats_subject_level();
-opt.subjects = subjects;
+% opt.subjects = subjects;
 
-for i = 1:numel(models)
+for i = 1 %:numel(list_models_files)
 
-  opt.toolbox.MACS.model.files{i} = fullfile(fileparts(mfilename('fullpath')), ...
-                                             'models', ...
-                                             ['model-' models{i} '_smdl.json']);
+  opt.toolbox.MACS.model.files{i} = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
 
 end
 
-bidsModelSelection(opt, 'action', 'BMS');
+bidsModelSelection(opt, 'action', 'cvLME');
+% bidsModelSelection(opt, 'action', 'BMS');

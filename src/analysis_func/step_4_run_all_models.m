@@ -31,7 +31,7 @@ list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
 % Model selection of the next step does not need model to be estimated
 specify_only = true;
 
-for i = 5:numel(list_models_files)
+for i = 1:numel(list_models_files)
 
   model_file = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
 

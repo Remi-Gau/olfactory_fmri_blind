@@ -24,7 +24,7 @@ This is done by `step_5_model_selection.m` using bayesian model selection with
 the [MACs toolbox](https://github.com/JoramSoch/MACS/releases/tag/v1.3).
 
 ```bash
-datalad run -d . -m 'compute cvLME model 1' \
+datalad run -d . -m 'compute cvLME missing model' \
     -o outputs/derivatives/cpp_spm-modelSelection/ \
     'cd code/src/analysis_func && make run_model_selection'
 ```

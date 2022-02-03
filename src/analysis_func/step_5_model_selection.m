@@ -11,7 +11,7 @@ clc;
 run ../../initEnv.m;
 
 % subjects = '.*[^ctrl02]';
-subjects = '.*[ctrl(0[89]|1[0-8])]';
+subjects = '.*ctrl0[89]|ctrl1[0-9]';
 
 list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
                      'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'

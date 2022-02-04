@@ -41,5 +41,5 @@ for i = 1:numel(list_models_files)
 end
 
 % bidsModelSelection(opt, 'action', 'cvLME');
-bidsModelSelection(opt, 'action', 'posterior');
-% bidsModelSelection(opt, 'action', 'BMS');
+% bidsModelSelection(opt, 'action', 'posterior');
+bidsModelSelection(opt, 'action', 'BMS');

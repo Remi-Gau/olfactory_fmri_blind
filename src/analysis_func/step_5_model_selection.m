@@ -10,8 +10,7 @@ clc;
 
 run ../../initEnv.m;
 
-% subjects = '.*[^ctrl02]';
-subjects = '.*ctrl0[89]|ctrl1[0-9]';
+subjects = '.*[^ctrl02]';
 
 list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
                      'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
@@ -35,12 +34,12 @@ opt.subjects = subjects;
 opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'cpp_spm-modelSelection'), 'cpath');
 opt.dir.stats = opt.dir.output;
 
-for i = 2 %1:numel(list_models_files)
+for i = 1:numel(list_models_files)
 
   opt.toolbox.MACS.model.files{end+1} = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
 
 end
 
-bidsModelSelection(opt, 'action', 'cvLME');
-% bidsModelSelection(opt, 'action', 'posterior');
+% bidsModelSelection(opt, 'action', 'cvLME');
+bidsModelSelection(opt, 'action', 'posterior');
 % bidsModelSelection(opt, 'action', 'BMS');

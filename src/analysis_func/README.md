@@ -18,10 +18,47 @@ Run this script: `step_2_subject_GLM.m`
 
 `step_4_run_all_models`
 
+All models include all experimental conditions (task, odor, nostril) and motion
+parameters.
+
+Models distinguish themselves by the HRF, extra confounds and scrubbing
+regressors.
+
+#### HRF
+
+-   HRF
+-   HRF + temporal
+-   HRF + temporal + dispersion
+
+#### Confounds
+
+-   None
+-   CSF + WM
+
+#### Scrubbing
+
+-   no outlier removal
+-   with outlier removal
+
+1. No Derivative No Tissue Confounds No Scrubbing_model
+2. No Derivative No Tissue Confounds With Scrubbing_model
+3. No Derivative With Tissue Confounds No Scrubbing_model
+4. No Derivative With Tissue Confounds With Scrubbing_model
+5. Temporal Derivatives No Tissue Confounds No Scrubbing_model
+6. Temporal Derivatives No Tissue Confounds With Scrubbing_model
+7. Temporal Derivatives With Tissue Confounds No Scrubbing_model_L
+8. Temporal Derivatives With Tissue Confounds With Scrubbing_model
+9. Temporal Dispersion Derivatives No Tissue Confounds No Scrubbing_model
+10. Temporal Dispersion Derivatives No Tissue Confounds With Scrubbing_model
+11. Temporal Dispersion Derivatives With Tissue Confounds No Scrubbing_model
+12. Temporal Dispersion Derivatives With Tissue Confounds With Scrubbing_model
+
 ### Compute cvLME and do bayesian model selection
 
 This is done by `step_5_model_selection.m` using bayesian model selection with
 the [MACs toolbox](https://github.com/JoramSoch/MACS/releases/tag/v1.3).
+
+Datalad run command to be run from the root of the dataset
 
 ```bash
 datalad run -d . -m 'compute cvLME missing model' \

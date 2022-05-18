@@ -26,7 +26,7 @@ list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
                      'model-TemporalDispersionDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
                      'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
 
-% subjects = '.*0[1-9]';
+subjects = 'ctrl18';
 
 % Model selection of the next step does not need model to be estimated
 specify_only = true;

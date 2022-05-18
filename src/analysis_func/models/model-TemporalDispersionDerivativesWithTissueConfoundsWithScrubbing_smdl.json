@@ -7,72 +7,15 @@
       "olfid",
       "olfloc"
     ],
-    "space": "MNI152NLin2009cAsym"
+    "space": ["MNI152NLin2009cAsym"]
   },
   "Nodes": [
     {
       "Level": "Run",
       "Name": "run_level",
-      "Model": {
-        "X": [
-          "trial_type.olfid_eucalyptus_left",
-          "trial_type.olfid_eucalyptus_right",
-          "trial_type.olfid_almond_left",
-          "trial_type.olfid_almond_right",
-          "trial_type.olfloc_eucalyptus_left",
-          "trial_type.olfloc_eucalyptus_right",
-          "trial_type.olfloc_almond_left",
-          "trial_type.olfloc_almond_right",
-          "trial_type.resp_03",
-          "trial_type.resp_12",
-          "trans_?",
-          "rot_?",
-          "white_matter",
-          "csf",
-          "*outlier*"
-        ],
-        "HRF": {
-          "Variables": [
-            "trial_type.olfid_eucalyptus_left",
-            "trial_type.olfid_eucalyptus_right",
-            "trial_type.olfid_almond_left",
-            "trial_type.olfid_almond_right",
-            "trial_type.olfloc_eucalyptus_left",
-            "trial_type.olfloc_eucalyptus_right",
-            "trial_type.olfloc_almond_left",
-            "trial_type.olfloc_almond_right",
-            "trial_type.resp_03",
-            "trial_type.resp_12"
-          ],
-          "Model": "DoubleGamma"
-        },
-        "Type": "glm",
-        "Options": {
-          "HighPassFilterCutoffHz": 0.0078,
-          "Mask": ""
-        },
-        "Software": {
-          "SPM": {
-            "SerialCorrelation": "FAST",
-            "HRFderivatives": "none",
-            "InclusiveMaskingThreshold": "-Inf"
-          }
-        }
-      }
-    },
-    {
-      "Level": "Subject",
-      "Name": "subject_level",
-      "Transformations": [
-        {
-          "Name": "Factor",
-          "Inputs": ["trial_type"]
-        },
-        {
-          "Name": "Convolve",
-          "Model": "spm",
-          "Inputs": [" "]
-        }
+      "GroupBy": [
+        "run",
+        "subject"
       ],
       "Model": {
         "X": [
@@ -109,8 +52,7 @@
         },
         "Type": "glm",
         "Options": {
-          "HighPassFilterCutoffHz": 0.0078,
-          "Mask": ""
+          "HighPassFilterCutoffHz": 0.0078
         },
         "Software": {
           "SPM": {
@@ -183,20 +125,29 @@
       ]
     },
     {
-      "Level": "Dataset",
-      "Name": "dataset_level",
+      "Level": "Subject",
+      "Name": "subject_level",
+      "GroupBy": [
+        "contrast",
+        "subject"
+      ],
       "Model": {
-        "X": ["all_olf"],
-        "Type": "glm",
-        "Options": {
-          "Mask": ""
-        }
+        "X": 1,
+        "Type": "glm"
       },
       "DummyContrasts": {
-        "Contrasts": [
-          "all_olf",
-          "Responses"
-        ],
+        "Test": "t"
+      }
+    },
+    {
+      "Level": "Dataset",
+      "Name": "dataset_level",
+      "GroupBy": ["contrast"],
+      "Model": {
+        "X": 1,
+        "Type": "glm"
+      },
+      "DummyContrasts": {
         "Test": "t"
       }
     }

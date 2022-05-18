@@ -68,7 +68,7 @@ for hrf_derivatives = 1:3
       json_content.Name = name;
       json_content.Description = description;
       json_content.Nodes{1}.Model.X(end + 1:end + numel(confounds_to_add)) = confounds_to_add;
-      json_content.Nodes{2}.Model.X(end + 1:end + numel(confounds_to_add)) = confounds_to_add;
+      
 
       list_models_files{end + 1, 1} =  ['model-' strrep(name, ' ', '') '_smdl.json']; %#ok<SAGROW>
       model_file = fullfile(pwd, 'models', ['model-' strrep(name, ' ', '') '_smdl.json']);

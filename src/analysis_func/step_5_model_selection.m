@@ -26,6 +26,7 @@ list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
                      'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
 
 opt = opt_stats_subject_level();
+opt.verbosity = 2;
 % opt.subjects = subjects;
 
 % TODO: probably should not have to be that heavy handed to save things in a

@@ -28,9 +28,6 @@ list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
 
 subjects = 'ctrl12';
 
-% 	- Subject: {blnd08}
-% 	- Model: {No Derivative No Tissue Confounds With Scrubbing}
-
 % Model selection of the next step does not need model to be estimated
 specify_only = true;
 
@@ -43,7 +40,7 @@ for i = 1:numel(list_models_files)
   opt.dryRun = dryRun;
 
   % TODO: putting this might include subjects that have been excluded in the options
-  opt.subjects = subjects;
+  % opt.subjects = subjects;
 
   opt.model.file = model_file;
 

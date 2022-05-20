@@ -12,6 +12,7 @@ run ../../initEnv.m;
 
 subjects = '.*[^ctrl02]';
 
+
 list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
                      'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
                      'model-NoDerivativeWithTissueConfoundsNoScrubbing_smdl.json'
@@ -27,7 +28,7 @@ list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
 
 opt = opt_stats_subject_level();
 opt.verbosity = 2;
-% opt.subjects = subjects;
+opt.subjects = subjects;
 
 % TODO: probably should not have to be that heavy handed to save things in a
 % different directory
@@ -41,6 +42,6 @@ for i = 1:numel(list_models_files)
 
 end
 
-bidsModelSelection(opt, 'action', 'cvLME');
+% bidsModelSelection(opt, 'action', 'cvLME');
 % bidsModelSelection(opt, 'action', 'posterior');
-% bidsModelSelection(opt, 'action', 'BMS');
+bidsModelSelection(opt, 'action', 'BMS');

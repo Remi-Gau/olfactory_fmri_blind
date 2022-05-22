@@ -81,8 +81,7 @@ disp('Done');
 
 %% merge left and right
 
-ROIs = {
-        'V1'
+ROIs = {'V1'
         'V2'
         'V3'
         'MST'

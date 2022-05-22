@@ -29,20 +29,13 @@ function opt = opt_stats_group_level()
   minimum_cluster_size = 10;
 
   % Specify the result to compute
-  opt.result.Nodes(1) = returnDefaultResultsStructure();
-  opt.result.Nodes(1).Level = 'Dataset';
-  
-  opt.result.Nodes(1).Contrasts(1).Name = 'Responses';
-  opt.result.Nodes(1).Contrasts(1).MC =  'none';
-  opt.result.Nodes(1).Contrasts(1).p = alpha;
-  opt.result.Nodes(1).Contrasts(1).k = minimum_cluster_size;
-
-  opt.result.Nodes(1).Contrasts(2).Name = 'all_olf';
-  opt.result.Nodes(1).Contrasts(2).MC =  'none';
-  opt.result.Nodes(1).Contrasts(2).p = alpha;
-  opt.result.Nodes(1).Contrasts(2).k = minimum_cluster_size;
-  
-  opt.result.Nodes(1).Output = default_output(opt);
+  opt.results = default_output(opt);
+  opt.results.nodeName = 'subject_level';
+  opt.results.name = {'Responses', 'all_olf'};
+  opt.results.MC =  'none';
+  opt.results.p = alpha;
+  opt.results.k = minimum_cluster_size;
+ 
 
   % post setup
   raw = bids.layout(opt.dir.raw);
@@ -57,17 +50,4 @@ function opt = opt_stats_group_level()
 
 end
 
-function output = default_output(opt)
-  output = struct('png', true, ...
-                  'csv', false, ...
-                  'thresh_spm', false, ...
-                  'binary', false, ...
-                  'NIDM_results', false);
-  output.montage.do = true();
-  output.montage.slices = -27:3:58; % in mm
-  output.montage.orientation = 'axial';
-  output.montage.background = ...
-      spm_select('FPList', ...
-                 fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats'), ...
-                 '.*desc-meanSmth6Masked_T1w.nii');
-end
+

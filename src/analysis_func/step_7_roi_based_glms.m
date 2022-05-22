@@ -11,7 +11,7 @@ opt = opt_stats_subject_level();
 opt.glm.roibased.do = true;
 opt.fwhm.func =  0;
 
-opt.space = {'MNI'};
+opt.bidsFilterFile.roi.space = {'MNI'};
 
 opt.subjects = '.*01';
 
@@ -33,7 +33,7 @@ opt.roi.name = {['^space-.*(', ...
 % to check
 roiList = getROIs(opt);
 
-opt.verbosity = 1;
+opt.verbosity = 2;
 
 bidsFFX('specify', opt);
 bidsRoiBasedGLM(opt);

@@ -32,21 +32,26 @@ function opt = opt_stats_subject_level()
   minimum_cluster_size = 10;
 
   % Specify the result to compute
-  opt.result.Nodes(2) = returnDefaultResultsStructure();
-  opt.result.Nodes(2).Level = 'Subject';
-  opt.result.Nodes(2).Contrasts(1).Name = 'Responses';
-  opt.result.Nodes(2).Contrasts(1).MC =  'none';
-  opt.result.Nodes(2).Contrasts(1).p = alpha;
-  opt.result.Nodes(2).Contrasts(1).k = minimum_cluster_size;
-  opt.result.Nodes(2).Output = default_output(opt);
-
-  opt.result.Nodes(2) = returnDefaultResultsStructure();
-  opt.result.Nodes(2).Level = 'Subject';
-  opt.result.Nodes(2).Contrasts(1).Name = 'all_olf';
-  opt.result.Nodes(2).Contrasts(1).MC =  'none';
-  opt.result.Nodes(2).Contrasts(1).p = alpha;
-  opt.result.Nodes(2).Contrasts(1).k = minimum_cluster_size;
-  opt.result.Nodes(2).Output = default_output(opt);
+  results = default_output(opt);
+  results.nodeName = 'subject_level';
+  results.name = {'Responses', 'all_olf'};
+  results.MC =  'none';
+  results.p = alpha;
+  results.k = minimum_cluster_size;
+  
+  opt.results(1) = results;
+  
+  % to investigate run level results
+  %
+  %   results = default_output(opt); 
+  %   results.nodeName = 'run_level';
+  %   results.name = {'^olf.*_1', 'Responses_1'};
+  %   results.MC =  'none';
+  %   results.p = alpha;
+  %   results.k = minimum_cluster_size;  
+  %   results.png = true;
+  %   
+  %   opt.results(2) = results;
 
   % post setup
   raw = bids.layout(opt.dir.raw);
@@ -59,19 +64,4 @@ function opt = opt_stats_subject_level()
   opt = checkOptions(opt);
   saveOptions(opt);
 
-end
-
-function output = default_output(opt)
-  output = struct('png', true, ...
-                  'csv', false, ...
-                  'thresh_spm', false, ...
-                  'binary', false, ...
-                  'NIDM_results', false);
-  output.montage.do = true();
-  output.montage.slices = -27:3:48; % in mm
-  output.montage.orientation = 'axial';
-  output.montage.background = ...
-      spm_select('FPList', ...
-                 fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats'), ...
-                 '.*desc-meanSmth6Masked_T1w.nii');
 end

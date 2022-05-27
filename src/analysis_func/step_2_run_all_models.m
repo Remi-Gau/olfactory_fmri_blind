@@ -1,6 +1,7 @@
 % Can either:
 %
-% - specify the models for different BIDS stats model to prepare for model selection
+% - specify the models for different BIDS stats model to prepare for model
+%   selection (specify only)
 % - specify and estimate run the subject and dataset levels models
 %
 % (C) Copyright 2019 Remi Gau
@@ -14,6 +15,8 @@ dryRun = false;
 run ../../initEnv.m;
 
 models_files = list_models_files();
+
+models_files = models_files(5:end);
 
 % Model selection of the next step does not need model to be estimated
 specify_only = true;
@@ -32,6 +35,10 @@ for i = 1:numel(models_files)
   opt.model.file = model_file;
 
   if specify_only
+
+    if specify_only
+      opt.subjects = '.*[^ctrl02]';
+    end
 
     % TODO: probably should not have to be that heavy handed to save things in a
     % different directory

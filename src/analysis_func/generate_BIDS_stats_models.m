@@ -69,7 +69,7 @@ for hrf_derivatives = 1:3
       json_content.Description = description;
       json_content.Nodes{1}.Model.X(end + 1:end + numel(confounds_to_add)) = confounds_to_add;
       json_content.Nodes{1}.Model.Software.SPM.HRFderivatives = hrf_derivatives_type;
-      
+
       json_content.Nodes{2}.Model.X = {1};
       json_content.Nodes{3}.Model.X = {1};
 

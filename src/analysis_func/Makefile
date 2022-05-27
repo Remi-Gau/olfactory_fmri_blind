@@ -4,8 +4,8 @@ MATLAB = /usr/local/MATLAB/R2017a/bin/matlab
 ARG    = -nodisplay -nosplash -nodesktop
 
 .PHONY:
-run_all_models: step_4_run_all_models.m
-	$(MATLAB) $(ARG) -r "run('step_4_run_all_models.m');exit;"
+run_all_models: step_2_run_all_models.m
+	$(MATLAB) $(ARG) -r "run('step_2_run_all_models.m');exit;"
 
-run_model_selection: step_5_model_selection.m
-	$(MATLAB) $(ARG) -r "run('step_5_model_selection.m');exit;"	
+run_model_selection: step_2_model_selection.m
+	$(MATLAB) $(ARG) -r "run('step_2_model_selection.m');exit;"	

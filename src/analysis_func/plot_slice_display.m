@@ -26,7 +26,6 @@ spmTImage = spm_select('FPList', output_dir, '^spmT_0001.nii$');
 % layers = sd_config_layers('init', {'truecolor', 'contour', 'contour', 'contour', 'contour', 'dual'});
 layers = sd_config_layers('init', {'truecolor', 'dual'});
 
-
 % Layer 1: Anatomical map
 layers(1).color.file = opt.result.Nodes(1).Output.montage.background;
 
@@ -43,17 +42,17 @@ layers(1).color.map = gray(256);
 %                                   'ROI-L-R-Amyg-mOC_space-MNI.nii');
 % layers(2).color.map = [0 0 0];
 % layers(2).color.line_width = 2;
-% 
+%
 % layers(3).color.file = spm_select('FPList', fullfile(opt.dir.roi, 'group'), ...
 %                                   'ROI-L-R-Olfactory-Cortex-mOC_space-MNI.nii');
 % layers(3).color.map = [1 1 1];
 % layers(3).color.line_width = 2;
-% 
+%
 % layers(4).color.file = spm_select('FPList', fullfile(opt.dir.roi, 'group'), ...
 %                                   'space-MNI_label-neurosynthOlfactory_desc-p05pt00_mask.nii');
 % layers(4).color.map = [0.5 0.5 0.5];
 % layers(4).color.line_width = 2;
-% 
+%
 % layers(5).color.file = spm_select('FPList', fullfile(opt.dir.roi, 'group'), ...
 %                                   'hemi-R_space-MNI_label-V1d_desc-wang_mask.nii');
 % layers(5).color.map = [0 1 0];
@@ -82,7 +81,7 @@ settings = sd_config_settings('init');
 % we reuse the details for the SPM montage
 settings.slice.orientation = opt.result.Nodes(1).Output.montage.orientation;
 settings.slice.disp_slices = -30.5:3:56.5;
-settings.fig_specs.title = strrep(opt.result.Nodes(1).Contrasts(2).Name, '_' , ' ');
+settings.fig_specs.title = strrep(opt.result.Nodes(1).Contrasts(2).Name, '_', ' ');
 
 % Display the layers
 [settings, p] = sd_display(layers, settings);

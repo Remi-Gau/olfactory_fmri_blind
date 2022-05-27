@@ -38,19 +38,19 @@ function opt = opt_stats_subject_level()
   results.MC =  'none';
   results.p = alpha;
   results.k = minimum_cluster_size;
-  
+
   opt.results(1) = results;
-  
+
   % to investigate run level results
   %
-  %   results = default_output(opt); 
+  %   results = default_output(opt);
   %   results.nodeName = 'run_level';
   %   results.name = {'^olf.*_1', 'Responses_1'};
   %   results.MC =  'none';
   %   results.p = alpha;
-  %   results.k = minimum_cluster_size;  
+  %   results.k = minimum_cluster_size;
   %   results.png = true;
-  %   
+  %
   %   opt.results(2) = results;
 
   % post setup

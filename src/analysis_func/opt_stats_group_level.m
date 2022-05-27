@@ -29,13 +29,20 @@ function opt = opt_stats_group_level()
   minimum_cluster_size = 10;
 
   % Specify the result to compute
+
   opt.results = default_output(opt);
   opt.results.nodeName = 'subject_level';
   opt.results.name = {'Responses', 'all_olf'};
   opt.results.MC =  'none';
   opt.results.p = alpha;
   opt.results.k = minimum_cluster_size;
- 
+
+  opt.results = default_output(opt);
+  opt.results.nodeName = 'dataset_level';
+  opt.results.name = {'Responses', 'all_olf'};
+  opt.results.MC =  'none';
+  opt.results.p = alpha;
+  opt.results.k = minimum_cluster_size;
 
   % post setup
   raw = bids.layout(opt.dir.raw);
@@ -49,5 +56,3 @@ function opt = opt_stats_group_level()
   saveOptions(opt);
 
 end
-
-

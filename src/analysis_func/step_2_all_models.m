@@ -13,28 +13,17 @@ dryRun = false;
 %%
 run ../../initEnv.m;
 
-list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
-                     'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
-                     'model-NoDerivativeWithTissueConfoundsNoScrubbing_smdl.json'
-                     'model-NoDerivativeWithTissueConfoundsWithScrubbing_smdl.json'
-                     'model-TemporalDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
-                     'model-TemporalDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
-                     'model-TemporalDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
-                     'model-TemporalDerivativesWithTissueConfoundsWithScrubbing_smdl.json'
-                     'model-TemporalDispersionDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
-                     'model-TemporalDispersionDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
-                     'model-TemporalDispersionDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
-                     'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
+models_files = list_models_files();
 
 % Model selection of the next step does not need model to be estimated
 specify_only = true;
 
-for i = 1:numel(list_models_files)
+for i = 1:numel(models_files)
 
-  model_file = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
+  model_file = fullfile(fileparts(mfilename('fullpath')), 'models', models_files{i});
 
   opt = opt_stats_subject_level();
-  
+
   opt.dryRun = dryRun;
 
   % TODO: putting this might include subjects that have been excluded in the options

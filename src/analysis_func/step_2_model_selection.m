@@ -4,6 +4,13 @@
 %
 % cvLME could not run for
 % - ctrl-02
+%
+% Unsure why we only get 2 images in
+% outputs/derivatives/cpp_spm-modelSelection/derivatives/cpp_spm-modelSelection/group/MS_SMM_BMS_10:
+%
+% - MS_SMM_map_pos_01_mod_03_No Derivative With Tissue Confounds No Scrubbing.nii
+% - MS_SMM_map_pos_02_mod_01_No Derivative No Tissue Confounds No Scrubbing.nii
+%
 
 clear;
 clc;
@@ -11,7 +18,6 @@ clc;
 run ../../initEnv.m;
 
 subjects = '.*[^ctrl02]';
-
 
 list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
                      'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
@@ -38,10 +44,16 @@ opt.dir.stats = opt.dir.output;
 
 for i = 1:numel(list_models_files)
 
-  opt.toolbox.MACS.model.files{end+1} = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
+  opt.toolbox.MACS.model.files{end + 1} = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
 
 end
 
+% to run all steps at once
+%
+% bidsModelSelection(opt, 'action', 'cvLME');
+
+% or one by one
+%
 % bidsModelSelection(opt, 'action', 'cvLME');
 % bidsModelSelection(opt, 'action', 'posterior');
 bidsModelSelection(opt, 'action', 'BMS');

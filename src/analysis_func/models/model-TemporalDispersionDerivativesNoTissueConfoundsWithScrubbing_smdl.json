@@ -31,6 +31,7 @@
           "trial_type.resp_12",
           "trans_?",
           "rot_?",
+          1,
           "*outlier*"
         ],
         "HRF": {
@@ -55,7 +56,7 @@
         "Software": {
           "SPM": {
             "SerialCorrelation": "FAST",
-            "HRFderivatives": "none",
+            "HRFderivatives": "temporalAndDispersion",
             "InclusiveMaskingThreshold": "-Inf"
           }
         }
@@ -130,7 +131,7 @@
         "subject"
       ],
       "Model": {
-        "X": 1,
+        "X": [1],
         "Type": "glm"
       },
       "DummyContrasts": {
@@ -142,7 +143,7 @@
       "Name": "dataset_level",
       "GroupBy": ["contrast"],
       "Model": {
-        "X": 1,
+        "X": [1],
         "Type": "glm"
       },
       "DummyContrasts": {

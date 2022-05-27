@@ -7,13 +7,18 @@
       "olfid",
       "olfloc"
     ],
-    "space": ["MNI152NLin2009cAsym"]
+    "space": [
+      "MNI152NLin2009cAsym"
+    ]
   },
   "Nodes": [
     {
       "Level": "Run",
       "Name": "run_level",
-      "GroupBy": ["run", "subject"],
+      "GroupBy": [
+        "run",
+        "subject"
+      ],
       "Model": {
         "X": [
           "trial_type.olfid_eucalyptus_left",
@@ -27,7 +32,8 @@
           "trial_type.resp_03",
           "trial_type.resp_12",
           "trans_?",
-          "rot_?"
+          "rot_?",
+          1
         ],
         "HRF": {
           "Variables": [
@@ -138,14 +144,19 @@
           ],
           "Test": "t"
         }
-      ]      
+      ]
     },
     {
       "Level": "Subject",
       "Name": "subject_level",
-      "GroupBy": ["contrast", "subject"],
+      "GroupBy": [
+        "contrast",
+        "subject"
+      ],
       "Model": {
-        "X": [1],
+        "X": [
+          1
+        ],
         "Type": "glm"
       },
       "DummyContrasts": {
@@ -155,9 +166,13 @@
     {
       "Level": "Dataset",
       "Name": "dataset_level",
-      "GroupBy": ["contrast"],
+      "GroupBy": [
+        "contrast"
+      ],
       "Model": {
-        "X": [1],
+        "X": [
+          1
+        ],
         "Type": "glm"
       },
       "DummyContrasts": {

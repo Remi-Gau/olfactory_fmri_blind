@@ -16,8 +16,6 @@ run ../../initEnv.m;
 
 models_files = list_models_files();
 
-models_files = models_files(5:end);
-
 % Model selection of the next step does not need model to be estimated
 specify_only = true;
 

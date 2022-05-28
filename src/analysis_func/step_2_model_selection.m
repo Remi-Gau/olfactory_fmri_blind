@@ -21,8 +21,6 @@ subjects = '.*[^ctrl02]';
 
 models_files = list_models_files();
 
-% models_files = models_files(5:end);
-
 opt = opt_stats_subject_level();
 opt.verbosity = 2;
 opt.subjects = subjects;
@@ -48,5 +46,4 @@ end
 % or one by one
 %
 % bidsModelSelection(opt, 'action', 'cvLME');
-% bidsModelSelection(opt, 'action', 'posterior');
 bidsModelSelection(opt, 'action', 'BMS');

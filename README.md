@@ -1,8 +1,6 @@
 [![](https://img.shields.io/badge/Octave-CI-blue?logo=Octave&logoColor=white)](https://github.com/Remi-Gau/chem_sens_blind/actions)
 ![](https://github.com/Remi-Gau/chem_sens_blind/workflows/CI/badge.svg)
-
 [![codecov](https://codecov.io/gh/Remi-Gau/chem_sens_blind/branch/master/graph/badge.svg)](https://codecov.io/gh/Remi-Gau/chem_sens_blind)
-
 [![Build Status](https://travis-ci.com/Remi-Gau/chem_sens_blind.svg?branch=master)](https://travis-ci.com/Remi-Gau/chem_sens_blind)
 
 <!-- vscode-markdown-toc -->
@@ -36,7 +34,9 @@
 	numbering=true
 	autoSave=true
 	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc --># code base for the analysis of olfaction fMRI experiment in blind and sighted control
+<!-- /vscode-markdown-toc -->
+
+# code base for the analysis of olfaction fMRI experiment in blind and sighted control
 
 ## Dependencies
 
@@ -44,17 +44,14 @@
 | ------------------------------------------------------------------------------------------------------------------------- | ------------ |
 | [Matlab](https://www.mathworks.com/products/matlab.html)                                                                  | 201?         |
 | [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/)                                                                | v7487        |
-| [Marsbar toolbox for SPM](http://marsbar.sourceforge.net/download.html)                                                   | 0.44         |
+| [CPP SPM](http://marsbar.sourceforge.net/download.html)                                                                   | v1.1.5dev    |
 | [Anatomy toolbox for SPM](https://www.fz-juelich.de/SharedDocs/Downloads/INM/INM-1/DE/Toolbox/Toolbox_22c.html?nn=563092) | 2.2          |
-| [MACs toolbox](https://github.com/JoramSoch/MACS/releases/tag/v1.3)                                                       | 1.3          |
 
 This has not been tried on Octave. Sorry open-science friends... :see_no_evil:
 
 ### Other Dependencies
 
-... are included in the `subfun/matlab_exchange` to make your life easier.
-
-But might be worth using this in the future: https://github.com/mobeets/mpm
+... are included in the `lib/matlab_exchange` to make your life easier.
 
 ## Docker images
 
@@ -144,23 +141,7 @@ also plots the mean +/- SEM (and distribution) of the number of responses.
 
 ## fMRI analysis
 
-For those you might need to edit the `set_dir` function to specify where the
-code is, the folder containing the BIDS raw data and the target directory where
-the SPM analysis should go.
-
-Here is how I set up the directories on my machine.
-
-```matlab
-case 1 % windows matlab/octave : Remi
-    code_dir = '/home/remi/github/chem_sens_blind';
-    data_dir = '/home/remi/BIDS/olf_blind';
-    output_dir = fullfile(data_dir, 'derivatives', 'spm12');
-```
-
-You can also decide all the GLMs you want to try in the `get_cfg_GLMS_to_run`
-file.
-
-**Need more here**
+See this [README](src/analysis_func/README.md)
 
 ### Converting ROIs to native space using ANTs
 

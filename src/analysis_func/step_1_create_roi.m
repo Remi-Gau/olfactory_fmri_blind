@@ -92,10 +92,10 @@ ROIs = {'V1'
         'MST'
         'hMT'
         'hV4'
-                'VO1'
-                'VO2'
-                'LO2'
-                'LO1'};
+        'VO1'
+        'VO2'
+        'LO2'
+        'LO1'};
 
 for iRoi = 1:numel(ROIs)
 

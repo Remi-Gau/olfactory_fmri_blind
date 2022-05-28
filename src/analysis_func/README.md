@@ -78,7 +78,7 @@ datalad run -d . -m 'compute cvLME missing model' \
 
 ### Viewing winning models
 
-With `step_2_model_selection_viz.m` 
+With `step_2_model_selection_viz.m`
 
 #### moddel 03: No Derivative With Tissue Confounds No Scrubbing
 
@@ -86,7 +86,21 @@ With `step_2_model_selection_viz.m`
 
 #### model 01: No Derivative No Tissue Confounds No Scrubbing.nii
 
-<img src="./images/mod_2_001.png" alt="drawing" width="200"/>
+<img src="./images/mod_2_001.png" alt="drawing" height="500"/>
+
+Can also view the distribution across all the voxels in one ROI with
+`step_2_model_selection_viz_roi.m`
+
+Main results:
+
+-   Model 1 (HRF, no denoising at all) seems better for olfactory regions
+-   Model 3 (HRF with tissue confounds) seems better for visual / auditory
+    regions
+
+<img src="./images/model_distribution_audio.png" alt="drawing" height="500"/>
+<img src="./images/model_distribution_olfactory.png" alt="drawing" height="500"/>
+<img src="./images/model_distribution_S1.png" alt="drawing" height="500"/>
+<img src="./images/model_distribution_visual.png" alt="drawing" height="500"/>
 
 #### Failed cvLME
 
@@ -101,7 +115,10 @@ Subject 18 (18 out of 32):
 
 `step_*_glm_group.m`
 
-## Running the ROI based analysis in native space to get time courses and percent signal change for each ROIs
+## Running the ROI based analysis
+
+Can be done in native space to get time courses and percent signal change for
+each ROIs
 
 You will first need to create the ROIs (or you can download them from neurovault
 (_insert URL_)) that will be used for this analysis.

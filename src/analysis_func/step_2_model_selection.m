@@ -19,18 +19,9 @@ run ../../initEnv.m;
 
 subjects = '.*[^ctrl02]';
 
-list_models_files = {'model-NoDerivativeNoTissueConfoundsNoScrubbing_smdl.json'
-                     'model-NoDerivativeNoTissueConfoundsWithScrubbing_smdl.json'
-                     'model-NoDerivativeWithTissueConfoundsNoScrubbing_smdl.json'
-                     'model-NoDerivativeWithTissueConfoundsWithScrubbing_smdl.json'
-                     'model-TemporalDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
-                     'model-TemporalDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
-                     'model-TemporalDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
-                     'model-TemporalDerivativesWithTissueConfoundsWithScrubbing_smdl.json'
-                     'model-TemporalDispersionDerivativesNoTissueConfoundsNoScrubbing_smdl.json'
-                     'model-TemporalDispersionDerivativesNoTissueConfoundsWithScrubbing_smdl.json'
-                     'model-TemporalDispersionDerivativesWithTissueConfoundsNoScrubbing_smdl.json'
-                     'model-TemporalDispersionDerivativesWithTissueConfoundsWithScrubbing_smdl.json'};
+models_files = list_models_files();
+
+% models_files = models_files(5:end);
 
 opt = opt_stats_subject_level();
 opt.verbosity = 2;
@@ -42,9 +33,11 @@ opt.subjects = subjects;
 opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'cpp_spm-modelSelection'), 'cpath');
 opt.dir.stats = opt.dir.output;
 
-for i = 1:numel(list_models_files)
+for i = 1:numel(models_files)
 
-  opt.toolbox.MACS.model.files{end + 1} = fullfile(fileparts(mfilename('fullpath')), 'models', list_models_files{i});
+  opt.toolbox.MACS.model.files{end + 1} = fullfile(fileparts(mfilename('fullpath')), ...
+                                                   'models', ...
+                                                   models_files{i});
 
 end
 

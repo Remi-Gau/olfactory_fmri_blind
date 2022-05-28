@@ -1,6 +1,6 @@
 % use interactive plotting functions of the MACS toolbox to vizualize winning
 % models in each voxel
-
+%
 % (C) Copyright 2019 Remi Gau
 
 clear;
@@ -28,9 +28,10 @@ for i = 1:numel(models_files)
 
 end
 
-MF_visualize.overlay = {fullfile(opt.dir.output, ...
-                                 'MS_SMM_BMS_5', ...
-                                 'MS_SMM_map_pos_02_mod_01_No Derivative No Tissue Confounds No Scrubbing.nii,1')};
+overlay = spm_select('FPList', fullfile(opt.dir.output, 'MS_SMM_BMS_10'), 'MS_SMM_map_pos_01.*');
+disp(spm_file(overlay, 'basename'));
+
+MF_visualize.overlay = {overlay};
 MF_visualize.thresh = '>0';
 MF_visualize.PlotType = 'bar';
 MF_visualize.LineSpec = 'b';

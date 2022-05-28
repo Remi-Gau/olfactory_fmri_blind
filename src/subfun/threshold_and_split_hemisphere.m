@@ -10,34 +10,11 @@ function threshold_and_split_hemisphere(zMaps, z_threshold, cluster_threshold)
     roiImage = thresholdToMask(zMap, z_threshold, cluster_threshold);
     
     %%
-    leftRoiImage = keepHemisphere(roiImage, 'L');
-    
-    bf = bids.File(leftRoiImage);
-    bf.entity_order = {'hemi'
-      'space'
-      'label'
-      'desc'
-      };
-    bf.entities.label = strrep(bf.entities.label, 'neurosynth', 'ns');
-    bf = bf.reorder_entities();
-    bf = bf.create_filename();
-    
-    movefile(leftRoiImage, fullfile(bf.pth, bf.filename));
+    keepHemisphere(roiImage, 'L');
     
     %%
-    rightRoiImage = keepHemisphere(roiImage, 'R');
-    
-    bf = bids.File(rightRoiImage);
-    bf.entity_order = {'hemi'
-      'space'
-      'label'
-      'desc'
-      };
-    bf.entities.label = strrep(bf.entities.label, 'neurosynth', 'ns');
-    bf = bf.reorder_entities();
-    bf = bf.create_filename();
-    
-    movefile(rightRoiImage, fullfile(bf.pth, bf.filename));
+    keepHemisphere(roiImage, 'R');
+   
     
   end
   

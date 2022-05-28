@@ -28,7 +28,10 @@ for i = 1:numel(models_files)
 
 end
 
-overlay = spm_select('FPList', fullfile(opt.dir.output, 'MS_SMM_BMS_10'), 'MS_SMM_map_pos_01.*');
+% change here to change the model to view as overlay
+% - MS_SMM_map_pos_01* will show the 1 model
+% - MS_SMM_map_pos_01* will show the 1 model
+overlay = spm_select('FPList', fullfile(opt.dir.output, 'MS_SMM_BMS_10'), 'MS_SMM_map_pos_02.*');
 disp(spm_file(overlay, 'basename'));
 
 MF_visualize.overlay = {overlay};

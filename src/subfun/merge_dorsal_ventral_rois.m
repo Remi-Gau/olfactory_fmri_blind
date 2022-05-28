@@ -10,8 +10,7 @@ function merge_dorsal_ventral_rois(roiList, label)
 
   bf = bids.File(roiList{1});
   bf.entities.label = label;
-  bf = bf.create_filename();
-  outputFilename = fullfile(bf.pth, bf.filename);
+  outputFilename = spm_file(bf.path, 'filename', bf.filename);
 
   merge_rois(roiList, outputFilename);
 

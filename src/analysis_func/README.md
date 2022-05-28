@@ -76,6 +76,18 @@ datalad run -d . -m 'compute cvLME missing model' \
     'cd code/src/analysis_func && make run_model_selection'
 ```
 
+### Viewing winning models
+
+With `step_2_model_selection_viz.m` 
+
+#### moddel 03: No Derivative With Tissue Confounds No Scrubbing
+
+<img src="./images/mod_1_001.png" alt="drawing" width="200"/>
+
+#### model 01: No Derivative No Tissue Confounds No Scrubbing.nii
+
+<img src="./images/mod_2_001.png" alt="drawing" width="200"/>
+
 #### Failed cvLME
 
 For `ctrl02`

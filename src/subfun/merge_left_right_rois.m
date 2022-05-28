@@ -6,8 +6,7 @@ function merge_left_right_rois(roiList)
 
   bf = bids.File(roiList{1});
   bf.entities.hemi = '';
-  bf = bf.create_filename();
-  outputFilename = fullfile(bf.pth, bf.filename);
+  outputFilename = spm_file(bf.path, 'filename', bf.filename);
 
   merge_rois(roiList, outputFilename);
 

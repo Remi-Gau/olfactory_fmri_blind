@@ -38,6 +38,8 @@ disp('Done');
 
 %% Create visual ROIs from the wang atlas
 
+opt.dir.roi = spm_file(fullfile(opt.dir.derivatives, 'cpp_spm-roi'), 'cpath');
+
 opt.roi.atlas = 'wang';
 opt.roi.name = {'V1v'
                 'V1d'
@@ -56,10 +58,13 @@ opt.roi.space = {'MNI'};
 
 bidsCreateROI(opt);
 
+delete(fullfile(opt.dir.roi, 'group', 'hemi*atlas-wang*.json'));
+
 disp('Done');
 
 %% merge ventral / dorsal ROIs
-opt.dir.roi = spm_file(fullfile(opt.dir.derivatives, 'cpp_spm-roi'), 'cpath');
+
+opt.bidsFilterFile.roi.space =  'MNI';
 
 hemi = {'L', 'R'};
 
@@ -85,12 +90,17 @@ ROIs = {'V1'
         'V2'
         'V3'
         'MST'
-        'hMT'};
+        'hMT'
+        'hV4'
+                'VO1'
+                'VO2'
+                'LO2'
+                'LO1'};
 
 for iRoi = 1:numel(ROIs)
 
-  roi_name =  ['_label-' ROIs{iRoi} '_'];
-  opt.roi.name = {['hemi-L.*' roi_name '.*'], ['hemi-R.*' roi_name '_.*']};
+  roi_name =  ['label-' ROIs{iRoi}];
+  opt.roi.name = {['.*hemi-L.*' roi_name '.*'], ['.*hemi-R.*' roi_name '.*']};
   roiList = getROIs(opt);
   merge_left_right_rois(roiList);
 

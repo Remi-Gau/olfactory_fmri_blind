@@ -1,1 +1,23 @@
-../.git/annex/objects/7K/VW/MD5E-s292--49be9dabbb2647d4dc59a25ba3db79b4.txt/MD5E-s292--49be9dabbb2647d4dc59a25ba3db79b4.txt
+# doc
+Sphinx
+sphinxcontrib-matlabdomain
+sphinxcontrib-napoleon
+sphinx_rtd_theme
+
+# lint
+miss_hit==0.9.30
+pre-commit
+nb_black==1.0.7 # black in jupyter notebooks
+black
+
+#
+jupyterlab
+pandas
+numpy
+matplotlib
+seaborn
+
+# neuroimaging
+nilearn==0.7.1
+nibabel
+pybids==0.11.1 # to query bids datasets

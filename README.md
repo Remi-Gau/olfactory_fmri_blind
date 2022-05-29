@@ -14,7 +14,6 @@
         - [Quality control](#quality-control)
         - [Results](#results)
     - [fMRI analysis](#fmri-analysis)
-        - [Converting ROIs to native space using ANTs](#converting-rois-to-native-space-using-ants)
 
 ## Dependencies
 
@@ -121,40 +120,3 @@ also plots the mean +/- SEM (and distribution) of the number of responses.
 
 See this [README](src/analysis_func/README.md)
 
-### Converting ROIs to native space using ANTs
-
-If you want to convert the ROIS created above into their native space equivalent
-we used ANTs and the transformation file created by fMRIprep to do that.
-
-Set some variable for the directories: this part will depend on where the files
-are on your computer
-
-```bash
-data_dir=~/BIDS/olf_blind # where the data are
-code_dir=~/github/chem_sens_blind # where this repo was downloaded or cloned
-output_dir=~/BIDS/olf_blind/derivatives/ANTs  # where to output the data
-mkdir $output_dir
-```
-
-```bash
-data_dir=/mnt/data/christine/olf_blind
-code_dir=/mnt/data/christine/olf_blind/chem_sens_blind
-output_dir=/mnt/data/christine/olf_blind/derivatives/ANTs
-mkdir $output_dir
-```
-
-Launch the ANTs docker container
-
-```bash
-docker run -it --rm \
-	-v $data_dir:/data \
-	-v $code_dir:/code \
-	-v $output_dir:/output \
-	kaczmarj/ants:v2.3.1-source
-```
-
-Run the conversion script
-
-```bash
-sh /code/inv_norm_ROIs.sh
-```

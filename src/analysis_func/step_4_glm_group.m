@@ -9,12 +9,12 @@ opt = opt_stats_group_level();
 
 opt.verbosity = 2;
 
-bidsRFX('meanAnatAndMask', opt);
+% bidsRFX('meanAnatAndMask', opt);
 
 % bidsRFX('RFX', opt);
 % bidsRFX('contrast', opt);
 
-% bidsResults(opt);
+bidsResults(opt);
 
 return
 

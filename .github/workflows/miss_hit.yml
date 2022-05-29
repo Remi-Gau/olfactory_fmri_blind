@@ -2,15 +2,9 @@ name: miss_hit
 
 on:
   push:
-    branches:
-      - main
-      - dev
-    paths:
-      - '**.m'
+    branches: ['*']
   pull_request:
     branches: ['*']
-    paths:
-      - '**.m'
 
 jobs:
 

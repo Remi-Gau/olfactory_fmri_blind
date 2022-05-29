@@ -1,5 +1,8 @@
+[![miss_hit](https://github.com/Remi-Gau/olfactory_fmri_blind/actions/workflows/miss_hit.yml/badge.svg)](https://github.com/Remi-Gau/olfactory_fmri_blind/actions/workflows/miss_hit.yml)
 
-- [code base for the analysis of olfaction fMRI experiment in blind and sighted control](#code-base-for-the-analysis-of-olfaction-fmri-experiment-in-blind-and-sighted-control)
+# Analysis of olfaction fMRI experiment in blind and sighted control
+
+- [Analysis of olfaction fMRI experiment in blind and sighted control](#analysis-of-olfaction-fmri-experiment-in-blind-and-sighted-control)
     - [Dependencies](#dependencies)
         - [Other Dependencies](#other-dependencies)
     - [Docker images](#docker-images)
@@ -12,8 +15,6 @@
         - [Results](#results)
     - [fMRI analysis](#fmri-analysis)
         - [Converting ROIs to native space using ANTs](#converting-rois-to-native-space-using-ants)
-
-# code base for the analysis of olfaction fMRI experiment in blind and sighted control
 
 ## Dependencies
 
@@ -103,15 +104,15 @@ shows when the acquisition was started.
 
 `beh_avg_timeseries` plots the average across subjects of:
 
--   stimulus onsets / offsets (to make sure that there is not too much variation
-    between subjects)
--   average across subject of the time course of each response type.
-    -   this can be row normalized for each subject (by the sum of response for
-        that subject on that run - gives more weight to subjects with more SNR
-        in their response)
-    -   it is possible to bin the responses from their original 25 Hz sampling
-        frequency.
-    -   responses can be passed through a moving with window size
+- stimulus onsets / offsets (to make sure that there is not too much variation
+  between subjects)
+- average across subject of the time course of each response type.
+  - this can be row normalized for each subject (by the sum of response for that
+    subject on that run - gives more weight to subjects with more SNR in their
+    response)
+  - it is possible to bin the responses from their original 25 Hz sampling
+    frequency.
+  - responses can be passed through a moving with window size
 
 `beh_PSTH` plots data with PSTH for each stimulus (averaged across runs) and
 also plots the mean +/- SEM (and distribution) of the number of responses.

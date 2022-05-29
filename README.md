@@ -1,40 +1,17 @@
-[![](https://img.shields.io/badge/Octave-CI-blue?logo=Octave&logoColor=white)](https://github.com/Remi-Gau/chem_sens_blind/actions)
-![](https://github.com/Remi-Gau/chem_sens_blind/workflows/CI/badge.svg)
-[![codecov](https://codecov.io/gh/Remi-Gau/chem_sens_blind/branch/master/graph/badge.svg)](https://codecov.io/gh/Remi-Gau/chem_sens_blind)
-[![Build Status](https://travis-ci.com/Remi-Gau/chem_sens_blind.svg?branch=master)](https://travis-ci.com/Remi-Gau/chem_sens_blind)
 
-<!-- vscode-markdown-toc -->
-
--   1. [Dependencies](#Dependencies)
-    -   1.1. [Other Dependencies](#OtherDependencies)
--   2. [Docker images](#Dockerimages)
--   3. [fMRI QC and preprocessing](#fMRIQCandpreprocessing)
-    -   3.1. [MRIQC](#MRIQC)
-    -   3.2. [fmriprep](#fmriprep)
-        -   3.2.1. [Problematic anat or func data](#Problematicanatorfuncdata)
--   4. [Behavioral analysis](#Behavioralanalysis)
-    -   4.1. [Quality control](#Qualitycontrol)
-    -   4.2. [Results](#Results)
--   5. [fMRI analysis](#fMRIanalysis)
-    -   5.1.
-        [Converting ROIs to native space using ANTs](#ConvertingROIstonativespaceusingANTs)
-    -   5.2. [Batches](#Batches)
-        -   5.2.1. [Copy and unzipping data](#Copyandunzippingdata)
-        -   5.2.2. [Smoothing the data](#Smoothingthedata)
-        -   5.2.3.
-            [Converting the events.tsv files into SOT.mat files for SPM](#Convertingtheevents.tsvfilesintoSOT.matfilesforSPM)
-        -   5.2.4. [Running the subject level GLM](#RunningthesubjectlevelGLM)
-        -   5.2.5.
-            [Model selection using the MACs toolbox](#ModelselectionusingtheMACstoolbox)
-        -   5.2.6. [Running the group level GLM](#RunningthegrouplevelGLM)
-        -   5.2.7.
-            [Running the ROI based analysis in native space to get time courses and percent signal change for each ROIs](#RunningtheROIbasedanalysisinnativespacetogettimecoursesandpercentsignalchangeforeachROIs)
-
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+- [code base for the analysis of olfaction fMRI experiment in blind and sighted control](#code-base-for-the-analysis-of-olfaction-fmri-experiment-in-blind-and-sighted-control)
+    - [Dependencies](#dependencies)
+        - [Other Dependencies](#other-dependencies)
+    - [Docker images](#docker-images)
+    - [fMRI QC and preprocessing](#fmri-qc-and-preprocessing)
+        - [MRIQC](#mriqc)
+        - [fmriprep](#fmriprep)
+            - [Problematic anat or func data](#problematic-anat-or-func-data)
+    - [Behavioral analysis](#behavioral-analysis)
+        - [Quality control](#quality-control)
+        - [Results](#results)
+    - [fMRI analysis](#fmri-analysis)
+        - [Converting ROIs to native space using ANTs](#converting-rois-to-native-space-using-ants)
 
 # code base for the analysis of olfaction fMRI experiment in blind and sighted control
 

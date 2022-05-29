@@ -7,9 +7,7 @@ run ../../initEnv.m;
 
 opt = opt_stats_subject_level();
 
-opt.subjects = {'^.*01$'};
-
-% bidsFFX('specifyAndEstimate', opt);
+bidsFFX('specifyAndEstimate', opt);
  
 bidsFFX('contrasts', opt);
 

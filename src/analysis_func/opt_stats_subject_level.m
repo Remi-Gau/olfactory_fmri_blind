@@ -23,7 +23,7 @@ function opt = opt_stats_subject_level()
 
   opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
                             'models', ...
-                            'model-defaultOlfidOlfloc_smdl.json');
+                            'model-TissueConfounds_smdl.json');
   opt.QA.glm.do = false;
 
   opt.glm.maxNbVols = 300;
@@ -34,24 +34,14 @@ function opt = opt_stats_subject_level()
   % Specify the result to compute
   results = default_output(opt);
   results.nodeName = 'subject_level';
-  results.name = {'Responses', 'all_olf'};
+  results.name = {'Responses', 'all_olf', 'all_olfid', 'all_olfloc'};
   results.MC =  'none';
   results.p = alpha;
   results.k = minimum_cluster_size;
+  results.montage.background = struct('desc', 'preproc', ...
+                                      'suffix', 'T1w');
 
   opt.results(1) = results;
-
-  % to investigate run level results
-  %
-  %   results = default_output(opt);
-  %   results.nodeName = 'run_level';
-  %   results.name = {'^olf.*_1', 'Responses_1'};
-  %   results.MC =  'none';
-  %   results.p = alpha;
-  %   results.k = minimum_cluster_size;
-  %   results.png = true;
-  %
-  %   opt.results(2) = results;
 
   % post setup
   raw = bids.layout(opt.dir.raw);

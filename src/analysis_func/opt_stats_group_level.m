@@ -23,7 +23,7 @@ function opt = opt_stats_group_level()
 
   opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
                             'models', ...
-                            'model-defaultOlfidOlfloc_smdl.json');
+                            'model-TissueConfounds_smdl.json');
 
   alpha = 0.05;
   minimum_cluster_size = 10;
@@ -39,7 +39,7 @@ function opt = opt_stats_group_level()
 
   opt.results = default_output(opt);
   opt.results.nodeName = 'dataset_level';
-  opt.results.name = {'Responses', 'all_olf'};
+  opt.results.name = {'Responses', 'all_olf', 'all_olfloc', 'all_olfid', 'all_olf_lt_baseline'};
   opt.results.MC =  'none';
   opt.results.p = alpha;
   opt.results.k = minimum_cluster_size;

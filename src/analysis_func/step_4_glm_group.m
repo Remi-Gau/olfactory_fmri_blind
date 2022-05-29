@@ -7,11 +7,16 @@ run ../../initEnv.m;
 
 opt = opt_stats_group_level();
 
-% bidsRFX('meanAnatAndMask', opt);
+opt.verbosity = 2;
+
+bidsRFX('meanAnatAndMask', opt);
 
 % bidsRFX('RFX', opt);
 % bidsRFX('contrast', opt);
-bidsResults(opt);
+
+% bidsResults(opt);
+
+return
 
 % TODO
 % 2 samples ttest

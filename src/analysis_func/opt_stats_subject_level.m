@@ -1,11 +1,13 @@
-function opt = opt_stats_subject_level()
+function opt = opt_stats_subject_level(opt)
   %
   % returns a structure that contains the options chosen by the user to run
   % slice timing correction, pre-processing, FFX, RFX...
   %
   % (C) Copyright 2021 Remi Gau
 
-  opt = [];
+  if nargin == 0
+    opt = [];
+  end
 
   % The directory where the data are located
   opt.dir.dataset_root = fullfile(fileparts(mfilename('fullpath')), '..', '..', '..');
@@ -45,7 +47,12 @@ function opt = opt_stats_subject_level()
 
   % post setup
   raw = bids.layout(opt.dir.raw);
-  opt.subjects = bids.query(raw, 'subjects');
+
+  if isfield(opt, 'subjects')
+    opt.subjects = bids.query(raw, 'subjects', 'sub', opt.subjects);
+  else
+    opt.subjects = bids.query(raw, 'subjects');
+  end
 
   opt = get_options(opt);
 

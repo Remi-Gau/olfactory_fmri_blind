@@ -1,14 +1,6 @@
-# doc
-Sphinx
-sphinxcontrib-matlabdomain
-sphinxcontrib-napoleon
-sphinx_rtd_theme
-
 # lint
 miss_hit==0.9.30
 pre-commit
-nb_black==1.0.7 # black in jupyter notebooks
-black
 
 #
 jupyterlab

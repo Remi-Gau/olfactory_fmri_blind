@@ -119,4 +119,3 @@ also plots the mean +/- SEM (and distribution) of the number of responses.
 ## fMRI analysis
 
 See this [README](src/analysis_func/README.md)
-

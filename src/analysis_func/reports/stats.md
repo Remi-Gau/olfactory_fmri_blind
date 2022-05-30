@@ -27,4 +27,3 @@ were convolved with a canonical hemodynamic response function (HRF)
  This method section was automatically generated using CPP SPM
 (v1.1.5dev; https://github.com/cpp-lln-lab/CPP_SPM; DOI: https://doi.org/10.5281/zenodo.3554331)
 and octache (https://github.com/Remi-Gau/Octache).
- 

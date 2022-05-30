@@ -9,7 +9,8 @@ function opt = opt_dir(opt)
   end
 
   % The directory where the data are located
-  opt.dir.dataset_root = fullfile(fileparts(mfilename('fullpath')), '..', '..', '..');
+  opt.dir.dataset_root = spm_file(fullfile(fileparts(mfilename('fullpath')), '..', '..', '..'), ...
+                                  'cpath');
   opt.dir.raw = fullfile(opt.dir.dataset_root, 'inputs', 'raw');
   opt.dir.derivatives = fullfile(opt.dir.dataset_root, 'outputs', 'derivatives');
   opt.dir.preproc = fullfile(opt.dir.derivatives, 'cpp_spm-preproc');

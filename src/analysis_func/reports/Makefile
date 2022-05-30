@@ -1,4 +1,4 @@
-.PHONY: fmriprep/preprocessing.docx data_description.docx
+.PHONY: fmriprep/preprocessing.docx data_description.docx fmri_statistics.docx
 
 fmriprep/preprocessing.docx:
 	pandoc -i fmriprep/CITATION.md -o fmriprep/preprocessing.docx

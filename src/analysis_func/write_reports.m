@@ -8,20 +8,26 @@ clc;
 run ../../initEnv.m;
 
 %%
-opt = opt_preproc();
+close all;
 
-bids.diagnostic(opt.dir.raw, 'split_by', {'task'}, 'output_path', fullfile(pwd, 'reports'));
+opt = opt_dir();
+opt.dir.input = opt.dir.raw;
+opt.dir.output = pwd;
 
-%%
-bids.report(opt.dir.raw, ...
-            'filter', struct('sub', 'ctrl01', 'modality', {{'anat', 'func'}}), ...
-            'output_path', fullfile(pwd, 'reports'), ...
-            'read_nifti', true, ...
-            'verbose', true);
+opt.subjects = 'ctrl01';
+opt.query.modality = {'anat', 'func'};
+
+reportBIDS(opt);
+
 %%
 clear opt;
+opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
+                          'models', ...
+                          'model-TissueConfounds_smdl.json');
+opt.fwhm.contrast = 0;
+opt = checkOptions(opt);
 
-opt = opt_stats_subject_level();
+opt.designType = 'block';
 
 outputFile = boilerplate(opt, 'outputPath', fullfile(pwd, 'reports'), ...
                          'pipelineType', 'stats');

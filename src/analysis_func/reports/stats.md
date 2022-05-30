@@ -9,6 +9,8 @@ on a unix computer (Ubuntu 18.04.6 LTS).
 
 The input data were the preprocessed BOLD images in MNI152NLin2009cAsym space for the task " olfid, olfloc ".
 
+### Run / subject level analysis
+
 At the subject level, we performed a mass univariate analysis with a linear
 regression at each voxel of the brain, using generalized least squares with a
 global  FAST  model to account for temporal auto-correlation
@@ -19,23 +21,60 @@ the mean image would have a mean intracerebral intensity of 100.
 
 We modeled the fMRI experiment in a  block  design with regressors
 entered into the run-specific design matrix. The onsets
-were convolved with a canonical hemodynamic response function (HRF)
-  for the conditions:
- - olfid_eucalyptus_left,
-- olfid_eucalyptus_right,
-- olfid_almond_left,
-- olfid_almond_right,
-- olfloc_eucalyptus_left,
-- olfloc_eucalyptus_right,
-- olfloc_almond_left,
-- olfloc_almond_right,
-- resp_03,
-- resp_12,
+were convolved with SPM canonical hemodynamic response function (HRF)
+ for the conditions:
+  - `olfid_eucalyptus_left`,
+ - `olfid_eucalyptus_right`,
+ - `olfid_almond_left`,
+ - `olfid_almond_right`,
+ - `olfloc_eucalyptus_left`,
+ - `olfloc_eucalyptus_right`,
+ - `olfloc_almond_left`,
+ - `olfloc_almond_right`,
+ - `resp_03`,
+ - `resp_12`,
  .
 
- Nuisance covariates included the 6 realignment parameters to account for residual motion artefacts.
+ Nuisance covariates included:
 
- This method section was automatically generated using CPP SPM
+ - `trans_?`,
+ - `rot_?`,
+ - `white_matter`,
+ - `csf`,
+
+to account for residual motion artefacts, 
+to regress out signal coming from non grey matter regions, 
+ .
+
+ 
+ ### Group level analysis
+
+Contrast for the following conditions were passed as summary statistics for a group level analysis:
+  - `olfid_eucalyptus_left`,
+  - `olfid_eucalyptus_right`,
+  - `olfid_almond_left`,
+  - `olfid_almond_right`,
+  - `olfloc_eucalyptus_left`,
+  - `olfloc_eucalyptus_right`,
+  - `olfloc_almond_left`,
+  - `olfloc_almond_right`,
+ 
+ ## References
+
+This method section was automatically generated using CPP SPM
 (v1.1.5dev; https://github.com/cpp-lln-lab/CPP_SPM; DOI: https://doi.org/10.5281/zenodo.3554331)
 and octache (https://github.com/Remi-Gau/Octache).
+ 
+ ```bibtex
+@article{Corbin2018,
+author = {Corbin, Nadège and Todd, Nick and Friston, Karl J. and Callaghan, Martina F.},
+title = {Accurate modeling of temporal correlations in rapidly sampled fMRI time series},
+journal = {Human Brain Mapping},
+volume = {39},
+number = {10},
+pages = {3884-3897},
+doi = {https://doi.org/10.1002/hbm.24218},
+year = {2018}
+}
+```
  

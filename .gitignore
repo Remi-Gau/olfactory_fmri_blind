@@ -1,15 +1,17 @@
+.DS_Store
+
 *.tsv
 *.jpeg
 *.csv
 *.jpg
 
-*.nii
-*.nii.gz
+*.nii*
 
 *.dset
-.DS_Store
 
 *.log
+
+.doc*
 
 check_my_code_report.txt
 

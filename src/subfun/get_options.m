@@ -1,4 +1,5 @@
 function opt = get_options(opt)
+  %
   % set some options for the analysis and plotting of the behavioral results.
   %
   % (C) Copyright 2021 Remi Gau

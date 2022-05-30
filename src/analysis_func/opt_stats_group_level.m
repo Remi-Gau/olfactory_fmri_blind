@@ -3,7 +3,7 @@ function opt = opt_stats_group_level()
   % returns a structure that contains the options chosen by the user to run RFX
   %
   % (C) Copyright 2021 Remi Gau
-  
+
   if nargin == 0
     opt = [];
   end

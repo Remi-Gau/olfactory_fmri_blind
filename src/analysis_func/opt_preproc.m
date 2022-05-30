@@ -6,7 +6,7 @@ function opt = opt_preproc(opt)
 
   if nargin == 0
     opt = [];
-  end  
+  end
 
   opt = opt_dir(opt);
 

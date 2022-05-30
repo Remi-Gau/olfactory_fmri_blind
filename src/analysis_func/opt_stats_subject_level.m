@@ -1,7 +1,6 @@
 function opt = opt_stats_subject_level(opt)
   %
-  % returns a structure that contains the options chosen by the user to run
-  % slice timing correction, pre-processing, FFX, RFX...
+  % returns a structure that contains the options chosen by the user to run FFX
   %
   % (C) Copyright 2021 Remi Gau
 
@@ -9,13 +8,7 @@ function opt = opt_stats_subject_level(opt)
     opt = [];
   end
 
-  % The directory where the data are located
-  opt.dir.dataset_root = fullfile(fileparts(mfilename('fullpath')), '..', '..', '..');
-  opt.dir.raw = fullfile(opt.dir.dataset_root, 'inputs', 'raw');
-  opt.dir.derivatives = fullfile(opt.dir.dataset_root, 'outputs', 'derivatives');
-  opt.dir.preproc = fullfile(opt.dir.derivatives, 'cpp_spm-preproc');
-  opt.dir.stats = fullfile(opt.dir.derivatives, 'cpp_spm-stats');
-  opt.dir.roi = fullfile(opt.dir.derivatives, 'cpp_spm-roi');
+  opt = opt_dir(opt);
   opt.dir.input = opt.dir.preproc;
 
   opt.verbosity = 1;

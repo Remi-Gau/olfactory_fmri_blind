@@ -35,7 +35,7 @@ function opt = opt_stats_group_level()
                                                'cpp_spm-groupStats', ...
                                                'space-MNI152NLin2009cAsym_desc-maskedMean_T1w.nii');
 
-  %   opt.results(2) = opt.results(1);
+  opt.results(2) = opt.results(1);
   opt.results(1).nodeName = 'between_groups';
 
   % post setup

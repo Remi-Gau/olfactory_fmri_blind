@@ -226,6 +226,58 @@
       "DummyContrasts": {
         "Test": "t"
       }
+    },
+    {
+      "Level": "Dataset",
+      "Name": "between_groups",
+      "Description": "2 sample t-test of the conditions filtered in Edges",
+      "GroupBy": [
+        "contrast"
+      ],
+      "Model": {
+        "Type": "glm",
+        "X": [
+          1,
+          "group"
+        ]
+      },
+      "Contrasts": [
+        {
+          "Name": "blind_gt_control",
+          "ConditionList": [
+            "Group.blind",
+            "Group.control"
+          ],
+          "Weights": [
+            1,
+            -1
+          ],
+          "Test": "t"
+        }
+      ]
+    }
+  ],
+  "Edges": [
+    {
+      "Source": "TissueConfounds",
+      "Destination": "subject_level"
+    },
+    {
+      "Source": "subject_level",
+      "Destination": "dataset_level"
+    },
+    {
+      "Source": "subject_level",
+      "Destination": "between_groups",
+      "Filter": {
+        "contrast": [
+          "all_olf",
+          "all_olfid",
+          "all_olfloc",
+          "Responses",
+          "all_olf_lt_baseline"          
+        ]
+      }
     }
   ]
 }

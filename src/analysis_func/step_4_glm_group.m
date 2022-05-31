@@ -11,9 +11,8 @@ opt.verbosity = 2;
 
 % bidsRFX('meanAnatAndMask', opt);
 
-% bidsRFX('RFX', opt);
-% bidsRFX('contrast', opt);
-
+bidsRFX('RFX', opt, 'nodeName', 'between_groups');
+bidsRFX('contrast', opt, 'nodeName', 'between_groups');
 bidsResults(opt);
 
 return
@@ -30,15 +29,15 @@ side = [1 2];
 
 C = cartesian(task, group, odor, side);
 
-function C = cartesian(varargin)
-  args = varargin;
-  n = nargin;
-
-  [F{1:n}] = ndgrid(args{:});
-
-  for i = n:-1:1
-    G(:, i) = F{i}(:);
-  end
-
-  C = unique(G, 'rows');
-end
+% function C = cartesian(varargin)
+%   args = varargin;
+%   n = nargin;
+%
+%   [F{1:n}] = ndgrid(args{:});
+%
+%   for i = n:-1:1
+%     G(:, i) = F{i}(:);
+%   end
+%
+%   C = unique(G, 'rows');
+% end

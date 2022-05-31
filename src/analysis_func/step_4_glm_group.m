@@ -11,8 +11,8 @@ opt.verbosity = 2;
 
 % bidsRFX('meanAnatAndMask', opt);
 
-bidsRFX('RFX', opt, 'nodeName', 'between_groups');
-bidsRFX('contrast', opt, 'nodeName', 'between_groups');
+bidsRFX('RFX', opt);
+bidsRFX('contrast', opt);
 bidsResults(opt);
 
 return

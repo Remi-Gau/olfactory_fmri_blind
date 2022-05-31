@@ -14,5 +14,5 @@ glm_subject: step_3_glm_subject.m
 	$(MATLAB) $(ARG) -r "run('step_3_glm_subject.m');exit;"	
 
 glm_group: step_4_glm_group.m	
-	$(MATLAB) $(ARG) -r "run('step_4_glm_group.m');exit;"	
+	$(MATLAB) -r "run('step_4_glm_group.m');exit;"	
 		

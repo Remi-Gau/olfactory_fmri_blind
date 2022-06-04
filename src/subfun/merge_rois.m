@@ -12,8 +12,8 @@ function merge_rois(roiList, outputFilename)
 
   hdr.fname = outputFilename;
   spm_write_vol(hdr, vol);
-  
+
   for i = 1:numel(roiList)
     delete(roiList{i});
 
-end
+  end

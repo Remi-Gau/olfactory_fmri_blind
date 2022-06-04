@@ -1,1 +1,17 @@
-../../../.git/annex/objects/Xm/7q/MD5E-s348--5906d1379e21b7054b2f4f2c69e3d211.m/MD5E-s348--5906d1379e21b7054b2f4f2c69e3d211.m
+function to_plot = bin_data(to_plot, nb_bins, opt)
+  %
+  % (C) Copyright 2021 Remi Gau
+  tmp = zeros(size(to_plot, 1), nb_bins);
+
+  t_start = 1;
+  t_end = opt.bin_size;
+
+  for iBin = 1:nb_bins
+    tmp(:, iBin) = sum(to_plot(:, t_start:t_end), 2);
+    t_start = t_start + opt.bin_size;
+    t_end = t_end + opt.bin_size;
+  end
+
+  to_plot = tmp;
+
+end

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files=$(find analysis_rshrf -name "*.*")
+files=$(find subfun -name "*.*")
 
 for i in ${files}; do
 

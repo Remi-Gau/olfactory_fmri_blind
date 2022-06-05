@@ -48,7 +48,7 @@ rois_to_plot = {{'V1', 'V2', 'V3', 'hMT'}, 'visual'
                 {'hand'}, 'S1'
                 {'PrimaryOlfCortex', 'olfactory', 'Orbitofrontal'}, 'olfactory'};
 
-for i = 1:numel(rois_to_plot)
+for i = 1:size(rois_to_plot, 1)
 
   opt.roi.name = {['^space-.*(', ...
                    strjoin(rois_to_plot{i, 1}, '|') ')']};

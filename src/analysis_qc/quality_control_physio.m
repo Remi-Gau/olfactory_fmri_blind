@@ -4,21 +4,25 @@
 %
 % (C) Copyright 2021 Remi Gau
 
+close all;
 clear;
 clc;
 
-% spm_path = '/home/remi-gau/Documents/SPM/spm12';
-% addpath(spm_path)
-spm('defaults', 'fmri');
+run ../../initEnv.m;
 
-tgt_dir = 'D:\BIDS\olf_blind\raw';
+% get options
+opt =  opt_dir();
+opt = get_options(opt);
 
-bids =  spm_BIDS(tgt_dir);
-physio_file = spm_BIDS(bids, 'data', 'type', 'physio');
-metadata = spm_BIDS(bids, 'metadata', 'type', 'physio');
+opt.verbosity = 2;
 
-out_dir = fullfile('output', 'figures', 'physio_qc');
-mkdir(out_dir);
+% get data info
+BIDS =  bids.layout(opt.dir.raw);
+physio_file = bids.query(BIDS, 'data', 'suffix', 'physio');
+metadata = bids.query(BIDS, 'metadata', 'suffix', 'physio');
+
+out_dir = fullfile(opt.dir.beh, 'derivatives', 'qc');
+spm_mkdir(out_dir);
 
 visible = 'off';
 
@@ -58,7 +62,10 @@ for i_stim = 1:numel(physio_file)
   legend({'respiration', 'first scan'});
 
   [~, file, ~] = fileparts(physio_file{i_stim}(1:end - 3));
-  print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg');
+
+  bf = bids.File(file);
+  spm_mkdir(fullfile(out_dir, ['sub-' bf.entities.sub]));
+  print(gcf, fullfile(out_dir, ['sub-' bf.entities.sub], [file '.jpeg']), '-djpeg');
 
   filenames{i_stim, 1} = [file '.jpeg']; %#ok<*SAGROW>
   comments{i_stim, 1} = comment;

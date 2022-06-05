@@ -4,8 +4,11 @@
 %
 % (C) Copyright 2021 Remi Gau
 
+close all;
 clear;
 clc;
+
+run ../../initEnv.m;
 
 visible = 'on';
 
@@ -34,7 +37,8 @@ tasks = bids.query(BIDS, 'tasks');
 % number of time points to remove from phsyio to align with beh
 physio_crop = 1:RT * nb_dummies * samp_freq;
 
-% mkdir(out_dir);
+out_dir = fullfile(opt.dir.beh, 'derivatives', 'qc');
+spm_mkdir(out_dir);
 
 %%
 
@@ -139,7 +143,8 @@ for iSub = 1:numel(subjects)
 
       % print figure
       [~, file, ~] = fileparts(event_file{iRun}(1:end - 3));
-      % print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg');
+      spm_mkdir(fullfile(out_dir, ['sub-' subjects{iSub}]));
+      print(gcf, fullfile(out_dir, ['sub-' subjects{iSub}], [file '.jpeg']), '-djpeg');
 
       % save comments for log file
       filenames{end + 1, 1} = [file '.jpeg']; %#ok<*SAGROW>
@@ -150,4 +155,4 @@ for iSub = 1:numel(subjects)
 end
 
 T = table(filenames, comments);
-% writetable(T, fullfile(out_dir, 'stim_files_QC.csv'), 'Delimiter', ',');
+writetable(T, fullfile(out_dir, 'stim_files_QC.csv'), 'Delimiter', ',');

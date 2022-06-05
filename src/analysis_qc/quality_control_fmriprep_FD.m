@@ -1,20 +1,30 @@
 %  This script uses the report from fmriprep to estimate the number of
 %  timepoints in framewise displacement timeseries with values superior to
 %  threshold.
+%
 % https://fmriprep.readthedocs.io/en/stable/outputs.html
 %
 % (C) Copyright 2021 Remi Gau
 
 % Plots the proportion of timepoints per run (to identidy runs with that goes above a limit)
-% also plots the sum of the proportion of timepoints over the 4 runs to
-% identify who move a lot but for whom no run goes above the threshold
+% also plots the sum of the proportion of timepoints over the 4 runs
+% to identify who move a lot but for whom no run goes above the threshold
 
 % This script also estimates how many points are lost through scrubbing
-% depending on the framewise displacement threshold and the number of
-% points to scrub after an outlier
+% depending on the framewise displacement threshold
+% and the number of points to scrub after an outlier
 
+close all;
 clear;
 clc;
+
+run ../../initEnv.m;
+
+% get options
+opt =  opt_dir();
+opt = get_options(opt);
+
+opt.verbosity = 2;
 
 %%
 thresh = [.5 .9]; % FD threshold to "censor" timepoints
@@ -23,45 +33,48 @@ nb_2_scrub = [0 2 4]; % number of additional time points to scrub after an outli
 %% Load fMRIprep confound reports
 % stores only the FD values and separates them into 2 groups
 
-machine_id = 2;
-[data_dir, code_dir, output_dir, fMRIprep_DIR] = set_dir(machine_id);
+BIDS_fmriprep = bids.layout(opt.dir.input, 'use_schema', false);
 
-out_dir = fullfile(pwd, 'output', 'figures', 'fmriprep_qc');
-mkdir(out_dir);
+out_dir = fullfile(opt.dir.beh, 'derivatives', 'fmriprep_qc');
+spm_mkdir(out_dir);
 
 % Get which participant is in which group
-participants_file = fullfile(data_dir, 'raw', 'participants.tsv');
+participants_file = fullfile(opt.dir.raw, 'participants.tsv');
 participants = spm_load(participants_file);
+
 group_id = ~cellfun(@isempty, strfind(participants.participant_id, 'ctrl'));
 
-% [participants, group_id] = ...
-%     rm_subjects(participants, group_id, [], 0);
+%%
 
-% initialize
 FramewiseDisplacement = cell(2, 1);
 NbVol = cell(2, 1);
 
-for i_group = 0:1 % loop through each group
+for i_group = 0:1
 
-  group_idx = find(group_id == i_group); % index of each subject
+  group_idx = find(group_id == i_group);
 
   col = 1;
 
   for i_subj = 1:numel(group_idx)
 
     % get data for each subject
-    subject = participants.participant_id{ group_idx(i_subj) }; % ID
+    subject_label = participants.participant_id{ group_idx(i_subj) };
+    subject_label = strrep(subject_label, 'sub-', '');
 
-    % list all the confounds files
-    files_2_load = spm_select('FPListrec', ...
-                              fullfile(data_dir, 'derivatives', 'fmriprep', subject), ...
-                              ['^' subject '.*confounds_regressors.tsv$']);
+    printProcessingSubject(i_subj, subject_label, opt);
 
-    if ~isempty(files_2_load)
-      for i_file = 1:4 % size(files_2_load) % we skip the 5th file as it is the resting state run
+    confounds_file = bids.query(BIDS_fmriprep, 'data', ...
+                                'sub', subject_label, ...
+                                'task', {'olfid', 'olfloc'}, ...
+                                'desc', 'confounds', ...
+                                'suffix', 'regressors');
+
+    if ~isempty(confounds_file)
+      for i_file = 1:numel(confounds_file)
 
         % load each event file
-        data = spm_load(deblank(files_2_load(i_file, :)));
+        disp(confounds_file{i_file});
+        data = spm_load(confounds_file{i_file});
 
         % collect the FD for each run / subject
         fd = data.framewise_displacement;
@@ -119,7 +132,7 @@ for i_thres = thresh
       summed_proportion = sum(reshape(proportion, [4, size(proportion, 2) / 4]));
 
       %%
-      fig_name = ['Scrubbing_Group-' group_name '_FD-thres' num2str(i_thres) 'scrub' num2str(i_nb_2_scrub + 1)];
+      fig_name = ['group-' group_name '_FD-thres' num2str(i_thres) 'scrub' num2str(i_nb_2_scrub + 1)];
       figure('name', ['Framewise Displacement - ' group_name], 'position', [50 50 1300 700], 'visible', visible);
 
       hold on;
@@ -146,7 +159,7 @@ for i_thres = thresh
       print(gcf, fullfile(out_dir, [fig_name '.jpeg']), '-djpeg');
 
       %%
-      fig_name = ['Scrubbing_Group-' group_name '_FD-thres' num2str(i_thres) 'scrub' num2str(i_nb_2_scrub + 1) '_sum'];
+      fig_name = ['group-' group_name '_FD-thres' num2str(i_thres) 'scrub' num2str(i_nb_2_scrub + 1) '_sum'];
       figure('name', ['Framewise Displacement - ' group_name], 'position', [50 50 1300 700], 'visible', visible);
 
       hold on;

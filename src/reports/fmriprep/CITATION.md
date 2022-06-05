@@ -5,9 +5,9 @@ performed using *fMRIPrep* 1.4.0
 which is based on *Nipype* 1.2.0
 (@nipype1; @nipype2; RRID:SCR_002502).
 
-Anatomical data preprocessing
+### Anatomical data preprocessing
 
-: The T1-weighted (T1w) image was corrected for intensity non-uniformity (INU)
+The T1-weighted (T1w) image was corrected for intensity non-uniformity (INU)
 with `N4BiasFieldCorrection` [@n4], distributed with ANTs 2.2.0 [@ants, RRID:SCR_004757], and used as T1w-reference throughout the workflow.
 The T1w-reference was then skull-stripped with a *Nipype* implementation of
 the `antsBrainExtraction.sh` workflow (from ANTs), using OASIS30ANTs
@@ -27,9 +27,9 @@ using brain-extracted versions of both T1w reference and the T1w template.
 The following templates were selected for spatial normalization:
 *ICBM 152 Nonlinear Asymmetrical template version 2009c* [@mni152nlin2009casym, RRID:SCR_008796; TemplateFlow ID: MNI152NLin2009cAsym], *FSL's MNI ICBM 152 non-linear 6th Generation Asymmetric Average Brain Stereotaxic Registration Model* [@mni152nlin6asym, RRID:SCR_002823; TemplateFlow ID: MNI152NLin6Asym].
 
-Functional data preprocessing
+### Functional data preprocessing
 
-: For each of the 5 BOLD runs found per subject (across all
+For each of the 5 BOLD runs found per subject (across all
 tasks and sessions), the following preprocessing was performed.
 First, a reference volume and its skull-stripped version were generated
 using a custom methodology of *fMRIPrep*.
@@ -116,5 +116,5 @@ For more details of the pipeline, see [the section corresponding
 to workflows in *fMRIPrep*'s documentation](https://fmriprep.readthedocs.io/en/latest/workflows.html "FMRIPrep's documentation").
 
 
-### References
+
 

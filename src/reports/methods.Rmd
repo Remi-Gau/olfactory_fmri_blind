@@ -1,0 +1,42 @@
+---
+title: "Material and methods"
+author: "Rémi Gau"
+date: "2022-06-05"
+# output: word_document
+output: html_document
+bibliography: references.bib  
+---
+
+------
+
+# Material and methods
+
+## Sample description
+
+## Behavioral testing (out of scan)
+
+## Experimental design
+
+## Stimuli description
+
+## MRI acquisition parameters
+
+```{r, child=c('sub-ctrl01/bids-matlab_report.md')}
+```
+
+## Preprocessing
+
+```{r, child=c('fmriprep/CITATION.md')}
+```
+
+## Statistical analysis
+
+## Behavioral
+
+## fMRI
+
+
+```{r, child=c('stats.md')}
+```
+
+### References

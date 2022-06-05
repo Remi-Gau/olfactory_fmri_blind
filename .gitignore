@@ -1,5 +1,8 @@
 .DS_Store
 
+*.docx
+*.html
+
 *.jpeg
 *.csv
 *.jpg
@@ -55,3 +58,7 @@ octave-workspace
 
 # Python
 .ipynb_checkpoints
+
+# R
+*.RData
+.Rproj.user

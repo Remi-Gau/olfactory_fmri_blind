@@ -1,4 +1,4 @@
-%% crash test
+%% plots PSC as "spagheti plot" for each group
 %
 %
 % (C) Copyright 2022 Remi Gau

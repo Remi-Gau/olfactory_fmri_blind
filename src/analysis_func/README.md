@@ -1,5 +1,26 @@
 # fMRI analysis
 
+- [fMRI analysis](#fmri-analysis)
+  - [Preprocessing](#preprocessing)
+    - [Copy and unzipping data](#copy-and-unzipping-data)
+    - [Smoothing the data](#smoothing-the-data)
+  - [Mass univariate analysis](#mass-univariate-analysis)
+    - [Subject level GLMs](#subject-level-glms)
+    - [Model selection using the MACs toolbox](#model-selection-using-the-macs-toolbox)
+      - [Specify all models](#specify-all-models)
+        - [HRF](#hrf)
+        - [Confounds](#confounds)
+        - [Scrubbing](#scrubbing)
+    - [Compute cvLME and do bayesian model selection](#compute-cvlme-and-do-bayesian-model-selection)
+    - [Viewing winning models](#viewing-winning-models)
+      - [moddel 03: No Derivative With Tissue Confounds No Scrubbing](#moddel-03-no-derivative-with-tissue-confounds-no-scrubbing)
+      - [model 01: No Derivative No Tissue Confounds No Scrubbing.nii](#model-01-no-derivative-no-tissue-confounds-no-scrubbingnii)
+      - [Failed cvLME](#failed-cvlme)
+    - [Running the group level GLM](#running-the-group-level-glm)
+  - [ROI based analysis](#roi-based-analysis)
+    - [Converting ROIs to native space using ANTs](#converting-rois-to-native-space-using-ants)
+    - [Running the ROI based analysis](#running-the-roi-based-analysis)
+
 ## Preprocessing
 
 ### Copy and unzipping data
@@ -166,10 +187,16 @@ each ROIs
 You will first need to create the ROIs (or you can download them from neurovault
 (_insert URL_)) that will be used for this analysis.
 
+`step_*_create_mean_gm_mask.m` creates a mean grey matter mask to constrain some
+of the ROIs made from neurosynth.
+
 `step_*_create_roi.m` create the ROIs to check responses in the regions
 corresponding to the terms _hand_ and _olfactory_ in neurosynth and also for
 visual ROIs from the Wang atlas.
 
 This is done by `step_*_glm_subject_roi.m`
 
-Percent signal changed are obtained with `step_*_glm_subject_roi_plot_psc.m`.
+Percent signal data can be compiled across ROIs / subjects / contrasts with
+`step_*_glm_subject_roi_psc.m`.
+
+The PSC can be plotted with `step_*_plot_psc.m`.

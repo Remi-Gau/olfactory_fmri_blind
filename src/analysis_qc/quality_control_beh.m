@@ -1,4 +1,5 @@
 % quality_control_beh()
+%
 % plots stimuli, responses and breathing
 %
 % (C) Copyright 2021 Remi Gau
@@ -6,21 +7,14 @@
 clear;
 clc;
 
-if ~exist('machine_id', 'var')
-  machine_id = 1; % 0: container ;  1: Remi ;  2: Beast
-end
-
-% setting up directories
-[data_dir, code_dir] = set_dir(machine_id);
-
-tgt_dir = fullfile(data_dir, 'raw');
-
-out_dir = fullfile(code_dir, 'output', 'figures', 'beh_qc');
-
-visible = 'off';
+visible = 'on';
 
 % get options
-opt = get_option;
+opt =  opt_dir();
+opt = get_options(opt);
+
+opt.verbosity = 2;
+
 nb_dummies = opt.nb_dummies;
 RT = opt.RT;
 samp_freq = opt.samp_freq;
@@ -33,14 +27,14 @@ Legend{end + 1} = 'resp_2';
 Legend{end + 1} = 'respiration';
 
 % get data info
-bids =  spm_BIDS(tgt_dir);
-subjects = spm_BIDS(bids, 'subjects');
-tasks = spm_BIDS(bids, 'tasks');
+BIDS =  bids.layout(opt.dir.raw);
+subjects = bids.query(BIDS, 'subjects');
+tasks = bids.query(BIDS, 'tasks');
 
 % number of time points to remove from phsyio to align with beh
 physio_crop = 1:RT * nb_dummies * samp_freq;
 
-mkdir(out_dir);
+% mkdir(out_dir);
 
 %%
 
@@ -48,22 +42,25 @@ comments = {};
 filenames = {};
 
 for iSub = 1:numel(subjects)
+
+  printProcessingSubject(iSub, subjects{iSub}, opt);
+
   for iTasks = 1:2
 
-    physio_file = spm_BIDS(bids, 'data', ...
-                           'sub', subjects{iSub}, ...
-                           'task', tasks{iTasks}, ...
-                           'type', 'physio');
+    physio_file = bids.query(BIDS, 'data', ...
+                             'sub', subjects{iSub}, ...
+                             'task', tasks{iTasks}, ...
+                             'suffix', 'physio');
 
-    metadata = spm_BIDS(bids, 'metadata', ...
-                        'sub', subjects{iSub}, ...
-                        'task', tasks{iTasks}, ...
-                        'type', 'physio');
-
-    event_file = spm_BIDS(bids, 'data', ...
+    metadata = bids.query(BIDS, 'metadata', ...
                           'sub', subjects{iSub}, ...
                           'task', tasks{iTasks}, ...
-                          'type', 'events');
+                          'suffix', 'physio');
+
+    event_file = bids.query(BIDS, 'data', ...
+                            'sub', subjects{iSub}, ...
+                            'task', tasks{iTasks}, ...
+                            'suffix', 'events');
 
     for iRun = 1:numel(physio_file)
 
@@ -129,6 +126,7 @@ for iSub = 1:numel(subjects)
       for iStim = 1:4
         plot(trial_courses(iStim, :), stim_color{iStim}, 'linewidth', 2);
       end
+
       % plot responses
       plot(trial_courses(5, :), '--k', 'linewidth', 2);
       plot(trial_courses(6, :), 'k', 'linewidth', 2);
@@ -141,7 +139,7 @@ for iSub = 1:numel(subjects)
 
       % print figure
       [~, file, ~] = fileparts(event_file{iRun}(1:end - 3));
-      print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg');
+      % print(gcf, fullfile(out_dir, [file '.jpeg']), '-djpeg');
 
       % save comments for log file
       filenames{end + 1, 1} = [file '.jpeg']; %#ok<*SAGROW>
@@ -152,4 +150,4 @@ for iSub = 1:numel(subjects)
 end
 
 T = table(filenames, comments);
-writetable(T, fullfile(out_dir, 'stim_files_QC.csv'), 'Delimiter', ',');
+% writetable(T, fullfile(out_dir, 'stim_files_QC.csv'), 'Delimiter', ',');

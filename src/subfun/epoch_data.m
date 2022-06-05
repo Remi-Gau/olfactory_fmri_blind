@@ -18,9 +18,15 @@ function [prestim_e, stim_e, poststim_e] = epoch_data(tasks, group, all_time_cou
         % onset and offset of each stim
         for iTrialtype = 1:4
           data = all_time_courses{iTrialtype, iRun, iGroup, iTask};
+          assert(sum(isnan(data(:))) == 0);
           for iSubj = 1:size(data, 1)
+
             ON = find(data(iSubj, :) == 1);
             if isempty(ON)
+              warning('forcing onsets sub-%s for task %s and trial %s.\n', ...
+                      group(iGroup).subjects{iSubj}, ...
+                      tasks{iTask}, ...
+                      opt.trial_type{iTrialtype});
               ON = 1;
             end
             onsets(iSubj, iTrialtype) = ON;
@@ -29,6 +35,7 @@ function [prestim_e, stim_e, poststim_e] = epoch_data(tasks, group, all_time_cou
 
         % indices of baseline epoch
         baseline_idx = onsets(:, 1);
+        assert(sum(isnan(baseline_idx(:))) == 0);
 
         % in case some subjects have messed up onsets
         bad_baseline = baseline_idx <= baseline_dur / 2;
@@ -45,6 +52,7 @@ function [prestim_e, stim_e, poststim_e] = epoch_data(tasks, group, all_time_cou
               repmat(round(mean(baseline_idx(~bad_baseline, :))), ...
                      [sum(bad_baseline), 1]);
         end
+        assert(sum(isnan(baseline_idx(:))) == 0);
 
         % Do something similar for the other onsets
         for iTrialtype = 2:4
@@ -55,6 +63,7 @@ function [prestim_e, stim_e, poststim_e] = epoch_data(tasks, group, all_time_cou
 
         % update onsets
         onsets(:, 1) = baseline_idx(:, 1);
+        assert(sum(isnan(onsets(:))) == 0);
 
         % create offsets using a fixed duration
         offsets = onsets + stim_dur;

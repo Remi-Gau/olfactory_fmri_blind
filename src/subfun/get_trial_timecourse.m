@@ -22,13 +22,12 @@ function trial_courses = get_trial_timecourse(event_file)
   % we collect the stim / resp onsets and offsets
   for iTrial_type = 1:numel(trial_type)
 
-    idx = strcmp(x.trial_type, trial_type{iTrial_type});
+    idx = strcmp(x.channel, trial_type{iTrial_type});
 
     event_onsets = x.onset(idx);
     event_offsets = event_onsets + x.duration(idx);
 
-    % we round as we need to use those values as indices in a time
-    % course
+    % we round as we need to use those values as indices in a time course
     event_onsets = round(event_onsets * samp_freq);
     event_offsets = round(event_offsets * samp_freq);
     if any(event_onsets < 0)

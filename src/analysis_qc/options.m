@@ -4,6 +4,6 @@ function opt = options()
 
   opt.visible = 'on';
 
-  opt = get_option(opt);
+  opt = get_options(opt);
 
 end

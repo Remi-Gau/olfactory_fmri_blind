@@ -2,11 +2,7 @@ function opt = options()
   %
   % (C) Copyright 2021 Remi Gau
 
-  % The directory where the data are located
-  opt.dir.dataset_root = fullfile(fileparts(mfilename('fullpath')), '..', '..', '..');
-  opt.dir.raw = fullfile(opt.dir.dataset_root, 'inputs', 'raw');
-  opt.dir.input = fullfile(opt.dir.dataset_root, 'inputs', 'fmriprep');
-  opt.dir.derivatives = fullfile(opt.dir.dataset_root, 'outputs', 'derivatives');
+  opt = opt_dir();
 
   opt.baseline_dur = 20;
   opt.pre_stim = 16;

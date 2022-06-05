@@ -12,7 +12,7 @@ function make_figure(all_stim, tasks, opt)
 
   fontsize = 12;
 
-  opt = get_option(opt);
+  opt = get_options(opt);
 
   samp_freq = opt.samp_freq;
 

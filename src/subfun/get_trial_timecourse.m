@@ -8,7 +8,7 @@ function trial_courses = get_trial_timecourse(event_file)
   %
   % (C) Copyright 2021 Remi Gau
 
-  opt = get_option;
+  opt = get_options;
 
   samp_freq = opt.samp_freq;
   timecourse_dur = opt.timecourse_dur;

@@ -4,7 +4,7 @@ function [all_stim, task] = average_beh(BIDS, task, subjects)
 
   fprintf(1, '\n\nGetting the data');
 
-  opt = get_option;
+  opt = get_options;
 
   samp_freq = opt.samp_freq;
   timecourse_dur = opt.timecourse_dur;

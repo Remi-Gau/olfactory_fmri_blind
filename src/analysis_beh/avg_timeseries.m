@@ -44,11 +44,11 @@ opt.max_y_axis = max_y_axis;
 group(1).name = 'blnd';
 group(2).name = 'ctrl';
 
-out_dir = fullfile(opt.dir.output_dir, 'beh', 'figures', 'beh_avg');
+out_dir = fullfile(opt.dir.beh, 'derivatives', 'beh', 'figures', 'beh_avg');
 spm_mkdir(out_dir);
 
 % loads bids data
-BIDS =  bids.layout(opt.dir.data);
+BIDS =  bids.layout(opt.dir.beh);
 
 tasks = bids.query(BIDS, 'tasks');
 if numel(tasks) == 3
@@ -143,6 +143,6 @@ for iTask = 1:numel(tasks)
 end
 
 function print_fig(prefix, out_dir, group_name, task, iNorm, desc)
-  print(gcf, fullfile(out_dir, ...
-                      [prefix group_name '_desc-' desc '_task-' task '_norm-' num2str(iNorm) '_plot.jpg']), '-djpeg');
+  %   print(gcf, fullfile(out_dir, ...
+  %                       [prefix group_name '_desc-' desc '_task-' task '_norm-' num2str(iNorm) '_plot.jpg']), '-djpeg');
 end

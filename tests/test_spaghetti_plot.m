@@ -6,7 +6,7 @@
 close all;
 clear;
 
-nb_cols = 4;
+nb_cols = 2;
 n_subjects = 30;
 use_spaghetti = true;
 

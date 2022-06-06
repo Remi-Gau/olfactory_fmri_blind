@@ -18,6 +18,10 @@ drift fit with discrete cosine transform basis (128 seconds cut-off).
 Image intensity scaling was done run-wide before statistical modeling such that
 the mean image would have a mean intracerebral intensity of 100.
 
+<!--
+TODO what slice was used as reference
+-->
+
 We modeled the fMRI experiment in a block design with regressors entered into
 the run-specific design matrix. The onsets were convolved with SPM canonical
 hemodynamic response function (HRF) for the conditions:

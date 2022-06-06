@@ -2,8 +2,8 @@
 title: "Material and methods"
 author: "Rémi Gau"
 date: "2022-06-05"
-# output: word_document
-output: html_document
+output: word_document
+# output: html_document
 bibliography: references.bib  
 ---
 
@@ -23,6 +23,10 @@ Ethics approval
 add participants descritption table
 -->
 
+```{r, echo=FALSE, warning=FALSE}
+library(flextable) #you can use another table library, if you want
+flextable(read.csv("participants.csv"))
+```
 
 ## Behavioral testing (out of scan)
 
@@ -36,7 +40,8 @@ add participants descritption table
 ```
 ## Quality control
 
-
+```{r, child=c('quality_control.md')}
+```
 
 ## Preprocessing
 
@@ -52,7 +57,7 @@ Code for the analysis is available on [Github](https://github.com/Remi-Gau/olfac
 ## fMRI
 
 
-```{r, child=c('stats.md')}
+```{r, child=c('statistical_analysis_fmri.md')}
 ```
 
 ### References

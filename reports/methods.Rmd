@@ -4,7 +4,7 @@ author: "Rémi Gau"
 date: "2022-06-05"
 # output: word_document
 output: html_document
-bibliography: references.bib  
+bibliography: references.bib
 ---
 
 
@@ -12,14 +12,14 @@ bibliography: references.bib
 
 # Material and methods
 
-<!-- 
+<!--
 Ethics approval
 -->
 
 
 ## Sample description
 
-<!-- 
+<!--
 add participants descritption table
 -->
 

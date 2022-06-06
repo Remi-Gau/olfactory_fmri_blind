@@ -114,7 +114,3 @@ Many internal operations of *fMRIPrep* use
 mostly within the functional processing workflow.
 For more details of the pipeline, see [the section corresponding
 to workflows in *fMRIPrep*'s documentation](https://fmriprep.readthedocs.io/en/latest/workflows.html "FMRIPrep's documentation").
-
-
-
-

@@ -1,0 +1,58 @@
+---
+title: "Material and methods"
+author: "Rémi Gau"
+date: "2022-06-05"
+# output: word_document
+output: html_document
+bibliography: references.bib  
+---
+
+
+------
+
+# Material and methods
+
+<!-- 
+Ethics approval
+-->
+
+
+## Sample description
+
+<!-- 
+add participants descritption table
+-->
+
+
+## Behavioral testing (out of scan)
+
+## Experimental design
+
+## Stimuli description
+
+## MRI acquisition parameters
+
+```{r, child=c('sub-ctrl01/bids-matlab_report.md')}
+```
+## Quality control
+
+
+
+## Preprocessing
+
+```{r, child=c('fmriprep/CITATION.md')}
+```
+
+## Statistical analysis
+
+Code for the analysis is available on [Github](https://github.com/Remi-Gau/olfactory_fmri_blind).
+
+## Behavioral
+
+## fMRI
+
+
+```{r, child=c('stats.md')}
+```
+
+### References

@@ -1,0 +1,249 @@
+Table	Aspect1	Aspect2			
+Table D.1. Experimental Design Reporting	Number of subjects (by group)	Subjects approached	Blind inviduals (B); Sighted individuals (C )		B= 17; C= 18
+Table D.1. Experimental Design Reporting	Number of subjects (by group)	Subjects consented	Blind inviduals (B); Sighted individuals (C )		B= 17; C= 18
+Table D.1. Experimental Design Reporting	Number of subjects (by group)	Subjects refused to participate	Blind inviduals (B); Sighted individuals (C )		B= 0; C= 0
+Table D.1. Experimental Design Reporting	Number of subjects (by group)	Subjects excluded	Blind inviduals (B); Sighted individuals (C )		B= 0; C= 0
+Table D.1. Experimental Design Reporting	Number of subjects (by group)	Subjects participated and analyzed	Blind inviduals (B); Sighted individuals (C )		Scanned: B= 17; C= 18; Excluded after acquisition: B= 1; C= 2; Included in the data analysis: B= 16*; C= 16*
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Age			B: (M= 52.69; SD= 13.36; R= 39.33-66.05); C: (M= 53.50; SD= 11.41; R= 42.09-64.91) 
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Sex			B: (M= 9; F= 7); C: (M= 9; F= 7)
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Race & ethnicity			N.A.
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Education, SES	Education		Education (years complete) : B: (M= 13.25; SD= 3.21); C: (M=14.69; SD= 2.27)
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	IQ			N.A.
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Handedness	Mean and standard deviation on the Modified Edinburgh Handedness Inventory (Argyropoulos et al., 2014); Absolute counts for handedness		B: (M= 13.50; SD= 11.27; Left H= 2; Right H= 14); C: (M=16.31; SD= 11.86; Left H= 2; Right H= 14)
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Exclusion criteria			Declared blind before the age of 3 years old; MRI compatible; Normal olfactory function; Ability to understand and give a consent
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Clinical criteria			N.A.
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Clinical instruments	Blindness level (BL); Normal olfactory abilities (SS)	Blindness level in absolute counts (0= Complete Congenital; 1= Complete Early blind; 2= Right eye residual light; 3= Left eye residual light; 4= Both eyes residual light; 5= Sighted); Normal olfactory abilities were assessed with the Sniffin' Sticks (Subtests: Threshold, Discrimination, Identification, Memory)	Put the t-test* Blindness Level: (B: (0= 3; 1= 6; 2= 4; 3= 1; 4= 2); C: (5= 16)); Olfactory abilities: (B= 16; C= 16)
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Matching strategy	On three variables: Age, Gender & Smoking habit (smokers (Sm))		Put the T-test * Age: Mean; SD; Gender: Mean; SD; N.S. Smokers in absolute counts (Sm): B= 3; C= 3.
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Population & recruitment strategy			Recruitment of blind pariticipants: previous list of participants; Institut Louis-Braille; Centre McKay. Recruitment of sighted individuals: by convenance and by public annoncements. Some blind participants already participated in sutides conducted in our lab.  
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Subject scanning order			N.A.
+Table D.1. Experimental Design Reporting	Inclusion criteria and descriptive statistics (by group)	Neurocognitive measures	Olfaction measures; Memory; Attention; Verbal Fluency		Put the t-test*Olfactory: Sniffin' Sticks (Identification, Threshold, Discrimination and Memory subtests); Memory : California Verbal Learning Test (CVLT); Attention: Test of Everyday Attention (TEA; Elevator counting and Elevator counting ith distraction subtests); Verbal Fluency: D-KEF (Letters, Category and Switching conditions from the Verbal Fluency subtest)
+Table D.1. Experimental Design Reporting	Ethical considerations	Ethical approval	CRIR & CIUSSS		Describe approval given, including the particular institutional review board, medical ethics committee or equivalent that granted the approval. When data is shared, describe the ethics/institutional approvals required from either the author (source) or recipient
+Table D.1. Experimental Design Reporting	Ethical considerations	Informed consent	Blind inviduals (B)		The ICF were read to all blind inviduals before the experiment and signed in the presence of a witness
+Table D.1. Experimental Design Reporting	Design specifications	Design type			Task (block design) & resting state
+Table D.1. Experimental Design Reporting	Design specifications	Condition & stimuli	Tasks (block design) & resting state		Tasks (block design): Blindfolded. 2 conditions (Identification and Localization) X 2 odors (Almond and Eucalyptus) X 2 nostrils (Left and Right). Baseline : continuous airflow.  Resting state: Blindfolded, nothing to do. 
+Table D.1. Experimental Design Reporting	Design specifications	Number of blocks, trials or experimental units			Tasks (block design): 2 runs of Identification (4 blocks each) and 2 runs of Localization (4 blocks). Stimulation order: Ch1, Ch3, Ch5, Ch7. Definition of the channels : Ch1 = Left Nostril - Eucalyptus; Ch3 = Left Nostril - Almond; Ch5 = Right Nostril - Eucalyptus; Ch7 = Right Nostril - Almond.
+Table D.1. Experimental Design Reporting	Design specifications	Timing and duration			Regular arrangement of the presentations. Odor presentation was set according to the breathing of the participant (always around 30, 86, 142 and 198 sec.). ON = 16 sec; OFF = 40 sec; BASELINE = 30 sec; TOTAL DURATION FOR A RUN = 214 sec
+Table D.1. Experimental Design Reporting	Design specifications	Length of the experiment			Description of the complete scanning session (Total Scanning session = app. 1h08): Anatomique = app. 11 min; Resting state = app. 11 min; Run 1 : Iden_1 =  app. 234 sec; Run 2 : Iden_2 = app. 234 sec; Run 3 : Loc_1 = app. 234 sec; Run 4 : Loc_2 = app. 234 sec (Total fMRI experiment = 856 sec + Verbal instructions); DWI = app. 5 min; Bulbe = app. 6 min
+Table D.1. Experimental Design Reporting	Design specifications	Design optimization			N.A.
+Table D.1. Experimental Design Reporting	Design specifications	Presentation software			Software : LabVIEW (version XXX); Operating system : Windows 10 
+Table D.1. Experimental Design Reporting	Task specification	Condition	Identification; Localization		Idenfication of the odors : Iden (Almond or Eucalyptus); Localization of the odors : Loc (Left or Right nostril).
+Table D.1. Experimental Design Reporting	Task specification	Instructions	Identification; Localization; Resting state		"Identification task : ""At each breathing, I ask you to tell me if you are smelling something. If so, identify the odors (Almond or Eucalyptus)""; Localization task : ""At each breathing, I ask you to tell me if you are smelling something in one of your nostril. If so, localize the odor (Left or Right nostril)""; Resting state : ""For the next minutes, I ask you to breath normally with your eyes closed. You can think of whatever you want (Blindfolded with no airflow)"". *Each participant had a training session just before the MRI. They practiced both conditions and feedbacks were given. "
+Table D.1. Experimental Design Reporting	Task specification	Stimuli	Identification; Localization		Identification (Almond or Eucalyptus); Localization (Left or Right nostril). Stimulation order: Ch1, Ch3, Ch5, Ch7. Definition of the channels : Ch1 = Left Nostril - Eucalyptus; Ch3 = Left Nostril - Almond; Ch5 = Right Nostril - Eucalyptus; Ch7 = Right Nostril - Almond.
+Table D.1. Experimental Design Reporting	Task specification	Randomization			No randomization. Each run for both conditions was the same. (Ch1 - Ch3 - Ch5 - Ch7)
+Table D.1. Experimental Design Reporting	Task specification	Stimulus presentation & response collection.			Specify the presentation hardware (e.g. back projection, in­ room display, goggles, etc.), and the response systems (e.g. button boxes, eye tracking, physiology)
+Table D.1. Experimental Design Reporting	Task specification	Stimulus presentation & response collection.			TTL pulses were used to trigger the start of a run. Runs were manually stopped by the MRI technician and the experimenter. 
+Table D.1. Experimental Design Reporting	Task specification	Run order	Identification; Localization		Iden 1; Iden 2; Loc 1; Loc 2.
+Table D.1. Experimental Design Reporting	Power analysis	Outcome			The type of outcome used as the basis of power computations, e.g. signal in a pre­specified ROI, or whole image voxelwise (or cluster­wise, peak­wise, etc.)
+Table D.1. Experimental Design Reporting	Power analysis	Power parameters			Effect size (or effect magnitude and standard deviation separately)
+Table D.1. Experimental Design Reporting	Power analysis	Power parameters			Source of predicted effect size (previous literature with citation; pilot data with description, etc.)
+Table D.1. Experimental Design Reporting	Power analysis	Power parameters			Significance level (e.g. uncorrected alpha 0.05 for an ROI, or FWE­corrected significance
+Table D.1. Experimental Design Reporting	Power analysis	Power parameters			Target power (typically 80%)
+Table D.1. Experimental Design Reporting	Power analysis	Power parameters			Any other parameters set (e.g. for spatial methods a brain volume and smoothness may be needed to be specified)
+Table D.1. Experimental Design Reporting	Behavioral performance	Variables recorded			State number of type of variables recorded (e.g. correct button press, response time)
+Table D.1. Experimental Design Reporting	Behavioral performance	Summary statistics			Summaries of behavior sufficient to establish that subjects were performing the task as expected. For example, correct response rates and/or response times, summarized over subjects (e.g. mean, range and/or standard deviation)
+Table D.2. Acquisition Reporting	Subject preparation	Mock scanning			Use of an MRI simulator to acclimate subjects to scanner environment. Report type of mock scanner and protocol (i.e. duration, types of simulated scans, experiments)
+Table D.2. Acquisition Reporting	Subject preparation	Special accommodations			For example, for pediatric scanning, presence of parent/guardian in the room
+Table D.2. Acquisition Reporting	Subject preparation	Experimenter personnel			Whether a single or multiple experimenters interacted with the subjects
+Table D.2. Acquisition Reporting	MRI system description	Scanner			Prisma Fit 3 Teslas MRI scanner from Siemens
+Table D.2. Acquisition Reporting	MRI system description	Coil			32 channels head coil
+Table D.2. Acquisition Reporting	MRI system description	Significant hardware modifications			N.A.
+Table D.2. Acquisition Reporting	MRI system description	Software version			Highly recommended when sharing vendor-specific protocols or exam cards, as version may be needed to correctly interpret that information
+Table D.2. Acquisition Reporting	MRI acquisition	Pulse sequence type			For example, gradient echo, spin echo, etc. 
+Table D.2. Acquisition Reporting	MRI acquisition	Imaging type			For example, echo planar imaging (EPI), spiral, 3D
+Table D.2. Acquisition Reporting	MRI acquisition	Imaging type			Number of shots (if multi­shot); partial Fourier scheme & reconstruction method (if used)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	All acquisitions		Echo time (TE)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	All acquisitions		Repetition time (TR)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	All acquisitions		Flip angle (FA)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	All acquisitions		Acquisition time (duration of acquisition)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	All acquisitions	Multi­shot acquisitions	Time per volume
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Functional MRI		Number of volumes
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Functional MRI		Sparse sampling delay (delay in TR) if used
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Inversion recovery sequences		Inversion time (TI)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	B0 field maps		Echo time difference (dTE)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Diffusion MRI		Number of directions
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Diffusion MRI		Direction optimization, if used and type
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Diffusion MRI		B-values
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Diffusion MRI		Number of b=0 images
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Diffusion MRI		Number of averages (if any)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Diffusion MRI		Single shell, multi­shell (specify equal or unequal spacing)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Diffusion MRI		Single­ or dual­-spin-­echo, gradient mode (serial or parallel)
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Diffusion MRI		If cardiac gating used
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Imaging parameters		Field of view
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Imaging parameters		In-plane matrix size, slice thickness and interslice gap, for 2D acquisitions
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Imaging parameters		3D matrix size, for 3D acquisitions
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Imaging parameters	Slice orientation	Axial, sagittal, coronal or oblique
+Table D.2. Acquisition Reporting	MRI acquisition	Essential sequence & imaging parameters	Imaging parameters	Slice orientation	Angulation: If acquisition not aligned with scanner axes, specify angulation to AC­PC line (see Slice position procedure)
+Table D.2. Acquisition Reporting	MRI acquisition	Phase encoding			Specify phase encoding direction (e.g. as A/P, L/R, or S/I)
+Table D.2. Acquisition Reporting	MRI acquisition	Phase encoding			For 3D, specify “partition encode” (aka slice) direction
+Table D.2. Acquisition Reporting	MRI acquisition	Phase encoding			Phase encoding reversal: Mention if used (aka “blip-up/blip-down”)
+Table D.2. Acquisition Reporting	MRI acquisition	Parallel imaging method & parameters			Method, e.g. SENSE, GRAPPA or other parallel imaging method, and acceleration factor
+Table D.2. Acquisition Reporting	MRI acquisition	Parallel imaging method & parameters			Matrix coil mode, and coil combining method (if non­standard)
+Table D.2. Acquisition Reporting	MRI acquisition	Multiband parameters			Multiband factor and field-of-view shift (only if applicable)
+Table D.2. Acquisition Reporting	MRI acquisition	Readout parameters			Receiver bandwidth, readout duration, echo spacing
+Table D.2. Acquisition Reporting	MRI acquisition	Fat suppression			For anatomical scans, whether it was used or not
+Table D.2. Acquisition Reporting	MRI acquisition	Shimming			Any specialized shimming procedures
+Table D.2. Acquisition Reporting	MRI acquisition	Slice order & timing			For fMRI acquisitions, interleaved vs. sequential ordering and direction (ascending/descending), location of 1st slice; any specialized slice timing
+Table D.2. Acquisition Reporting	MRI acquisition	Slice position procedure			For example, landmark guided vs. auto-alignment
+Table D.2. Acquisition Reporting	MRI acquisition	Brain coverage			Report whether coverage was whole-brain, and whether cerebellum and brainstem were included. If not whole-brain, note the nature of the partial area of coverage. If axial and co­planar with AC­PC line, the volume coverage in terms of Z in mm
+Table D.2. Acquisition Reporting	MRI acquisition	Scanner-side preprocessing			Reconstruction matrix size differing from acquisition matrix size
+Table D.2. Acquisition Reporting	MRI acquisition	Scanner-side preprocessing			Prospective-motion correction (including details of any optical tracking, and how motion parameters are used)
+Table D.2. Acquisition Reporting	MRI acquisition	Scanner-side preprocessing			Signal inhomogeneity correction
+Table D.2. Acquisition Reporting	MRI acquisition	Scanner-side preprocessing			Distortion-correction
+Table D.2. Acquisition Reporting	MRI acquisition	Scan duration			In seconds 
+Table D.2. Acquisition Reporting	MRI acquisition	Other non­standard procedures			Turning off the cold head(s) (e.g. during EEG/fMRI or spectroscopy measurements)
+Table D.2. Acquisition Reporting	MRI acquisition	Other non­standard procedures			Reduce sound pressure by limiting the gradient slew rate
+Table D.2. Acquisition Reporting	MRI acquisition	T1 stabilization			Number of initial “dummy” scans acquired and then discarded by the scanner
+Table D.2. Acquisition Reporting	MRI acquisition	Diffusion MRI gradient table			Also referred to as the b­matrix (but not to be confused with the 3×3 matrix that describes diffusion weighting for a single diffusion weighted measurement)
+Table D.2. Acquisition Reporting	Preliminary quality control	Motion monitoring			For functional or diffusion acquisitions, any visual or quantitative checks for severe motion; likewise, for structural images, checks on motion or general image quality
+Table D.2. Acquisition Reporting	Preliminary quality control	Incidental findings			Protocol for review of any incidental findings, and how they are handled in particular with respect to possible exclusion of a subject’s data
+Table D.3. Preprocessing Reporting	Software				For each software used, be sure to include version and revision number
+Table D.3. Preprocessing Reporting	Software citation				Include URL and Research Resource Identifier for each software used
+Table D.3. Preprocessing Reporting	T1 stabilization				Number of initial “dummy” scans discarded as part of preprocessing (if not already performed by scanner)
+Table D.3. Preprocessing Reporting	Brain extraction				See fMRIprep
+Table D.3. Preprocessing Reporting	Brain extraction				See fMRIprep
+Table D.3. Preprocessing Reporting	Brain extraction				See fMRIprep
+Table D.3. Preprocessing Reporting	Segmentation				See fMRIprep
+Table D.3. Preprocessing Reporting	Slice time correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Slice time correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Slice time correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Slice time correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Motion correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Motion correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Motion correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Motion correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Motion correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Motion correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Motion correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Gradient distortion correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Function-structure (inter-subjective) coregistration				See fMRIprep
+Table D.3. Preprocessing Reporting	Function-structure (inter-subjective) coregistration				See fMRIprep
+Table D.3. Preprocessing Reporting	Function-structure (inter-subjective) coregistration				See fMRIprep
+Table D.3. Preprocessing Reporting	Function-structure (inter-subjective) coregistration				See fMRIprep
+Table D.3. Preprocessing Reporting	Function-structure (inter-subjective) coregistration				See fMRIprep
+Table D.3. Preprocessing Reporting	Distortion correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intersubject registration				See fMRIprep
+Table D.3. Preprocessing Reporting	Intensity correction				See fMRIprep
+Table D.3. Preprocessing Reporting	Intensity normalization				Scan-by-scan or run-wide scaling of image intensities before statistical modelling. E.g. SPM scales each run such that the mean image will have mean intracerebral intensity of 100; FSL scales each run such that the mean image will have an intracerebral mode of 10,000
+Table D.3. Preprocessing Reporting	Artifact and structured noise removal	Physiological noise correction method			Name of software/method used (e.g. CompCor, ICA­FIX, ICA­AROMA, etc.)
+Table D.3. Preprocessing Reporting	Artifact and structured noise removal	Nuisance regression	Motion parameters		Expansion basis and order (e.g. 1st temporal derivatives; Volterra kernel expansion)
+Table D.3. Preprocessing Reporting	Artifact and structured noise removal	Nuisance regression	Tissue signals		Tissue type (e.g., whole brain, gray matter, white matter, ventricles)
+Table D.3. Preprocessing Reporting	Artifact and structured noise removal	Nuisance regression	Tissue signals		Tissue definition (e.g., a priori seed, automatic segmentation, spatial regression)
+Table D.3. Preprocessing Reporting	Artifact and structured noise removal	Nuisance regression	Tissue signals		Signal definition (e.g., mean of voxels, first singular vector, etc.)
+Table D.3. Preprocessing Reporting	Artifact and structured noise removal	Nuisance regression	Physiological signals		e.g., heart rate variability, respiration
+Table D.3. Preprocessing Reporting	Artifact and structured noise removal	Nuisance regression	Physiological signals		Modeling choices (e.g. RETROICOR, cardiac and/or respiratory response functions) and number of computed regressors
+Table D.3. Preprocessing Reporting	Volume censoring (a.k.a. “scrubbing” or “de-spiking”)				Name of software/method
+Table D.3. Preprocessing Reporting	Volume censoring (a.k.a. “scrubbing” or “de-spiking”)				Criteria (e.g., frame-by-frame displacement threshold, percentage BOLD change)
+Table D.3. Preprocessing Reporting	Volume censoring (a.k.a. “scrubbing” or “de-spiking”)				Use of censoring or interpolation; if interpolation, method used (e.g., spline, spectral estimation)
+Table D.3. Preprocessing Reporting	Resting state fMRI feature	Summary measures	ALFF, fALFF 		Lower and upper band pass frequencies
+Table D.3. Preprocessing Reporting	Resting state fMRI feature	Summary measures	ReHo		Neighborhood size used to compute local similarity measures (e.g. 6, 18 or 26)
+Table D.3. Preprocessing Reporting	Resting state fMRI feature	Summary measures	ReHo		Similarity measure (e.g. Kendall’s coefficient of concordance)
+Table D.3. Preprocessing Reporting	Spatial smoothing				Name of software/method
+Table D.3. Preprocessing Reporting	Spatial smoothing				Size and type of smoothing kernel
+Table D.3. Preprocessing Reporting	Spatial smoothing				Filtering approach, e.g., fixed kernel or iterative smoothing until fixed FWHM
+Table D.3. Preprocessing Reporting	Spatial smoothing				Space in which smoothing is performed (i.e. native volume, native surface, MNI volume, template surface)
+Table D.3. Preprocessing Reporting	Quality control reports				Summaries of subject motion (e.g. mean frame-wise displacement), image variance (e.g. DVARS), and note of any other irregularities found (e.g. motion or poor SNR not sufficiently severe to warrant exclusion). Should be included with any publically shared data
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Dependent variable	Data submitted to statistical modeling		Report the number of time points, number of subjects; specify exclusions of time points / subjects, if not already specified in experimental design
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Dependent variable	Spatial region modeled		If not “Full brain”, give a specification of an anatomically or functionally defined mask
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	First level fMRI	Event-related design predictors	Modeled duration, if other than zero
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	First level fMRI	Event-related design predictors	Parametric modulation
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	First level fMRI	Block design predictors	Note whether baseline was explicitly modelled
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	First level fMRI	HRF basis	"Canonical, Canonical plus temporal derivative"", ""Canonical plus temporal and dispersion derivative"", ""Smooth basis (e.g. SPM “informed” or Fourier basis; FSL’s FLOBS)"", or ""Finite Impulse Response model"""
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	First level fMRI		Drift regressors (e.g. DCT basis in SPM, with specified cut­off)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	First level fMRI		Movement regressors; specify if squares and/or temporal derivative used
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	First level fMRI		Any other nuisance regressors, and whether they were entered as interactions (e.g. with a task effect in 1st level fMRI, or with group effect)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	First level fMRI		Any orthogonalization of regressors, and set of other regressors used to orthogonalize against
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	Second level or general group model fMRI		Group effects (patients vs. controls)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	Second level or general group model fMRI		Clearly state whether or not covariates are split by group (i.e. fit as a group-­by-­covariate interaction)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	Second level or general group model fMRI		Other between subject effects (age, sex; for VBM, total GM or ICV)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	Second level or general group model fMRI	For group model with repeated measures	How condition effects are modeled (e.g. as factors, or as linear trends)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Independent variables	Second level or general group model fMRI	For group model with repeated measures	Whether subject effects are modeled (i.e. as regressors, as opposed to with a covariance structure)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model type	Model name		“Mass Univariate”, “Multivariate” (e.g. ICA on whole brain data), “Mass Multivariate” (e.g. MANOVA on diffusion or morphometry tensor data), “Local Multivariate” (e.g. “searchlight”), “Multivariate, inter-subjective predictive” (e.g. classify individual trials in event­ related fMRI), “Multivariate inter-subject predictive” (e.g. classify subjects as patient vs. control), “Representational Similarity Analysis”
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	First level fMRI		Drift model, if not already specified as a dependent variable (e.g. locally linear detrending of data & regressors, as in FSL)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	First level fMRI		Autocorrelation model (e.g. global approximate AR(1) in SPM; locally regularized autocorrelation function in FSL)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	Second level fMRI	Model type	"Fixed effects"" (all subjects’ data in one model), ""random effects"" or ""mixed effects "
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	Second level fMRI	Random or mixed effects	Ordinary least squares (OLS, aka unweighted summary statistics approach; SPM default, FSL FEAT’s “Simple OLS”)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	Second level fMRI	Random or mixed effects	Weighted least squares (i.e. FSL FEAT’s “FLAME 1”), using voxel­wise estimate of between subject variance
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	Second level fMRI	Random or mixed effects	Global weighted least squares (i.e. SPM’s MFX)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	Second level fMRI	Group model variance structures	If un­equal variance between groups (and if globally pooled, as in SPM)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	Second level fMRI	Group model variance structures	If repeated measures, the specific covariance structure assumed (e.g. compound symmetric, or arbitrary; if globally pooled) 
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	Local-multivariate		The number of voxels in the local model
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Model settings	Local-multivariate		Local model used (e.g. Canonical Correlation Analysis) with any constraints (e.g. positive weights only)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Contrast/effect		Specification of the precise effect tested, often as a linear contrast of parameters in a model. When possible, define these in terms of the task or stimulus conditions instead of psychological concepts (See Task Specification in Experimental Design Reporting)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Contrast/effect		Provide tables/figures on main effects (e.g. in supplement), not just differences or interactions. For example, an inference on a difference of two fMRI conditions, A­B, doesn’t indicate if both A & B induced positive changes; likewise, to fully interpret an interaction requires knowledge of the main effects
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Contrast/effect		Indicate any use of any omnibus ANOVA tests
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Contrast/effect		All contrasts explored as part of the research should be fully described in the methods section, whether or not they are considered in the results
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Contrast/effect		If performing a two-sided test via two one-sided tests, double the one-sided p­values to convert them into two-sided p­values. For example, if looking at both a contrast [­1 1] and [1 ­1] together, each with cluster­-forming threshold p=0.001, double the FWE cluster p­-values from each contrast to obtain two-sided inferences
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Search region		Whole brain or “small volume”; carefully describe any small volume correction used for each contrast
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Search region		If a small-volume correction mask is defined anatomically, provide named anatomical regions from a publicly available ROI atlas
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Search region		If small-volume correction mask is functionally defined, clearly describe the functional task and identify any risk of circularity
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Search region		All small-volume corrections should be fully described in the methods section, not just mentioned in passing in the results
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Statistic type		"Voxel­wise (aka peak­wise in SPM), or ""cluster-wise"""
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Statistic type	Cluster-wise	Cluster size
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Statistic type	Cluster-wise	Cluster mass
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Statistic type	Cluster-wise	Threshold-free Cluster Enhancement (TFCE)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Statistic type	Cluster-wise	Cluster-forming threshold
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Statistic type	Cluster-wise	Neighborhood size used to form clusters (e.g. 6, 18 or 26)
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Statistic type	TFCE	Use of non-default TFCE parameters
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	P­value computation		Report if anything but standard parametric inference used to obtain (uncorrected) P­values. If nonparametric method was used, report method (e.g. permutation or bootstrap) and number of permutations/samples used
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Multiple testing correction 		"Familywise Error: ""Random Field Theory"" (typical); ""Permutation""; ""Monte Carlo""; ""Bonferroni"". False Discovery Rate: ""Benjamini & Hochberg FDR"" (typical); ""Positive FDR""; ""Local FDR""; ""Cluster-level FDR""; ""None/Uncorrected"""
+Table D.4. Statistical Modeling & Inference	Mass univariate analyses	Inference	Multiple testing correction 	Permutation or Monte Carlo	If permutation or Monte Carlo, report the number of permutations/samples. If Monte Carlo, note the brain mask and smoothness used, and how smoothness was estimated
+Table D.5. Results Reporting	Mass univariate analysis	Effects tested			Provide a complete list of tested and omitted effects
+Table D.5. Results Reporting	Mass univariate analysis	Extracted data			Define how voxels/elements were selected; if region is based on the same data, clarify how circularity was accounted for
+Table D.5. Results Reporting	Mass univariate analysis	Extracted data			For any summary reported, give units. Ideally these are as interpretable as possible (e.g. percent change)
+Table D.5. Results Reporting	Mass univariate analysis	Extracted data			If reporting R^2 (coefficient of determination) clarify how nuisance variability is considered. For instance, in task fMRI the vast majority of variance is explained by slow temporal drift, and R^2 values for an effect of interest will be vastly different if computed with or without counting drift in the total variance
+Table D.5. Results Reporting	Mass univariate analysis	Extracted data			State whether data extracted from an ROI (e.g. to compute an effect size) is defined based on independent data, as otherwise it is susceptible to bias
+Table D.5. Results Reporting	Mass univariate analysis	Extracted data			If ROIs are circularly defined, best not to provide any statistical summary (i.e. p-values, R^2, etc.)
+Table D.5. Results Reporting	Mass univariate analysis	Tables of coordinates (one table)			Contrast / effect to which it refers
+Table D.5. Results Reporting	Mass univariate analysis	Tables of coordinates (one table)			XYZ coordinate (with coordinate system, MNI, Talairach, noted in caption; also clarify whether peak or center-of-­mass location)
+Table D.5. Results Reporting	Mass univariate analysis	Tables of coordinates (one table)			Anatomical region (in caption or body text, describe source of labels, e.g. subjective, atlas, etc.)
+Table D.5. Results Reporting	Mass univariate analysis	Tables of coordinates (one table)			P­value forming basis of inference (e.g. voxel­-wise FWE corrected P; or cluster­-wise FDR corrected P)
+Table D.5. Results Reporting	Mass univariate analysis	Tables of coordinates (one table)			T/Z/F statistic (with degrees of freedom in table caption)
+Table D.5. Results Reporting	Mass univariate analysis	Tables of coordinates (one table)			In caption, state whether coordinates are from whole brain, or from a specific constrained volume
+Table D.5. Results Reporting	Mass univariate analysis	Tables of coordinates (one table)			If cluster­wise inference is used, the cluster size. Report in mm3 or, if in voxels, be explicit about the size of voxels. If a cluster statistic other than size is used (e.g. mass) it should be listed as well
+Table D.5. Results Reporting	Mass univariate analysis	Tables of coordinates (one table)			In caption or body text, note criterion for peak per cluster reporting; e.g. “one peak per cluster listed”, or “up to 3 per cluster that are at least 8mm apart” (SPM default), etc.
+Table D.5. Results Reporting	Mass univariate analysis	Thresholded maps (images for significant regions of each effect, ensuring that each caption describes)			Type of inference and the correction method, as well as form of any sub-volume corrections applied when computing corrected significance
+Table D.5. Results Reporting	Mass univariate analysis	Thresholded maps (images for significant regions of each effect, ensuring that each caption describes)			Include color bars; when presenting multiple maps in a figure, use a common color bar to ensure the results are comparable
+Table D.5. Results Reporting	Mass univariate analysis	Unthresholded maps (Share via supplementary material or repository)			Unthresholded statistic maps
+Table D.5. Results Reporting	Mass univariate analysis	Unthresholded maps (Share via supplementary material or repository)			Optionally, the thresholded statistic maps
+Table D.5. Results Reporting	Mass univariate analysis	Unthresholded maps (Share via supplementary material or repository)			Optionally, the effect size map (e.g. % BOLD change, % GM change)
+Table D.5. Results Reporting	Mass univariate analysis	Spatial features			Size of the analysis volume in voxels, mm
+Table D.5. Results Reporting	Mass univariate analysis	Spatial features			Spatial smoothness of noise (e.g. FWHM) and Resel count (if using Random Field Theory)
+Table D.5. Results Reporting	Functional connectivity	ICA analyses			Report the total number of components (especially when estimated from the data and not fixed). Report the number of these analyzed and the reason for their selection
+Table D.5. Results Reporting	Functional connectivity	Graph analyses			For graph-based methods, carefully state what is the null hypothesis of the test and how the statistic distribution under the null is computed
+Table D.5. Results Reporting	Multivariate modelling & predictive analysis	Optimised evaluation metrics			Report the values obtained for the evaluation metrics chosen (see Evaluation Metrics, above), as well as any P­values to justify above­-chance performance
+Table D.6. Data Sharing	Reporting a data sharing resource	Material shared			List types of images and non­imaging data provided
+Table D.6. Data Sharing	Reporting a data sharing resource	Material shared			Report on the completeness of the data (e.g., number of subjects where all types of imaging, demographic, and behavioral data is available)
+Table D.6. Data Sharing	Reporting a data sharing resource	URL, access information			Stable URL or DOI
+Table D.6. Data Sharing	Reporting a data sharing resource	URL, access information			Specific instructions on how to gain access. Specifically mention whether application must be vetted for particular intended research use (e.g. to preclude multiple users investigating the same question), or whether a research collaboration must be established
+Table D.6. Data Sharing	Reporting a data sharing resource	URL, access information			Cost of access
+Table D.6. Data Sharing	Reporting a data sharing resource	Ethics compliance			Confirm that the ethics board of the host institution generating the data approves the sharing of the data made available
+Table D.6. Data Sharing	Reporting a data sharing resource	Ethics compliance			Clarify any constraints on uses of shared data, for example, whether users downloading the data also need ethics approval from their own institution
+Table D.6. Data Sharing	Reporting a data sharing resource	Documentation			Provide URL to documentation, and specify its scope (e.g. worked examples, white papers, etc.)
+Table D.6. Data Sharing	Reporting a data sharing resource	Data format			Report the format of the image data shared, e.g. DICOM, MINC, NIFTI, etc.
+Table D.6. Data Sharing	Reporting a data sharing resource	Ontologies			Data organization structures, including Data Dictionaries and Schemas. Is the software using an established ontology?
+Table D.6. Data Sharing	Reporting a data sharing resource	Visualization			Availability of in-resource visualization of the imaging or non­imaging data
+Table D.6. Data Sharing	Reporting a data sharing resource	De-identification			How, if at all, data are de-identified
+Table D.6. Data Sharing	Reporting a data sharing resource	Provenance and history			Availability of detailed provenance of preprocessing and analysis of shared data
+Table D.6. Data Sharing	Reporting a data sharing resource	Interoperability			Ability of a repository to work in a multi-database environment, availability of API’s and ability to connect to analysis pipelines
+Table D.6. Data Sharing	Reporting a data sharing resource	Querying			Mechanisms available for constructing queries on the repository (e.g. SQL, SPARQL)
+Table D.6. Data Sharing	Reporting a data sharing resource	Versioning			How users can check version of downloaded data and compare it to the current version at a later time
+Table D.7. Reproducibility	Documentation	Tools used			Tool names, versions, and URLs
+Table D.7. Reproducibility	Documentation	Infrastructure			Machine CPU model, operating system version, any use of parallelization
+Table D.7. Reproducibility	Documentation	Workflow			Use of a workflow system, its version and URL
+Table D.7. Reproducibility	Documentation	Provenance trace			State whether detailed provenance information is available
+Table D.7. Reproducibility	Documentation	Literate program implementing results			Provide a URL linking to the relevant resource; for example, an ipython notebook implementing key analyses
+Table D.7. Reproducibility	Documentation	English language version			As the scientific lingua franca, documentation should be provided in English in addition to any other languages
+Table D.7. Reproducibility	Archiving	Tools availability			Note if tools are publically available
+Table D.7. Reproducibility	Archiving	Virtual appliances			Note if a virtual environment to facilitate a repeated analysis is available
+Table D.7. Reproducibility	Data	Data			Provide permanent identifier if possible
+Table D.7. Reproducibility	Workflow	Workflow			Provide permanent identifier if possible

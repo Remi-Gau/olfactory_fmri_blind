@@ -3,26 +3,25 @@
 # Analysis of olfaction fMRI experiment in blind and sighted control
 
 - [Analysis of olfaction fMRI experiment in blind and sighted control](#analysis-of-olfaction-fmri-experiment-in-blind-and-sighted-control)
-    - [Dependencies](#dependencies)
-        - [Other Dependencies](#other-dependencies)
-    - [Docker images](#docker-images)
-    - [fMRI QC and preprocessing](#fmri-qc-and-preprocessing)
-        - [MRIQC](#mriqc)
-        - [fmriprep](#fmriprep)
-            - [Problematic anat or func data](#problematic-anat-or-func-data)
-    - [Behavioral analysis](#behavioral-analysis)
-        - [Quality control](#quality-control)
-        - [Results](#results)
-    - [fMRI analysis](#fmri-analysis)
+  - [Dependencies](#dependencies)
+    - [Other Dependencies](#other-dependencies)
+  - [Docker images](#docker-images)
+  - [fMRI QC and preprocessing](#fmri-qc-and-preprocessing)
+    - [MRIQC](#mriqc)
+    - [fmriprep](#fmriprep)
+      - [Problematic anat or func data](#problematic-anat-or-func-data)
+  - [Behavioral analysis](#behavioral-analysis)
+    - [Quality control](#quality-control)
+    - [Results](#results)
+  - [fMRI analysis](#fmri-analysis)
 
 ## Dependencies
 
-| Dependencies                                                                                                              | Used version |
-| ------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| [Matlab](https://www.mathworks.com/products/matlab.html)                                                                  | 201?         |
-| [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/)                                                                | v7487        |
-| [CPP SPM](http://marsbar.sourceforge.net/download.html)                                                                   | v1.1.5dev    |
-| [Anatomy toolbox for SPM](https://www.fz-juelich.de/SharedDocs/Downloads/INM/INM-1/DE/Toolbox/Toolbox_22c.html?nn=563092) | 2.2          |
+| Dependencies                                               | Used version |
+| ---------------------------------------------------------- | ------------ |
+| [Matlab](https://www.mathworks.com/products/matlab.html)   | 201?         |
+| [SPM12](https://www.fil.ion.ucl.ac.uk/spm/software/spm12/) | v7487        |
+| [CPP SPM](http://marsbar.sourceforge.net/download.html)    | v1.1.5dev    |
 
 This has not been tried on Octave. Sorry open-science friends... :see_no_evil:
 
@@ -119,4 +118,3 @@ also plots the mean +/- SEM (and distribution) of the number of responses.
 ## fMRI analysis
 
 See this [README](src/analysis_func/README.md)
-

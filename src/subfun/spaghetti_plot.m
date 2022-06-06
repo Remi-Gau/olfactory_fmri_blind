@@ -16,8 +16,9 @@ function spaghetti_plot(varargin)
   %             'color', [0 0 255]);
   %
   %
-  % :param data: data to plot
-  % :type data: n X 2 numeric data
+  % :param data: Data to plot. If number of colums <= 2 the mean of each column
+  %              will be plotted.
+  % :type data: n X m numeric data
   %
   % :param spaghetti: To use spaghetti plot or just a side by side scatter plot.
   %                   If ``false``, it requires ``shadedErrorBar`` from Matlab
@@ -48,9 +49,6 @@ function spaghetti_plot(varargin)
   %
   % (C) Copyright 2022 Remi Gau
 
-  x_values_for_mean = [0.6, 2.4];
-  x_values_for_data = [1.1, 1.9];
-
   args = inputParser;
   args.CaseSensitive = false;
 
@@ -72,10 +70,11 @@ function spaghetti_plot(varargin)
   spaghetti = args.Results.spaghetti;
   fontSize = args.Results.fontSize;
   markerSize = args.Results.markerSize;
-  color = args.Results.color;
 
+  color = args.Results.color;
   color = color / 255;
 
+  % dummy data for standalone testing
   if isempty(data)
 
     close all;
@@ -86,6 +85,16 @@ function spaghetti_plot(varargin)
     data(:, 2) = data + randn * 0.4 + randn(30, 1) * 0.4;
 
   end
+
+  % any line with a nan is skipped;
+  rows_to_keep = all(~isnan(data), 2);
+  data = data(rows_to_keep, :);
+  if isempty(data)
+    error('no data left after cleaning');
+  end
+
+  %%
+  nb_cols = size(data, 2);
 
   yMin = args.Results.yMin;
 
@@ -106,12 +115,28 @@ function spaghetti_plot(varargin)
 
   range = yMax - yMin;
 
+  x_values_for_data = 1:nb_cols;
+  xMin = 0.6;
+  xMax = nb_cols + 0.4;
+
+  if nb_cols <= 2
+    x_values_for_mean = [0.6, 2.4];
+    x_values_for_data = [1.1, 1.9];
+    xMin = x_values_for_mean(1) - 0.2;
+    xMax = x_values_for_mean(nb_cols) + 0.2;
+  end
+
+  if nb_cols == 1
+    spaghetti = false;
+    xMax = 1.6;
+  end
+
   %%
   hold on;
 
-  plot([0 3], [0 0], 'k');
+  plot([0 nb_cols + 1], [0 0], 'k');
 
-  for i_col = 1:2
+  for i_col = 1:nb_cols
 
     to_plot = data(:, i_col);
 
@@ -132,15 +157,20 @@ function spaghetti_plot(varargin)
 
     end
 
-    errorbar(x_values_for_mean(i_col), ...
-             mean(to_plot, 'omitnan'), ...
-             std(to_plot, 'omitnan'), ...
-             'o', ...
-             'color', color, ...
-             'linewidth', 2, ...
-             'markerSize', markerSize * 1.5, ...
-             'MarkerEdgeColor', 'k', ...
-             'MarkerFaceColor', color);
+    % plot means
+    if nb_cols <= 2
+
+      errorbar(x_values_for_mean(i_col), ...
+               mean(to_plot, 'omitnan'), ...
+               std(to_plot, 'omitnan'), ...
+               'o', ...
+               'color', color, ...
+               'linewidth', 2, ...
+               'markerSize', markerSize * 1.5, ...
+               'MarkerEdgeColor', 'k', ...
+               'MarkerFaceColor', color);
+
+    end
 
   end
 
@@ -158,7 +188,7 @@ function spaghetti_plot(varargin)
     end
   end
 
-  axis([x_values_for_mean(1) - 0.2, x_values_for_mean(2) + 0.2,  yMin, yMax]);
+  axis([xMin, xMax,  yMin, yMax]);
 
   abs_max = round(max(abs([yMin yMax])) * 100);
   yTickLabel = round(-2 * abs_max:abs_max / 8:abs_max * 2) / 100;
@@ -174,7 +204,7 @@ function spaghetti_plot(varargin)
   set(gca, ...
       'fontSize', fontSize, ...
       'ytick', yTickLabel, 'yTickLabel', yTickLabel, ...
-      'xtick', 1:2, 'xTickLabel', xTickLabel, ...
+      'xtick', 1:nb_cols, 'xTickLabel', xTickLabel, ...
       'tickLength', [.02 .02], ...
       'tickDir', 'out');
 
@@ -183,7 +213,11 @@ function spaghetti_plot(varargin)
   t = ylabel(args.Results.yLabel);
   set(t, 'fontSize', fontSize + 2);
 
-  t = title(args.Results.title);
+  % any line with a nan is skipped;
+  n = size(data, 1);
+  t = title(sprintf('%s (n=%i)', ...
+                    args.Results.title, ...
+                    n));
   set(t, 'fontSize', fontSize + 4);
 
 end

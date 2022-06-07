@@ -8,9 +8,6 @@ from SIEMENS, with serial number 167006. The software version was syngo MR E11.
 
 #### T1-weighted image
 
-MRI scans were acquired at 3 Tesla using a {{ManufacturersModelName}} system
-from SIEMENS, with serial number 167006. The software version was syngo MR E11.
-
 {{PulseSequenceType}} GRIR SKSPMP T1w structural MRI data were collected (256
 slices; repetition time, TR= 2.3 s; echo time, TE= 0.00226 s; flip angle, FA= 8
 deg; field of view, FOV= 176 X 256 mm; matrix size= 176 X 256; voxel size= 1.00

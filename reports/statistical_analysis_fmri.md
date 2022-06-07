@@ -8,6 +8,10 @@ https://www.fil.ion.ucl.ac.uk/spm; RRID:SCR_007037) using MATLAB 9.2.0.538062
 The input data were the preprocessed BOLD images in MNI152NLin2009cAsym space
 for the task **olfid**, **olfloc**.
 
+TODO list excluded participants and reasons
+
+TODO explain bayesian model selection
+
 ### Run / subject level analysis
 
 At the subject level, we performed a mass univariate analysis with a linear
@@ -18,9 +22,7 @@ drift fit with discrete cosine transform basis (128 seconds cut-off).
 Image intensity scaling was done run-wide before statistical modeling such that
 the mean image would have a mean intracerebral intensity of 100.
 
-<!--
 TODO what slice was used as reference
--->
 
 We modeled the fMRI experiment in a block design with regressors entered into
 the run-specific design matrix. The onsets were convolved with SPM canonical
@@ -48,6 +50,8 @@ to account for residual motion artefacts, to regress out signal coming from non
 grey matter regions, .
 
 ### Group level analysis
+
+TODO ROI based analysis
 
 Contrast for the following conditions were passed as summary statistics for a
 group level analysis:

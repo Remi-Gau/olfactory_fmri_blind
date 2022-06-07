@@ -18,15 +18,15 @@ Ethics approval
 
 
 ## Sample description
+ 
+TODO add participants descritption table
 
-<!-- 
-add participants descritption table
--->
-
+<!--
 ```{r, echo=FALSE, warning=FALSE}
 library(flextable) #you can use another table library, if you want
 flextable(read.csv("participants.csv"))
 ```
+-->
 
 ## Behavioral testing (out of scan)
 
@@ -50,14 +50,29 @@ flextable(read.csv("participants.csv"))
 
 ## Statistical analysis
 
-Code for the analysis is available on [Github](https://github.com/Remi-Gau/olfactory_fmri_blind).
+### Behavioral
 
-## Behavioral
-
-## fMRI
+### fMRI
 
 
 ```{r, child=c('statistical_analysis_fmri.md')}
 ```
 
-### References
+## Data and code
+
+Code and data are bundled together as a datalad dataset available on GIN:
+https://gin.g-node.org/cpp-lln-lab/olf_blind_yoda
+
+Code is also available on [Github](https://github.com/Remi-Gau/olfactory_fmri_blind).
+
+Raw behavioral in-scan data are available on Gin : https://gin.g-node.org/cpp-lln-lab/olfaction_blind_beh
+
+Raw and derivative (fMRIprep and MRIQC) output data is available on requests.
+
+<!--
+where to store stats data at the group level
+-->
+
+Statiscal maps are availble on neurovault  
+
+## References

@@ -255,7 +255,25 @@
           "Test": "t"
         }
       ]
-    }
+    },
+    {
+      "Level": "Dataset",
+      "Name": "within_group",
+      "Description": "one sample t-test of each group of the conditions filtered in Edges",
+      "GroupBy": [
+        "contrast",
+        "Group"
+      ],
+      "Model": {
+        "Type": "glm",
+        "X": [
+          1
+        ]
+      },
+      "DummyContrasts": {
+        "Test": "t"
+      }
+    }    
   ],
   "Edges": [
     {
@@ -278,6 +296,15 @@
           "all_olf_lt_baseline"          
         ]
       }
-    }
+    },
+    {
+      "Source": "subject_level",
+      "Destination": "within_group",
+      "Filter": {
+        "contrast": [
+          "all_olf"      
+        ]
+      }
+    }    
   ]
 }

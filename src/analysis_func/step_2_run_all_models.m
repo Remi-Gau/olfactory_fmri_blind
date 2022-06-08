@@ -54,13 +54,13 @@ for i = 1:numel(models_files)
     bidsFFX('contrasts', opt);
     bidsResults(opt);
 
-    opt = opt_stats_group_level();
-    opt.subjects = subjects;
+    % opt = opt_stats_group_level();
+    % opt.subjects = subjects;
 
-    opt.model.file = model_file;
+    % opt.model.file = model_file;
 
-    bidsRFX('RFX', opt);
-    bidsResults(opt);
+    % bidsRFX('RFX', opt);
+    % bidsResults(opt);
 
   end
 

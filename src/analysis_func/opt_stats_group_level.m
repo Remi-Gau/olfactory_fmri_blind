@@ -11,11 +11,6 @@ function opt = opt_stats_group_level()
   opt = opt_dir(opt);
   opt.dir.input = opt.dir.preproc;
 
-  opt.verbosity = 1;
-
-  opt.fwhm.func = 6;
-  opt.fwhm.contrast = 0;
-
   opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
                             'models', ...
                             'model-TissueConfounds_smdl.json');
@@ -36,17 +31,18 @@ function opt = opt_stats_group_level()
                                                'space-MNI152NLin2009cAsym_desc-maskedMean_T1w.nii');
 
   opt.results(2) = opt.results(1);
-  opt.results(1).nodeName = 'between_groups';
+  opt.results(2).nodeName = 'between_groups';
 
-  % post setup
+  opt.results(3) = opt.results(1);
+  opt.results(3).nodeName = 'within_group';
+
+  % post setup we remove the excluded participants to avoid including them at
+  % the group level
   raw = bids.layout(opt.dir.raw);
   opt.subjects = bids.query(raw, 'subjects');
 
   opt = get_options(opt);
 
   opt.subjects = rm_subjects(opt.subjects, opt);
-
-  opt = checkOptions(opt);
-  saveOptions(opt);
 
 end

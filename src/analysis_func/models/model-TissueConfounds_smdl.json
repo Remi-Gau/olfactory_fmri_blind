@@ -273,7 +273,7 @@
       "DummyContrasts": {
         "Test": "t"
       }
-    }    
+    }
   ],
   "Edges": [
     {
@@ -293,7 +293,7 @@
           "all_olfid",
           "all_olfloc",
           "Responses",
-          "all_olf_lt_baseline"          
+          "all_olf_lt_baseline"
         ]
       }
     },
@@ -302,9 +302,13 @@
       "Destination": "within_group",
       "Filter": {
         "contrast": [
-          "all_olf"      
+          "all_olf",
+          "all_olfid",
+          "all_olfloc",
+          "Responses",
+          "all_olf_lt_baseline"
         ]
       }
-    }    
+    }
   ]
 }

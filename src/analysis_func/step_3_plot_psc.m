@@ -3,9 +3,24 @@
 %
 % (C) Copyright 2022 Remi Gau
 
+clc;
+close all;
 clear;
 
 run ../../initEnv.m;
+
+opt.pipeline.type = 'stats';
+
+opt = opt_dir(opt);
+opt = get_options(opt);
+
+opt.verbosity = 2;
+opt.glm.roibased.do = true;
+opt.fwhm.func =  0;
+
+opt.bidsFilterFile.roi.space = 'MNI';
+
+%% Model 3 : visual, auditory, hand regions
 
 roi_names = {'V1', ...
              'V2', ...
@@ -14,97 +29,100 @@ roi_names = {'V1', ...
              'VO1', ...
              'VO2', ...
              'auditory', ...
-             'olfactory', ...
              'hand'};
 
-groups = {'blind', 'control'};
-
-opt.pipeline.type = 'stats';
-
-opt = opt_dir(opt);
-opt = get_options(opt);
-
-opt.bidsFilterFile.roi.space = 'MNI';
 opt.roi.name = {['^space-.*(', strjoin(roi_names, '|') ')']};
 roi_list = getROIs(opt);
 
-opt.verbosity = 2;
-opt.glm.roibased.do = true;
-opt.fwhm.func =  0;
+input_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_model-3_psc.tsv');
 
-Colors(1, :) = opt.blnd_color;
-Colors(2, :) = opt.sighted_color;
+plot_psc(opt, roi_list, input_file);
 
-contrasts = {'all_olfid', 'all_olfloc'};
+%% Model 1 : olfactory regions
 
-participants_tsv = bids.util.tsvread(fullfile(opt.dir.raw, 'participants.tsv'));
+roi_names = {'olfactory.*GM', ...
+             'Orbitofrontal'};
 
-input_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_psc.tsv');
+opt.roi.name = {['^space-.*(', strjoin(roi_names, '|') ')']};
+roi_list = getROIs(opt);
 
-group_tsv = bids.util.tsvread(input_file);
+input_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_model-1_psc.tsv');
 
-%%
-clc;
-close all;
+plot_psc(opt, roi_list, input_file);
 
-yLabel = {'percent signal change', ''};
+%% helper function
 
-for i_roi = 1:numel(roi_list)
+function plot_psc(opt, roi_list, input_file)
 
-  data = [];
+  group_tsv = bids.util.tsvread(input_file);
 
-  bf = bids.File(roi_list{i_roi});
+  Colors(1, :) = opt.blnd_color;
+  Colors(2, :) = opt.sighted_color;
 
-  roi_filter = strcmp(group_tsv.roi, bf.entities.label);
+  groups = {'blind', 'control'};
 
-  main_title = bf.entities.label;
-  if isfield(bf.entities, 'desc')
-    main_title = [main_title ' - ' bf.entities.desc];
-    desc_filter = strcmp(group_tsv.desc, bf.entities.desc);
-  else
-    desc_filter = true(size(group_tsv.desc));
-  end
+  contrasts = {'all_olfid', 'all_olfloc'};
 
-  figure('name', 'Both tasks', 'position', [50 50 1300 700], 'visible', 'on');
+  yLabel = {'percent signal change', ''};
 
-  for i_group = 1:2
+  for i_roi = 1:numel(roi_list)
 
-    group_filter = strcmp(group_tsv.group, groups{i_group});
+    data = [];
 
-    for i_con = 1:numel(contrasts)
-      con_filter = strcmp(group_tsv.contrast, contrasts{i_con});
+    bf = bids.File(roi_list{i_roi});
 
-      filter = all([roi_filter, desc_filter, group_filter, con_filter], 2);
+    roi_filter = strcmp(group_tsv.roi, bf.entities.label);
 
-      data{i_group}(:, i_con) = group_tsv.psc_abs_max(filter, 1); %#ok<*SAGROW>
+    main_title = bf.entities.label;
+    if isfield(bf.entities, 'desc')
+      main_title = [main_title ' - ' bf.entities.desc];
+      desc_filter = strcmp(group_tsv.desc, bf.entities.desc);
+    else
+      desc_filter = true(size(group_tsv.desc));
     end
 
+    figure('name', 'Both tasks', 'position', [50 50 1300 700], 'visible', 'on');
+
+    for i_group = 1:2
+
+      group_filter = strcmp(group_tsv.group, groups{i_group});
+
+      for i_con = 1:numel(contrasts)
+        con_filter = strcmp(group_tsv.contrast, contrasts{i_con});
+
+        filter = all([roi_filter, desc_filter, group_filter, con_filter], 2);
+
+        data{i_group}(:, i_con) = group_tsv.psc_abs_max(filter, 1); %#ok<*SAGROW>
+      end
+
+    end
+
+    yMin = min(cellfun(@(x) min(x(:)), data));
+    yMax = max(cellfun(@(x) max(x(:)), data));
+
+    for i_group = 1:2
+
+      subplot(1, 2, i_group);
+
+      spaghetti_plot(data{i_group}, ...
+                     'spaghetti', true, ...
+                     'fontSize', 10, ...
+                     'xTickLabel', {'identification', 'localization'}, ...
+                     'xLabel', 'conditions', ...
+                     'yLabel', yLabel{i_group}, ...
+                     'yMin', yMin, ...
+                     'yMax', yMax, ...
+                     'title', groups{i_group}, ...
+                     'markerSize', 8, ...
+                     'color', Colors(i_group, :));
+
+    end
+
+    mtit(sprintf('ROI: %s', main_title), ...
+         'fontsize', 16, ...
+         'xoff', 0, ...
+         'yoff', 0.04);
+
   end
-
-  yMin = min(cellfun(@(x) min(x(:)), data));
-  yMax = max(cellfun(@(x) max(x(:)), data));
-
-  for i_group = 1:2
-
-    subplot(1, 2, i_group);
-
-    spaghetti_plot(data{i_group}, ...
-                   'spaghetti', true, ...
-                   'fontSize', 10, ...
-                   'xTickLabel', {'identification', 'localization'}, ...
-                   'xLabel', 'conditions', ...
-                   'yLabel', yLabel{i_group}, ...
-                   'yMin', yMin, ...
-                   'yMax', yMax, ...
-                   'title', groups{i_group}, ...
-                   'markerSize', 8, ...
-                   'color', Colors(i_group, :));
-
-  end
-
-  mtit(sprintf('ROI: %s', main_title), ...
-       'fontsize', 16, ...
-       'xoff', 0, ...
-       'yoff', 0.04);
 
 end

@@ -4,11 +4,11 @@ on:
   push:
     branches: ['*']
     paths:
-      - '**.m'    
+      - '**.m'
   pull_request:
     branches: ['*']
     paths:
-      - '**.m'    
+      - '**.m'
 
 jobs:
 

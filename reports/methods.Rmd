@@ -4,7 +4,7 @@ author: "Rémi Gau"
 date: "2022-06-05"
 output: word_document
 # output: html_document
-bibliography: references.bib  
+bibliography: references.bib
 ---
 
 
@@ -12,13 +12,13 @@ bibliography: references.bib
 
 # Material and methods
 
-<!-- 
+<!--
 Ethics approval
 -->
 
 
 ## Sample description
- 
+
 TODO add participants descritption table
 
 <!--
@@ -73,6 +73,6 @@ Raw and derivative (fMRIprep and MRIQC) output data is available on requests.
 where to store stats data at the group level
 -->
 
-Statiscal maps are availble on neurovault  
+Statiscal maps are availble on neurovault
 
 ## References

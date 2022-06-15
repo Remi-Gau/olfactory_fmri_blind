@@ -11,9 +11,9 @@ opt.verbosity = 2;
 
 saveOptions(opt);
 
-action = 'stats';
+% action = 'stats';
 % action = 'contrasts';
-% action = 'results';
+action = 'results';
 
 % 'node_name', 'between_groups'
 
@@ -26,7 +26,7 @@ cpp_spm(opt.dir.raw, opt.dir.derivatives, 'dataset', ...
         'fwhm', 6, ...
         'verbosity', 2, ...
         'options', opt, ...
-        'node_name', 'within_group');
+        'node_name', 'dataset_level');
 
 return
 

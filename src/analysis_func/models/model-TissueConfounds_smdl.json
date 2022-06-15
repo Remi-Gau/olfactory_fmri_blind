@@ -144,6 +144,22 @@
           "Test": "t"
         },
         {
+          "Name": "right_gt_left",
+          "ConditionList": [
+            "trial_type.olfloc_almond_right",
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_almond_left"
+          ],
+          "Weights": [
+            1,
+            1,
+            -1,
+            -1
+          ],
+          "Test": "t"
+        },
+        {
           "Name": "all_olf",
           "ConditionList": [
             "trial_type.olfid_eucalyptus_left",
@@ -281,7 +297,12 @@
     },
     {
       "Source": "subject_level",
-      "Destination": "dataset_level"
+      "Destination": "dataset_level",
+      "Filter": {
+        "contrast": [
+          "right_gt_left"
+        ]
+      }
     },
     {
       "Source": "subject_level",

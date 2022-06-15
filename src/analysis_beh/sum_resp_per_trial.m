@@ -1,10 +1,5 @@
-% Plots the average number of response during stimulus period
-%
-%
-% Some subjects have weird onsets for some stimuli so we replace them by
-% the average onset from the rest of the group
-%
-% Assumes a fixed 16 seconds stimulation duration
+% sums number of response during stimulus period
+% and saves to a TSV for ANOVA
 %
 %
 % (C) Copyright 2021 Remi Gau

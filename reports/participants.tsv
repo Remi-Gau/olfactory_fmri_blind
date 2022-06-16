@@ -1,0 +1,33 @@
+Participants	Group	Age	Sex	Education	Handness	Smoking	Residual visual perception	Onset	Cause of blindness
+B01	blind	66	M	14	30	No	Diffuse light	0	Congenital cataracts
+B02	blind	28	M	16	12	Yes	No	0	Congenital microphtalmia
+B03	blind	61	F	8	28	No	No	0	Retinopathy of prematurity
+B04	blind	69	M	14	22	No	No	0	Rubella virus during pregnancy of the mother
+B05	blind	50	M	16	-6	No	Diffuse light	0	Retina detachment
+B06	blind	47	M	11	16	No	No	0	Retinopathy of prematurity
+B07	blind	51	F	16	2	No	No	0	Retina displasia
+B08	blind	32	M	14	13	No	No	0	Retinopathy of prematurity
+B09	blind	63	F	14	8	No	No	0	Retinopathy of prematurity
+B10	blind	54	M	10	8	No	No	0	Retinopathy of prematurity
+B11	blind	55	M	16	-6	Yes	No	0	Affected by thalidomide treatment 
+B12	blind	636	F	16	15	No	No	0	Leber congenital amaurosis
+B13	blind	66	F	7	19	No	No	0	Retinopathy of prematurity
+B14	blind	36	F	11	5	Yes	No	0	Retina detachment
+B15	blind	37	M	18	22	No	Diffuse light	0	Leber congenital amaurosis
+B16	blind	63	F	11	28	No	No	0	Congenital toxoplasmosis
+C01	control	61	F	16	18	No	n/a	n/a	n/a
+C02	control	29	M	12	11	No	n/a	n/a	n/a
+C03	control	65	F	16	30	No	n/a	n/a	n/a
+C05	control	47	M	16	16	No	n/a	n/a	n/a
+C06	control	64	F	15	26	No	n/a	n/a	n/a
+C08	control	51	M	16	24	No	n/a	n/a	n/a
+C09	control	63	F	16	-11	No	n/a	n/a	n/a
+C10	control	69	M	11	23	No	n/a	n/a	n/a
+C11	control	39	F	11	28	Yes	n/a	n/a	n/a
+C12	control	39	M	16	26	No	n/a	n/a	n/a
+C13	control	62	F	16	19	No	n/a	n/a	n/a
+C14	control	54	M	16	22	Yes	n/a	n/a	n/a
+C15	control	52	F	11	-7	No	n/a	n/a	n/a
+C16	control	54	M	18	17	No	n/a	n/a	n/a
+C17	control	44	M	16	5	No	n/a	n/a	n/a
+C18	control	63	F	13	14	No	n/a	n/a	n/a

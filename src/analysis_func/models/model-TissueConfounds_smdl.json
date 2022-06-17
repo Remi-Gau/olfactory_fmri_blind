@@ -144,12 +144,84 @@
           "Test": "t"
         },
         {
-          "Name": "right_gt_left",
+          "Name": "olfloc_gt_olfid",
+          "ConditionList": [
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_almond_left",
+            "trial_type.olfid_almond_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_almond_left",
+            "trial_type.olfloc_almond_right"
+          ],
+          "Weights": [
+            -1,
+            -1,
+            -1,
+            -1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "olfloc-right_gt_left",
           "ConditionList": [
             "trial_type.olfloc_almond_right",
             "trial_type.olfloc_eucalyptus_right",
             "trial_type.olfloc_eucalyptus_left",
             "trial_type.olfloc_almond_left"
+          ],
+          "Weights": [
+            1,
+            1,
+            -1,
+            -1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "olfid-right_gt_left",
+          "ConditionList": [
+            "trial_type.olfid_almond_right",
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_almond_left"
+          ],
+          "Weights": [
+            1,
+            1,
+            -1,
+            -1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "olfloc-eucalyptus_gt_almond",
+          "ConditionList": [
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_almond_right",
+            "trial_type.olfloc_almond_left"
+          ],
+          "Weights": [
+            1,
+            1,
+            -1,
+            -1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "olfid-eucalyptus_gt_almond",
+          "ConditionList": [
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_almond_right",
+            "trial_type.olfid_almond_left"
           ],
           "Weights": [
             1,
@@ -317,7 +389,16 @@
       "Destination": "dataset_level",
       "Filter": {
         "contrast": [
-          "right_gt_left"
+          "all_olf",
+          "all_olfid",
+          "all_olfloc",
+          "Responses",
+          "olfloc_gt_olfid",
+          "all_olf_lt_baseline",
+          "olfloc-right_gt_left",
+          "olfid-right_gt_left",
+          "olfloc-eucalyptus_gt_almond",
+          "olfid-eucalyptus_gt_almond"
         ]
       }
     },
@@ -330,7 +411,12 @@
           "all_olfid",
           "all_olfloc",
           "Responses",
-          "all_olf_lt_baseline"
+          "olfloc_gt_olfid",
+          "all_olf_lt_baseline",
+          "olfloc-right_gt_left",
+          "olfid-right_gt_left",
+          "olfloc-eucalyptus_gt_almond",
+          "olfid-eucalyptus_gt_almond"
         ]
       }
     },
@@ -343,7 +429,12 @@
           "all_olfid",
           "all_olfloc",
           "Responses",
-          "all_olf_lt_baseline"
+          "olfloc_gt_olfid",
+          "all_olf_lt_baseline",
+          "olfloc-right_gt_left",
+          "olfid-right_gt_left",
+          "olfloc-eucalyptus_gt_almond",
+          "olfid-eucalyptus_gt_almond"
         ]
       }
     }

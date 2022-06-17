@@ -11,11 +11,11 @@ opt.verbosity = 2;
 
 saveOptions(opt);
 
-% action = 'stats';
+action = 'stats';
 % action = 'contrasts';
-action = 'results';
+% action = 'results';
 
-% 'node_name', 'between_groups'
+% 'node_name', {'between_groups', 'dataset_level', 'within_group'}
 
 % bidsRFX('meanAnatAndMask', opt);
 
@@ -25,29 +25,5 @@ cpp_spm(opt.dir.raw, opt.dir.derivatives, 'dataset', ...
         'model_file', opt.model.file, ...
         'fwhm', 6, ...
         'verbosity', 2, ...
-        'options', opt, ...
-        'node_name', 'dataset_level');
-
-return
-
-%% ANOVA
-task = [1 2];
-group = [1 2];
-odor = [1 2];
-side = [1 2];
-% subject
-
-C = cartesian(task, group, odor, side);
-
-% function C = cartesian(varargin)
-%   args = varargin;
-%   n = nargin;
-%
-%   [F{1:n}] = ndgrid(args{:});
-%
-%   for i = n:-1:1
-%     G(:, i) = F{i}(:);
-%   end
-%
-%   C = unique(G, 'rows');
-% end
+        'node_name', 'between_groups', ...
+        'options', opt);

@@ -669,7 +669,9 @@
           "olfid-eucalyptus_gt_almond",
           "olfid-almond_gt_eucalyptus",
           "eucalyptus_gt_almond",
-          "almond_gt_eucalyptus"
+          "almond_gt_eucalyptus",
+          "left_gt_right",
+          "right_gt_left"
         ]
       }
     },
@@ -696,7 +698,9 @@
           "olfloc-eucalyptus_gt_almond",
           "olfloc-almond_gt_eucalyptus",
           "olfid-eucalyptus_gt_almond",
-          "olfid-almond_gt_eucalyptus"
+          "olfid-almond_gt_eucalyptus",
+          "left_gt_right",
+          "right_gt_left"          
         ]
       }
     },
@@ -723,7 +727,11 @@
           "olfloc-eucalyptus_gt_almond",
           "olfloc-almond_gt_eucalyptus",
           "olfid-eucalyptus_gt_almond",
-          "olfid-almond_gt_eucalyptus"
+          "olfid-almond_gt_eucalyptus",
+          "eucalyptus_gt_almond",
+          "almond_gt_eucalyptus",
+          "left_gt_right",
+          "right_gt_left"          
         ]
       }
     }

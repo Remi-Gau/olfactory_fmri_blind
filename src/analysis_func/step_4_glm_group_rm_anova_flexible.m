@@ -43,15 +43,15 @@ task_labels = opt.taskName;
 %                   'olfloc_almond_right'; ...
 %                   'olfloc_eucalyptus_left'; ...
 %                   'olfloc_eucalyptus_right'};
-% 
+%
 % contrast_levels = cartesian(1:numel(task_labels), ...
 %                             1:numel(odor_labels), ...
 %                             1:numel(side_labels));
-                          
+
 contrasts_list = {'all_olfid'; ...
                   'all_olfloc'};
 
-contrast_levels = cartesian(1:numel(task_labels));                          
+contrast_levels = cartesian(1:numel(task_labels));
 
 %%
 

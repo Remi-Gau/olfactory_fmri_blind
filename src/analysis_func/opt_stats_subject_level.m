@@ -30,8 +30,8 @@ function opt = opt_stats_subject_level(opt)
   results = default_output(opt);
   results.nodeName = 'subject_level';
 
-  results.name = {'Responses', 'all_olf', 'all_olfid', 'all_olfloc'};
-  results.name = {'all_olf'};
+  %   results.name = {'Responses', 'olf', 'olfid', 'olfloc'};
+  results.name = {'olf'};
   results.MC =  'none';
   results.p = alpha;
   results.k = minimum_cluster_size;

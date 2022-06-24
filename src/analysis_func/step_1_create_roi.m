@@ -146,3 +146,35 @@ for iRoi = 1:numel(ROIs)
 end
 
 disp('Done');
+
+%% Create right and left for each ROI
+
+opt.roi.space = {'MNI'};
+opt.bidsFilterFile.roi.space = {'MNI'};
+
+ROIs = {'V1'
+        'V2'
+        'V3'
+        'MST'
+        'hMT'
+        'hV4'
+        'VO1'
+        'VO2'
+        'LO2'
+        'LO1'
+        'hand'
+        'auditory'
+        'olfactory'
+        'Orbitofrontal'
+       };
+
+for iRoi = 1:numel(ROIs)
+
+  roi_name =  ['.*label-' ROIs{iRoi} '.*'];
+  opt.roi.name = {roi_name};
+  roiList = getROIs(opt);
+
+  outputImage = keepHemisphere(roiList{1}, 'L');
+  outputImage = keepHemisphere(roiList{1}, 'R');
+
+end

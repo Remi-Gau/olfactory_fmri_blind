@@ -31,13 +31,13 @@ opt.model.bm = BidsModel('file', opt.model.file);
 roi_list = {'olfactory.*GM', ...
             'Orbitofrontal'};
 
-opt.roi.name = {['^space-.*(', strjoin(roi_list, '|') ')']};
+opt.roi.name = {['^hemi.*space-.*(', strjoin(roi_list, '|') ')']};
 
 % to check
 % roiList = getROIs(opt);
 
-bidsFFX('specify', opt);
-bidsRoiBasedGLM(opt);
+% bidsFFX('specify', opt);
+% bidsRoiBasedGLM(opt);
 
 %% All other regions use model 3
 
@@ -58,7 +58,7 @@ roi_list = {'V1', ...
             'auditory', ...
             'hand'};
 
-opt.roi.name = {['^space-.*(', strjoin(roi_list, '|') ')']};
+opt.roi.name = {['^hemi.*space-.*(', strjoin(roi_list, '|') ')']};
 
 % to check
 % roiList = getROIs(opt);

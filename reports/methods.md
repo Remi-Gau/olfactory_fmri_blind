@@ -57,7 +57,7 @@ administration of time-controlled air pulses (Frasnelli et al. 2010; La
 Buissonnière-Ariza et al. 2012).
 
 The odorants were presented via a eight-channel air compressor. It delivered air
-puffs of 2.5 L/min per channel, as ascertained by a flow meter (Cole Parmer,
+puffs of 2.0 L/min per channel, as ascertained by a flow meter (Cole Parmer,
 Montreal, QC). A valve control unit directed air into the air compressor via
 polyurethane tubing with 8.0 mm outer diameter and an inner diameter of 4.8 mm
 (Fre-Thane 85A, Freelin-Wade, McMinnville, OR). From the air compressor,
@@ -94,6 +94,10 @@ Each run has the same order of stimulus presentation:
 2. left nostril/benzaldehyde
 3. right nostril/eucalyptol
 4. right nostril/benzaldehyde.
+
+<!-- TODO 
+- talk about how this confounds some interpretation
+-->
 
 The total duration of one run was 214 s. A short verbal instruction was
 delivered before the start of each run to instruct participants which task they

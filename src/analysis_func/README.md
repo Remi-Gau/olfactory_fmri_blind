@@ -192,9 +192,10 @@ of the ROIs made from neurosynth.
 
 `step_*_create_roi.m` create the ROIs to check responses in the regions
 corresponding to the terms _hand_ and _olfactory_ in neurosynth and also for
-visual ROIs from the Wang atlas.
+visual ROIs from the Wang atlas. `step_*_split_rois_left_and_right` can then
+be used to create ROIs for the left and right hemisphere
 
-This is done by `step_*_glm_subject_roi.m`
+Estimating the GLM in the ROIS is done by `step_*_glm_subject_roi.m`.
 
 Percent signal data can be compiled across ROIs / subjects / contrasts with
 `step_*_glm_subject_roi_psc.m`.

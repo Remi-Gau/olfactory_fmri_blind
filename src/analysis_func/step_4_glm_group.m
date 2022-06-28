@@ -28,13 +28,13 @@ cpp_spm(opt.dir.raw, opt.dir.derivatives, 'dataset', ...
         'node_name', 'within_group', ...
         'options', opt);
 
-return      
-      
+return
+
 %%
 action = 'results';
 
-opt = opt_stats_group_level();      
-opt = add_results_options(opt);  
+opt = opt_stats_group_level();
+opt = add_results_options(opt);
 
 cpp_spm(opt.dir.raw, opt.dir.derivatives, 'dataset', ...
         'action', action, ...

@@ -1,11 +1,11 @@
 function opt = add_results_options(opt)
-  
+
   alpha = 0.001;
   minimum_cluster_size = 10;
 
   % Specify the result to compute
   opt.results(1) = default_output(opt);
-  
+
   opt.results(1).nodeName = 'dataset_level';
 
   opt.results(1).name = {'olf', ...
@@ -36,7 +36,7 @@ function opt = add_results_options(opt)
   opt.results(1).p = alpha;
   opt.results(1).k = minimum_cluster_size;
   opt.results(1).csv = true;
-  
+
   opt.results(1).montage.background = fullfile(opt.dir.stats, ...
                                                'derivatives', ...
                                                'cpp_spm-groupStats', ...

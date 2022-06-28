@@ -25,4 +25,3 @@ function opt = opt_stats_group_level()
   opt.subjects = rm_subjects(opt.subjects, opt);
 
 end
-

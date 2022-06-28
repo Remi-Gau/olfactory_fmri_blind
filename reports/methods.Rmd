@@ -45,9 +45,10 @@ flextable(read.table(file = "participants.tsv", sep = '\t', header = TRUE))
 
 We used two mixed olfactory-trigeminal stimuli, i.e., substances that stimulate
 both the olfactory and the trigeminal system (Doty et al. 1978; Viana 2011).
-Specifically, we used almond (benzaldehyde, almond odor with a burning/tingling
-sensation; Sigma-Aldrich, St Louis, MO) and eucalyptus (eucalyptol, eucalyptus
-odors with a cooling sensation; Galenova St-Hyacinthe, Quebec).
+Specifically, we used benzaldehyde (`almond` odor with a burning/tingling
+sensation; Sigma-Aldrich, St Louis, MO) and eucalyptol (`eucalyptus` odors with
+a cooling sensation; Galenova St-Hyacinthe, Quebec). For simplicity we will
+henceforth refer to those stimuli respectively as `almond` and `eucalyptus`.
 
 ## Odor presentation
 
@@ -63,10 +64,10 @@ polyurethane tubing with 8.0 mm outer diameter and an inner diameter of 4.8 mm
 (Fre-Thane 85A, Freelin-Wade, McMinnville, OR). From the air compressor,
 polyurethane tubes were connected to bottles containing the odorants. For
 odorant localization and identification, four tubes were connected to four 60mL
-glass bottles containing the odorants; two bottles filled with almond and two
-bottles filled with eucalyptus (Figure 2). From the four bottles, two
-polyurethane tubes were directly connected to the left nostril and the other two
-polyurethane tubes were connected to the right nostril. To administer the
+glass bottles containing the odorants; two bottles filled with `almond` and two
+bottles filled with `eucalyptus` (Figure 2). From the four bottles, two
+polyurethane tubes were directly connected to the `left` nostril and the other
+two polyurethane tubes were connected to the `right` nostril. To administer the
 odorants, an air stream was sent to the compressor, which delivered an air puff
 into one of the four odor-containing bottles for the identification and
 localization tasks. During the inter-stimulus interval, a continuous air flow
@@ -82,40 +83,41 @@ TODO INFOS DE LABVIEW À DEMANDER
 
 Each participant underwent four fMRI runs with 4 stimulus presentations per run,
 resulting in a total of 16 stimulus presentations. The chemosensory stimuli were
-either eucalyptol or benzaldehyde and delivered either to the left or the right
-nostril. The 16-s stimuli ("on"-period) were separated by fixed inter-stimulus
-intervals of 40 s to avoid habituation (Hummel and Kobal 1999) and during which
-subjects received odorless air ("off"-periods). This design allows for
-physiological refreshment and prevents the overlap of hemodynamic responses.
+either `eucalyptus` or `almond` and delivered either to the `left` or the
+`right` nostril. The 16-s stimuli ("on"-period) were separated by fixed
+inter-stimulus intervals of 40 s to avoid habituation (Hummel and Kobal 1999)
+and during which subjects received odorless air ("off"-periods). This design
+allows for physiological refreshment and prevents the overlap of hemodynamic
+responses.
 
 Each run has the same order of stimulus presentation:
 
-1. left nostril/eucalyptol
-2. left nostril/benzaldehyde
-3. right nostril/eucalyptol
-4. right nostril/benzaldehyde.
+1. `left` nostril/`eucalyptus`
+2. `left` nostril/`almond`
+3. `right` nostril/`eucalyptus`
+4. `right` nostril/`almond`.
 
-<!-- TODO 
+<!-- TODO
 - talk about how this confounds some interpretation
 -->
+
+<!-- TODO
+ check average duration of runs
+ -->
 
 The total duration of one run was 214 s. A short verbal instruction was
 delivered before the start of each run to instruct participants which task they
 would have to carry out:
 
-- identification/what or,
-- localization/where).
+- a localization task (`oldloc`),
+- an identification (`olfid`).
 
 After each sniffing, subjects responded to the presence of an odorant and
 according to the task by pressing one of two buttons with the index or the major
-of their right hand. Specifically, during the localization task they had to
-indicate whether their left or their right nostril was stimulated and during the
-identification task, they had to indicate whether they received eucalyptol or
-benzaldehyde.
-
-For data analysis we classified volumes during the "on"-periods as "where" or
-"what" conditions, whereas the "off"-periods were classified as "baseline"
-condition.
+of their `right` hand. Specifically, during the localization task they had to
+indicate whether their `left` or their `right` nostril was stimulated and during
+the identification task, they had to indicate whether they received `eucalyptus`
+or `almond`.
 
 ## MRI acquisition parameters
 

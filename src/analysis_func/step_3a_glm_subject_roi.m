@@ -32,7 +32,7 @@ opt.taskName = opt.model.bm.Input.task;
 roi_list = {'olfactory.*GM', ...
             'Orbitofrontal'};
 
-opt.roi.name = {['^space-.*(', strjoin(roi_list, '|') ')']};
+opt.roi.name = {['^hemi.*space-.*(', strjoin(roi_list, '|') ')']};
 
 % to check
 % roiList = getROIs(opt);
@@ -91,7 +91,7 @@ roi_list = {'V1', ...
             'auditory', ...
             'hand'};
 
-opt.roi.name = {['^space-.*(', strjoin(roi_list, '|') ')']};
+opt.roi.name = {['^hemi.*space-.*(', strjoin(roi_list, '|') ')']};
 
 % to check
 % roiList = getROIs(opt);

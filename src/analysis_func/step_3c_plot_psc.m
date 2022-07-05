@@ -68,21 +68,21 @@ input_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group
 
 close all;
 
-% contrasts = {'all_olfid', 'all_olfloc'};
+% contrasts =  {'all_olfid',      'all_olfloc'};
 % xTickLabel = {'identification', 'localization'};
 
-%
+% identification
 contrasts = {'olfid_eucalyptus_left',  'olfid_almond_left'
              'olfid_eucalyptus_right', 'olfid_almond_right'};
 xTickLabel = {'id - euc - left',       'id - alm - left'
               'id - euc - right',      'id - alm - right'};
 
-plot_psc(opt, roi_list, input_file, contrasts, xTickLabel);
+plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, 'identification');
 
-%
+% localization
 contrasts = {'olfloc_eucalyptus_left',  'olfloc_eucalyptus_right'
              'olfid_almond_left',       'olfloc_almond_right'};
 xTickLabel = {'loc - euc - left',       'loc - euc - right'
               'loc - alm - left',       'loc - alm - right'};
 
-plot_psc(opt, roi_list, input_file, contrasts, xTickLabel);
+plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, 'localization');

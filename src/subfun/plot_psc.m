@@ -1,4 +1,4 @@
-function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel)
+function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_prefix)
   %
   % (C) Copyright 2022 Remi Gau
 
@@ -6,8 +6,14 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel)
     contrasts = {'all_olfid', 'all_olfloc'};
     xTickLabel = {'identification', 'localization'};
   end
+  if nargin < 6
+    main_title_prefix = '';
+  end
 
   group_tsv = bids.util.tsvread(input_file);
+
+  output_dir = fullfile(fileparts(input_file), 'figures');
+  spm_mkdir(output_dir);
 
   Colors(1, :) = opt.blnd_color;
   Colors(2, :) = opt.sighted_color;
@@ -24,23 +30,26 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel)
 
     roi_filter = strcmp(group_tsv.roi, bf.entities.label);
 
-    main_title = bf.entities.label;
-
+    if isempty(main_title_prefix)
+      main_title = ['label-' bf.entities.label];
+    else
+      main_title = [main_title_prefix ' - label-' bf.entities.label];
+    end
     if isfield(bf.entities, 'hemi')
-      main_title = [main_title ' - hemi: ' bf.entities.hemi];
+      main_title = [main_title ' - hemi-' bf.entities.hemi];
       hemi_filter = strcmp(group_tsv.hemi, bf.entities.hemi);
     else
       hemi_filter = strcmp(group_tsv.hemi, 'NaN');
     end
 
     if isfield(bf.entities, 'desc')
-      main_title = [main_title ' - ' bf.entities.desc];
+      main_title = [main_title ' - desc-' bf.entities.desc];
       desc_filter = strcmp(group_tsv.desc, bf.entities.desc);
     else
       desc_filter = true(size(group_tsv.desc));
     end
 
-    figure('name', 'Both tasks', 'position', [50 50 1300 700], 'visible', 'on');
+    figure('name', main_title, 'position', [50 50 1300 700], 'visible', 'on');
 
     for i_group = 1:numel(groups)
 
@@ -97,10 +106,15 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel)
 
     end
 
-    mtit(sprintf('ROI: %s', main_title), ...
+    mtit(sprintf('%s', main_title), ...
          'fontsize', 16, ...
          'xoff', 0, ...
          'yoff', 0.04);
+
+    output_file = fullfile(output_dir, [strrep(main_title, ' - ', '_'), '.png']);
+    print(gcf, '-dpng', output_file);
+    output_file = fullfile(output_dir, [strrep(main_title, ' - ', '_'), '.svg']);
+    print(gcf, '-dsvg', output_file);
 
   end
 

@@ -1,4 +1,5 @@
 function opt = add_results_options(opt)
+  % (C) Copyright 2022 Remi Gau
 
   alpha = 0.001;
   minimum_cluster_size = 10;

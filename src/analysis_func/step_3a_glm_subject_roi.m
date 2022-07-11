@@ -29,19 +29,25 @@ opt.model.bm = BidsModel('file', opt.model.file);
 opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
-roi_list = {'olfactory.*GM', ...
-            'Orbitofrontal', ...
-            'OlfactoryCortexMOC', ...
-            'PrimaryOlfactoryCortexMOC'};
+roi_list = {'Broadmann28Ento'
+            'Broadmann34Piriform'
+            'Hippocampus'
+            'Insula'
+            'OFCant'
+            'OFClat'
+            'OFCmed'
+            'OFCpost'};
 
 opt.roi.name = {['^.*space-.*(', strjoin(roi_list, '|') ')']};
 
 % to check
-% roiList = getROIs(opt)
+roiList = getROIs(opt);
 
 %
 % bidsFFX('specify', opt);
 bidsRoiBasedGLM(opt);
+
+return
 
 %% to recompile the results without recomputing them
 eventSpec = struct('name', {'olfid_eucalyptus_left'
@@ -57,9 +63,11 @@ eventSpec = struct('name', {'olfid_eucalyptus_left'
                             'all_olfloc'
                             'all_olf'});
 
-% for iSub = 1:numel(opt.subjects)
-%     saveRoiGlmSummaryTable(opt, opt.subjects{iSub}, roiList, eventSpec);
-% end
+for iSub = 1:numel(opt.subjects)
+  saveRoiGlmSummaryTable(opt, opt.subjects{iSub}, roiList, eventSpec);
+end
+
+return
 
 %% All other regions use model 3
 
@@ -93,10 +101,6 @@ roi_list = {'V1', ...
             'LO1', ...
             'auditory', ...
             'hand'};
-
-roi_list = {'hMT'};
-
-opt.subjects = {'ctrl12', 'ctrl09', 'ctrl08', 'ctrl03'};
 
 opt.roi.name = {['^.*space-.*(', strjoin(roi_list, '|') ')']};
 

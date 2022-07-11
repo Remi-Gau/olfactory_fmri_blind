@@ -22,7 +22,6 @@ ROIs = {'V1'
         'VO2'
         'LO2'
         'LO1'
-        'Orbitofrontal'
        };
 
 for iRoi = 1:numel(ROIs)
@@ -42,29 +41,11 @@ end
 
 ROIs = {'hand'
         'auditory'
-        'olfactory'
        };
 
 for iRoi = 1:numel(ROIs)
 
   roi_name =  ['^space.*label-' ROIs{iRoi} '.*GM.*'];
-  opt.roi.name = {roi_name};
-  roiList = getROIs(opt);
-
-  assert(numel(roiList) == 1);
-
-  left = keepHemisphere(roiList{1}, 'L');
-  right = keepHemisphere(roiList{1}, 'R');
-
-end
-
-%% Same but for olfactory regions
-
-ROIs = {'OlfactoryCortexMOC'; 'PrimaryOlfactoryCortexMOC'};
-
-for iRoi = 1:numel(ROIs)
-
-  roi_name =  ['^space.*label-' ROIs{iRoi} '.*'];
   opt.roi.name = {roi_name};
   roiList = getROIs(opt);
 

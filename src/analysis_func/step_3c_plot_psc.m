@@ -28,8 +28,8 @@ roi_names = {'V1', ...
              'hV4', ...
              'VO1', ...
              'VO2', ...
-             'auditory', ...
-             'hand'};
+             'LO1', ...
+             'LO2'};
 
 opt.roi.name = {['^space-.*(', strjoin(roi_names, '|') ')']};
 roi_list = getROIs(opt);
@@ -57,7 +57,9 @@ opt.fwhm.func =  0;
 opt.bidsFilterFile.roi.space = 'MNI';
 
 roi_names = {'olfactory.*GM', ...
-             'Orbitofrontal'};
+             'Orbitofrontal', ...
+             'OlfactoryCortexMOC', ...
+             'PrimaryOlfactoryCortexMOC'};
 
 opt.roi.name = {['^.*space-.*(', strjoin(roi_names, '|') ')']};
 roi_list = getROIs(opt);
@@ -71,7 +73,7 @@ close all;
 % contrasts =  {'all_olfid',      'all_olfloc'};
 % xTickLabel = {'identification', 'localization'};
 
-% identification
+%% identification
 contrasts = {'olfid_eucalyptus_left',  'olfid_almond_left'
              'olfid_eucalyptus_right', 'olfid_almond_right'};
 xTickLabel = {'id - euc - left',       'id - alm - left'

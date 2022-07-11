@@ -680,27 +680,10 @@
       "Destination": "between_groups",
       "Filter": {
         "contrast": [
-          "olf",
-          "olf_lt_baseline",
-          "olfid",
-          "olfloc",
-          "left",
-          "right",
-          "eucalyptus",
-          "almond",
-          "Responses",
-          "olfloc_gt_olfid",
-          "olfid_gt_olfloc",
-          "olfloc-right_gt_left",
-          "olfloc-left_gt_right",
-          "olfid-right_gt_left",
-          "olfid-left_gt_right",
-          "olfloc-eucalyptus_gt_almond",
-          "olfloc-almond_gt_eucalyptus",
-          "olfid-eucalyptus_gt_almond",
-          "olfid-almond_gt_eucalyptus",
+          "eucalyptus_gt_almond",
+          "almond_gt_eucalyptus",
           "left_gt_right",
-          "right_gt_left"          
+          "right_gt_left"
         ]
       }
     },
@@ -731,7 +714,7 @@
           "eucalyptus_gt_almond",
           "almond_gt_eucalyptus",
           "left_gt_right",
-          "right_gt_left"          
+          "right_gt_left"
         ]
       }
     }

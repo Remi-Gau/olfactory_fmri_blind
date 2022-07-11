@@ -18,7 +18,7 @@ opt.fwhm.func =  0;
 
 opt.bidsFilterFile.roi.space = {'MNI'};
 
-opt.verbosity = 2;
+opt.verbosity = 0;
 
 opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
                           'models', ...
@@ -30,17 +30,20 @@ opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
 roi_list = {'olfactory.*GM', ...
-            'Orbitofrontal'};
+            'Orbitofrontal', ...
+            'OlfactoryCortexMOC', ...
+            'PrimaryOlfactoryCortexMOC'};
 
-opt.roi.name = {['^hemi.*space-.*(', strjoin(roi_list, '|') ')']};
+opt.roi.name = {['^.*space-.*(', strjoin(roi_list, '|') ')']};
 
 % to check
-% roiList = getROIs(opt);
+% roiList = getROIs(opt)
 
+%
 % bidsFFX('specify', opt);
 bidsRoiBasedGLM(opt);
 
-% to recompile the results without recomputing them
+%% to recompile the results without recomputing them
 eventSpec = struct('name', {'olfid_eucalyptus_left'
                             'olfid_eucalyptus_right'
                             'olfid_almond_left'
@@ -91,7 +94,11 @@ roi_list = {'V1', ...
             'auditory', ...
             'hand'};
 
-opt.roi.name = {['^hemi.*space-.*(', strjoin(roi_list, '|') ')']};
+roi_list = {'hMT'};
+
+opt.subjects = {'ctrl12', 'ctrl09', 'ctrl08', 'ctrl03'};
+
+opt.roi.name = {['^.*space-.*(', strjoin(roi_list, '|') ')']};
 
 % to check
 % roiList = getROIs(opt);

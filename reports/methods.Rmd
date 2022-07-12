@@ -27,6 +27,8 @@ could affect their sense of smell at the time of the testing.
 Participants were instructed not to eat or drink anything besides water one hour
 prior to the experiment.
 
+## Sample description
+
 As depicted in the supplementary Figure 1, all participants had normal olfactory
 function as ascertained by means of the Sniffin Sticks identification test
 (Hummel et al. 2007; Hummel et al. 1997). A one-way ANOVA did not suggest a

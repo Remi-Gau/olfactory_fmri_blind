@@ -14,11 +14,11 @@ TODO list excluded participants and reasons
 
 TODO add reference
 
-We performed a Bayesian model selection using the MACS toolbox to identify 
+We performed a Bayesian model selection using the MACS toolbox to identify
 the best model given our data.
 
 All models included all experimental conditions:
-- tasks: `olfid`, `olfloc`, 
+- tasks: `olfid`, `olfloc`,
 - stimuli: `almond`, `eucalyptus`
 - nostril side: `left`, `right`
 

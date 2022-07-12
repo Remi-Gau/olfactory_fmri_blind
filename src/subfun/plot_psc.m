@@ -49,8 +49,10 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
       desc_filter = true(size(group_tsv.desc));
     end
 
-    data_to_save = struct();
     columns = fieldnames(group_tsv);
+    for i = 1:numel(columns)
+      data_to_save.(columns{i}) = [];
+    end
 
     figure('name', main_title, 'position', [50 50 1300 700], 'visible', 'on');
 
@@ -69,7 +71,9 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
           data{row, i_group}(:, col) = group_tsv.psc_abs_max(filter, 1); %#ok<*SAGROW>
 
           for i = 1:numel(columns)
-            data_to_save.(columns{i}) = group_tsv.columns{i}(filter, 1);
+            data_to_save.(columns{i}) = cat(1, ...
+                                            data_to_save.(columns{i}), ...
+                                            group_tsv.(columns{i})(filter, 1));
           end
 
         end
@@ -122,6 +126,8 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
     print(gcf, '-dpng', output_file);
     output_file = fullfile(output_dir, [strrep(main_title, ' - ', '_'), '.svg']);
     print(gcf, '-dsvg', output_file);
+    output_file = fullfile(output_dir, [strrep(main_title, ' - ', '_'), '.tsv']);
+    bids.util.tsvwrite(output_file, data_to_save);
 
   end
 

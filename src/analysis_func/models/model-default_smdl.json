@@ -142,6 +142,94 @@
           "Test": "t"
         },
         {
+          "Name": "olfloc_gt_olfid",
+          "ConditionList": [
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_almond_left",
+            "trial_type.olfid_almond_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_almond_left",
+            "trial_type.olfloc_almond_right"
+          ],
+          "Weights": [
+            -1,
+            -1,
+            -1,
+            -1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "olfloc-right_gt_left",
+          "ConditionList": [
+            "trial_type.olfloc_almond_right",
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_almond_left"
+          ],
+          "Weights": [
+            1,
+            1,
+            -1,
+            -1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "olfid-right_gt_left",
+          "ConditionList": [
+            "trial_type.olfid_almond_right",
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_almond_left"
+          ],
+          "Weights": [
+            1,
+            1,
+            -1,
+            -1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "olfloc-eucalyptus_gt_almond",
+          "ConditionList": [
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_almond_right",
+            "trial_type.olfloc_almond_left"
+          ],
+          "Weights": [
+            1,
+            1,
+            -1,
+            -1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "olfid-eucalyptus_gt_almond",
+          "ConditionList": [
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_almond_right",
+            "trial_type.olfid_almond_left"
+          ],
+          "Weights": [
+            1,
+            1,
+            -1,
+            -1
+          ],
+          "Test": "t"
+        },
+        {
           "Name": "all_olf",
           "ConditionList": [
             "trial_type.olfid_eucalyptus_left",
@@ -162,6 +250,30 @@
             1,
             1,
             1
+          ],
+          "Test": "t"
+        },
+        {
+          "Name": "all_olf_lt_baseline",
+          "ConditionList": [
+            "trial_type.olfid_eucalyptus_left",
+            "trial_type.olfid_eucalyptus_right",
+            "trial_type.olfid_almond_left",
+            "trial_type.olfid_almond_right",
+            "trial_type.olfloc_eucalyptus_left",
+            "trial_type.olfloc_eucalyptus_right",
+            "trial_type.olfloc_almond_left",
+            "trial_type.olfloc_almond_right"
+          ],
+          "Weights": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
           ],
           "Test": "t"
         }

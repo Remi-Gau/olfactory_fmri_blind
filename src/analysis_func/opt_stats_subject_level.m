@@ -29,7 +29,19 @@ function opt = opt_stats_subject_level(opt)
   % Specify the result to compute
   results = default_output(opt);
   results.nodeName = 'subject_level';
-  results.name = {'Responses', 'all_olf', 'all_olfid', 'all_olfloc'};
+
+  results.name = {'olfid_eucalyptus_left'
+                  'olfid_eucalyptus_right'
+                  'olfid_almond_left'
+                  'olfid_almond_right'
+                  'olfloc_eucalyptus_left'
+                  'olfloc_eucalyptus_right'
+                  'olfloc_almond_left'
+                  'olfloc_almond_right'
+                  'Responses'
+                  'all_olfid'
+                  'all_olfloc'
+                  'all_olf'};
   results.MC =  'none';
   results.p = alpha;
   results.k = minimum_cluster_size;

@@ -6,11 +6,64 @@ https://www.fil.ion.ucl.ac.uk/spm; RRID:SCR_007037) using MATLAB 9.2.0.538062
 ### Input data and exclusion criterion
 
 The input data were the preprocessed BOLD images in MNI152NLin2009cAsym space
-for the task **olfid**, **olfloc**.
+for the task `olfid`, `olfloc`.
 
 TODO list excluded participants and reasons
 
-TODO explain bayesian model selection
+#### Bayesian model selection
+
+TODO add reference
+
+We performed a Bayesian model selection using the MACS toolbox to identify 
+the best model given our data.
+
+All models included all experimental conditions:
+- tasks: `olfid`, `olfloc`, 
+- stimuli: `almond`, `eucalyptus`
+- nostril side: `left`, `right`
+
+- motion parameters: translations along x, y, z, and rotations along x, y, z
+
+Models distinguish themselves by the HRF basis set, extra confounds and scrubbing
+regressors.
+
+1. HRF
+
+- HRF canonical
+- HRF + derivative
+- HRF + derivative + dispersion
+
+2. extra confounds
+
+To include the noise confounds computed by fmriprep in given regions.
+
+- none
+- cerebrospinal fluids + white matter
+
+3. Scrubbing
+
+TODO: how are outliers defined? Used the default fmriprep?
+
+- no outlier removal
+- with outlier removal
+
+This gave us 12 models that we were specified and estimated for each subject:
+
+1. No Derivative No Tissue Confounds No Scrubbing_model
+2. No Derivative No Tissue Confounds With Scrubbing_model
+3. No Derivative With Tissue Confounds No Scrubbing_model
+4. No Derivative With Tissue Confounds With Scrubbing_model
+5. Temporal Derivatives No Tissue Confounds No Scrubbing_model
+6. Temporal Derivatives No Tissue Confounds With Scrubbing_model
+7. Temporal Derivatives With Tissue Confounds No Scrubbing_model_L
+8. Temporal Derivatives With Tissue Confounds With Scrubbing_model
+9. Temporal Dispersion Derivatives No Tissue Confounds No Scrubbing_model
+10. Temporal Dispersion Derivatives No Tissue Confounds With Scrubbing_model
+11. Temporal Dispersion Derivatives With Tissue Confounds No Scrubbing_model
+12. Temporal Dispersion Derivatives With Tissue Confounds With Scrubbing_model
+
+
+
 
 ### Run / subject level analysis
 

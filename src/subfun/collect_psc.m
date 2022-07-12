@@ -1,80 +1,6 @@
-% Collects percent signal change for each:
-%
-% - ROI
-% - subject
-% - contrast
-%
-% and save the collected data in a TSV
-%
-% (C) Copyright 2021 Remi Gau
-
-% Warning: No data for sub-ctrl11 / roi V1
-
-clc;
-clear;
-
-run ../../initEnv.m;
-
-opt = opt_stats_subject_level();
-
-opt.fwhm.func =  0;
-
-opt.glm.roibased.do = true;
-
-opt.verbosity = 2;
-
-opt.pipeline.type = 'stats';
-
-opt.bidsFilterFile.roi.space = 'MNI';
-
-for i = 1:numel(opt.results.name)
-  contrasts(i).name = opt.results.name{i}; %#ok<*SAGROW>
-end
-
-%% Model 3 : visual, auditory, hand regions
-
-opt.model.bm = BidsModel('file', opt.model.file);
-
-opt.space = opt.model.bm.Input.space;
-opt.taskName = opt.model.bm.Input.task;
-
-roi_names = {'V1', ...
-             'V2', ...
-             'V3', ...
-             'hV4', ...
-             'VO1', ...
-             'VO2', ...
-             'auditory', ...
-             'hand'};
-
-opt.roi.name = {['^space-.*(', strjoin(roi_names, '|') ')']};
-roi_list = getROIs(opt);
-
-output_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_model-3_psc.tsv');
-
-collect_psc(opt, contrasts, roi_list, output_file);
-
-%% Model 1 : olfactory regions
-
-opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
-                          'models', ...
-                          'model-default_smdl.json');
-
-opt.model.bm = BidsModel('file', opt.model.file);
-
-roi_names = {'olfactory.*GM', ...
-             'Orbitofrontal'};
-
-opt.roi.name = {['^space-.*(', strjoin(roi_names, '|') ')']};
-roi_list = getROIs(opt);
-
-output_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_model-1_psc.tsv');
-
-collect_psc(opt, contrasts, roi_list, output_file);
-
-%% Helper function
-
 function collect_psc(opt, contrasts, roi_list, output_file)
+  %
+  % (C) Copyright 2022 Remi Gau
 
   % collect PSC data from each subject
   group_tsv = struct('subject', {{}}, ...
@@ -116,7 +42,7 @@ function collect_psc(opt, contrasts, roi_list, output_file)
         if isfield(bf.entities, 'hemi')
           group_tsv.hemi{end + 1} = bf.entities.hemi;
         else
-          group_tsv.hemi{end + 1} = nan;
+          group_tsv.hemi{end + 1} = 'NaN';
         end
 
         if isfield(bf.entities, 'desc')
@@ -127,13 +53,11 @@ function collect_psc(opt, contrasts, roi_list, output_file)
           group_tsv.desc{end + 1} = nan;
         end
 
-        idx = all([strcmp(tsv.label, bf.entities.label), ...
+        idx = all([strcmp(tsv.hemi, group_tsv.hemi{end}), ...
+                   strcmp(tsv.label, bf.entities.label), ...
                    strcmp(tsv.contrast_name, contrasts(i_con).name), ...
                    desc_filter], ...
                   2);
-
-        % if GLM could not be estimated we nan pad
-        assert(sum(idx) <= 1);
 
         if sum(idx) == 0
           warning('No data for sub-%s / roi %s / contrast %s\n', ...
@@ -144,6 +68,12 @@ function collect_psc(opt, contrasts, roi_list, output_file)
 
         elseif sum(idx) == 1
           group_tsv.psc_abs_max(end + 1) = tsv.percent_signal_change_absMax(idx);
+
+        elseif sum(idx) > 1
+          error('Too many data for sub-%s / roi %s / contrast %s\n', ...
+                sub_label, ...
+                bf.entities.label, ...
+                contrasts(i_con).name);
 
         end
 

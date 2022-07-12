@@ -1,3 +1,9 @@
+Image acquisition
+
+The study was performed using a 3-T scanner (Siemens MAGNETOM Prisma, Siemens Medical Solutions, Erlangen, Germany) with 32-channel phased-array head coil. For anatomical overlays, … . Functional data acquisition was performed using … imaging sequence. Scan parameters included … . A total of X images were acquired at each of X slice locations per run over the course of a total functional acquisition session of approximately X min in length. The three imaging conditions consisted of (1) subjects identifying a chemosensory stimulus (“what”), (2) subjects localizing a chemosensory stimulus (“where”), and (3) chemosensory-free low-level baseline.
+
+
+
 The data acquisition was performed in the IUGM, {{InstitutionalDepartmentName}},
 Chemin Queen-Mary 4565,Montreal,District,CA,H3W 1W5.
 

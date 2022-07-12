@@ -24,12 +24,14 @@ ROIs = {'Broadmann28Ento'
         'OFCmed'
         'OFCpost'};
 
+rm_input = false;
+
 for iRoi = 1:numel(ROIs)
 
   roi_name =  ['label-' ROIs{iRoi}];
   opt.roi.name = {['.*hemi-L.*' roi_name '.*'], ['.*hemi-R.*' roi_name '.*']};
   roiList = getROIs(opt);
-  merge_left_right_rois(roiList);
+  merge_left_right_rois(roiList, rm_input);
 
 end
 

@@ -62,6 +62,24 @@ return
 
 %% Model 1 : olfactory regions
 
+% missing results
+%
+% Broadmann34Piriform
+%
+% sub-blnd05
+% sub-blnd13
+% sub-blnd14
+% sub-blnd17
+% sub-ctrl03
+% sub-ctrl09
+% sub-ctrl18
+%
+%
+% OFCpost
+%
+% sub-blnd06
+%
+
 clc;
 clear;
 
@@ -92,10 +110,14 @@ opt.model.bm = BidsModel('file', opt.model.file);
 opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
-roi_names = {'olfactory.*GM', ...
-             'Orbitofrontal', ...
-             'OlfactoryCortexMOC', ...
-             'PrimaryOlfactoryCortexMOC'};
+roi_names = {'Broadmann28Ento'
+             'Broadmann34Piriform'
+             'Hippocampus'
+             'Insula'
+             'OFCant'
+             'OFClat'
+             'OFCmed'
+             'OFCpost'};
 
 opt.roi.name = {['^.*space-.*(', strjoin(roi_names, '|') ')']};
 roi_list = getROIs(opt);

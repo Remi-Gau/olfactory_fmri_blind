@@ -14,8 +14,10 @@ saveOptions(opt);
 % bidsRFX('meanAnatAndMask', opt);
 
 %%
-action = 'stats';
-% action = 'contrasts';
+% action = 'stats';
+action = 'contrasts';
+
+opt = add_results_options(opt);
 
 % 'node_name', {'between_groups', 'dataset_level', 'within_group'}
 

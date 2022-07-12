@@ -37,6 +37,7 @@ function opt = add_results_options(opt)
   opt.results(1).p = alpha;
   opt.results(1).k = minimum_cluster_size;
   opt.results(1).csv = true;
+  opt.results(1).atlas = 'AAL';
 
   opt.results(1).montage.background = fullfile(opt.dir.stats, ...
                                                'derivatives', ...

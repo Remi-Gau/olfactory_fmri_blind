@@ -620,23 +620,6 @@
       "DummyContrasts": {
         "Test": "t"
       }
-    },
-    {
-      "Level": "Dataset",
-      "Name": "rm_anova",
-      "Description": "repeated measure anova 2 X 2 X 2 x 2 X 32",
-      "GroupBy": [
-        "contrast"
-      ],
-      "Model": {
-        "Type": "glm",
-        "X": [
-          1
-        ]
-      },
-      "DummyContrasts": {
-        "Test": "t"
-      }
     }
   ],
   "Edges": [

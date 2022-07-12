@@ -49,6 +49,9 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
       desc_filter = true(size(group_tsv.desc));
     end
 
+    data_to_save = struct();
+    columns = fieldnames(group_tsv);
+
     figure('name', main_title, 'position', [50 50 1300 700], 'visible', 'on');
 
     for i_group = 1:numel(groups)
@@ -64,6 +67,10 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
           filter = all([roi_filter, hemi_filter, desc_filter, group_filter, con_filter], 2);
 
           data{row, i_group}(:, col) = group_tsv.psc_abs_max(filter, 1); %#ok<*SAGROW>
+
+          for i = 1:numel(columns)
+            data_to_save.(columns{i}) = group_tsv.columns{i}(filter, 1);
+          end
 
         end
 

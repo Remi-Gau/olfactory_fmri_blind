@@ -79,6 +79,19 @@ return
 %
 % sub-blnd06
 %
+%
+% ThalamusMDm
+%   blnd 05     
+% 
+% ACCsup
+%   blnd 09     
+% 
+% ThalamusMDl
+%   blnd16 
+%   ctrl02  
+% 
+% ThalamusMD
+%   ctrl11 
 
 clc;
 clear;
@@ -110,14 +123,18 @@ opt.model.bm = BidsModel('file', opt.model.file);
 opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
-roi_names = {'Broadmann28Ento'
-             'Broadmann34Piriform'
-             'Hippocampus'
-             'Insula'
-             'OFCant'
-             'OFClat'
-             'OFCmed'
-             'OFCpost'};
+% roi_names = {'Broadmann28Ento'
+%              'Broadmann34Piriform'
+%              'Hippocampus'
+%              'Insula'
+%              'OFCant'
+%              'OFClat'
+%              'OFCmed'
+%              'OFCpost'};
+      
+roi_names = {'ACC'
+        'Thalamus'
+        'Amygdala'};             
 
 opt.roi.name = {['^.*space-.*(', strjoin(roi_names, '|') ')']};
 roi_list = getROIs(opt);

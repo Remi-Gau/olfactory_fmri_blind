@@ -29,14 +29,19 @@ opt.model.bm = BidsModel('file', opt.model.file);
 opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
-roi_list = {'Broadmann28Ento'
-            'Broadmann34Piriform'
-            'Hippocampus'
-            'Insula'
-            'OFCant'
-            'OFClat'
-            'OFCmed'
-            'OFCpost'};
+% roi_list = {'Broadmann28Ento'
+%             'Broadmann34Piriform'
+%             'Hippocampus'
+%             'Insula'
+%             'OFCant'
+%             'OFClat'
+%             'OFCmed'
+%             'OFCpost'};
+%          
+     
+roi_list = {'ACC'
+        'Thalamus'
+        'Amygdala'};             
 
 opt.roi.name = {['^.*space-.*(', strjoin(roi_list, '|') ')']};
 

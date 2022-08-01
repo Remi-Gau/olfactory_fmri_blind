@@ -62,14 +62,18 @@ opt.fwhm.func =  0;
 
 opt.bidsFilterFile.roi.space = 'MNI';
 
-roi_names = {'Broadmann28Ento'
-             'Broadmann34Piriform'
-             'Hippocampus'
-             'Insula'
-             'OFCant'
-             'OFClat'
-             'OFCmed'
-             'OFCpost'};
+roi_names = {'ACC'
+        'Thalamus'
+        'Amygdala'}; 
+
+% roi_names = {'Broadmann28Ento'
+%              'Broadmann34Piriform'
+%              'Hippocampus'
+%              'Insula'
+%              'OFCant'
+%              'OFClat'
+%              'OFCmed'
+%              'OFCpost'};
 
 opt.roi.name = {['^.*space-.*(', strjoin(roi_names, '|') ')']};
 roi_list = getROIs(opt);

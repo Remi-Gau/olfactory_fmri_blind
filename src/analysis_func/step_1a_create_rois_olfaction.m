@@ -23,16 +23,16 @@ opt.bidsFilterFile.roi.space =  'MNI';
 %         'OFClat'
 %         'OFCmed'
 %         'OFCpost'};
-     
+
 ROIs = {'ACC_'
-        'ThalamusMD_'}; 
+        'ThalamusMD_'};
 
 % ROIs = {'ThalamusMDl'
 %         'ThalamusMDm'
 %         'Amygdala'
 %         'ACCsub'
 %         'ACCsup'
-%         'ACCpre'};      
+%         'ACCpre'};
 
 rm_input = false;
 
@@ -40,9 +40,9 @@ for iRoi = 1:numel(ROIs)
 
   fprintf(1, '\n');
   roi_name =  ['label-' ROIs{iRoi}];
-  opt.roi.name = {['hemi-L.*' roi_name ], ['hemi-R.*' roi_name ]};
+  opt.roi.name = {['hemi-L.*' roi_name], ['hemi-R.*' roi_name]};
   roiList = getROIs(opt);
-  assert(numel(roiList)==2);
+  assert(numel(roiList) == 2);
   fprintf(1, '%s', strjoin(roiList, '\n '));
   merge_left_right_rois(roiList, rm_input);
 

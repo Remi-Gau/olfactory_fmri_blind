@@ -38,19 +38,23 @@ opt.model.bm = BidsModel('file', opt.model.file);
 opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
-roi_names = {'V1', ...
-             'V2', ...
-             'V3', ...
-             'hV4', ...
-             'hMT', ...
-             'VO1', ...
-             'VO2', ...
-             'LO2', ...
-             'LO1', ...
-             'auditory', ...
-             'hand'};
+ROIs = {'V1', ...
+        'V2', ...
+        'V3', ...
+        'hV4', ...
+        'hMT', ...
+        'VO1', ...
+        'VO2', ...
+        'LO2', ...
+        'LO1', ...
+        'auditory', ...
+        'hand', ...
+        'S1', ...
+        'IPS', ...
+        'pons', ...
+        'midbrain'};
 
-opt.roi.name = {['^space-.*(', strjoin(roi_names, '|') ')']};
+opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 roi_list = getROIs(opt);
 
 output_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_model-3_psc.tsv');
@@ -81,17 +85,17 @@ return
 %
 %
 % ThalamusMDm
-%   blnd 05     
-% 
+%   blnd 05
+%
 % ACCsup
-%   blnd 09     
-% 
+%   blnd 09
+%
 % ThalamusMDl
-%   blnd16 
-%   ctrl02  
-% 
+%   blnd16
+%   ctrl02
+%
 % ThalamusMD
-%   ctrl11 
+%   ctrl11
 
 clc;
 clear;
@@ -123,20 +127,19 @@ opt.model.bm = BidsModel('file', opt.model.file);
 opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
-% roi_names = {'Broadmann28Ento'
-%              'Broadmann34Piriform'
-%              'Hippocampus'
-%              'Insula'
-%              'OFCant'
-%              'OFClat'
-%              'OFCmed'
-%              'OFCpost'};
-      
-roi_names = {'ACC'
+ROIs = {'Broadmann28Ento'
+        'Broadmann34Piriform'
+        'Hippocampus'
+        'Insula'
+        'OFCant'
+        'OFClat'
+        'OFCmed'
+        'OFCpost'
+        'ACC'
         'Thalamus'
-        'Amygdala'};             
+        'Amygdala'};
 
-opt.roi.name = {['^.*space-.*(', strjoin(roi_names, '|') ')']};
+opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 roi_list = getROIs(opt);
 
 output_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_model-1_psc.tsv');

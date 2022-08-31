@@ -29,7 +29,7 @@ opt.model.bm = BidsModel('file', opt.model.file);
 opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
-% roi_list = {'Broadmann28Ento'
+% ROIs = {'Broadmann28Ento'
 %             'Broadmann34Piriform'
 %             'Hippocampus'
 %             'Insula'
@@ -37,13 +37,13 @@ opt.taskName = opt.model.bm.Input.task;
 %             'OFClat'
 %             'OFCmed'
 %             'OFCpost'};
-%          
-     
-roi_list = {'ACC'
-        'Thalamus'
-        'Amygdala'};             
+%
 
-opt.roi.name = {['^.*space-.*(', strjoin(roi_list, '|') ')']};
+ROIs = {'ACC'
+        'Thalamus'
+        'Amygdala'};
+
+opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 
 % to check
 roiList = getROIs(opt);
@@ -51,26 +51,6 @@ roiList = getROIs(opt);
 %
 % bidsFFX('specify', opt);
 bidsRoiBasedGLM(opt);
-
-return
-
-%% to recompile the results without recomputing them
-eventSpec = struct('name', {'olfid_eucalyptus_left'
-                            'olfid_eucalyptus_right'
-                            'olfid_almond_left'
-                            'olfid_almond_right'
-                            'olfloc_eucalyptus_left'
-                            'olfloc_eucalyptus_right'
-                            'olfloc_almond_left'
-                            'olfloc_almond_right'
-                            'Responses'
-                            'all_olfid'
-                            'all_olfloc'
-                            'all_olf'});
-
-for iSub = 1:numel(opt.subjects)
-  saveRoiGlmSummaryTable(opt, opt.subjects{iSub}, roiList, eventSpec);
-end
 
 return
 
@@ -89,30 +69,33 @@ opt.fwhm.func =  0;
 
 opt.bidsFilterFile.roi.space = {'MNI'};
 
-opt.verbosity = 2;
+opt.verbosity = 0;
 
 opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
                           'models', ...
                           'model-TissueConfounds_smdl.json');
 
-roi_list = {'V1', ...
-            'V2', ...
-            'V3', ...
-            'hV4', ...
-            'hMT', ...
-            'VO1', ...
-            'VO2', ...
-            'LO2', ...
-            'LO1', ...
-            'auditory', ...
-            'hand'};
+% ROIs = {'V1'
+%             'V2'
+%             'V3'
+%             'hV4'
+%             'hMT'
+%             'VO1'
+%             'VO2'
+%             'LO2'
+%             'LO1'
+%             'auditory'
+%             'hand'};
 
-opt.roi.name = {['^.*space-.*(', strjoin(roi_list, '|') ')']};
+ROIs = {'S1'
+        'IPS'
+        'pons'
+        'midbrain'};
+
+opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 
 % to check
-% roiList = getROIs(opt);
+roiList = getROIs(opt);
 
 % bidsFFX('specify', opt);
 bidsRoiBasedGLM(opt);
-
-return

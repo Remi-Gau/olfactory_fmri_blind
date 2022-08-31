@@ -112,7 +112,7 @@
           "Test": "t"
         },
         {
-          "Name": "olfid",
+          "Name": "all_olfid",
           "ConditionList": [
             "trial_type.olfid_eucalyptus_left",
             "trial_type.olfid_eucalyptus_right",
@@ -128,7 +128,7 @@
           "Test": "t"
         },
         {
-          "Name": "olfloc",
+          "Name": "all_olfloc",
           "ConditionList": [
             "trial_type.olfloc_eucalyptus_left",
             "trial_type.olfloc_eucalyptus_right",
@@ -384,7 +384,7 @@
           "Test": "t"
         },
         {
-          "Name": "olf",
+          "Name": "all_olf",
           "ConditionList": [
             "trial_type.olfid_eucalyptus_left",
             "trial_type.olfid_eucalyptus_right",
@@ -632,10 +632,10 @@
       "Destination": "dataset_level",
       "Filter": {
         "contrast": [
-          "olf",
+          "all_olf",
           "olf_lt_baseline",
-          "olfid",
-          "olfloc",
+          "all_olfid",
+          "all_olfloc",
           "left",
           "right",
           "eucalyptus",
@@ -675,10 +675,10 @@
       "Destination": "within_group",
       "Filter": {
         "contrast": [
-          "olf",
+          "all_olf",
           "olf_lt_baseline",
-          "olfid",
-          "olfloc",
+          "all_olfid",
+          "all_olfloc",
           "left",
           "right",
           "eucalyptus",

@@ -6,7 +6,7 @@
 % - ctrl-02
 %
 % Unsure why we only get 2 images in
-% outputs/derivatives/cpp_spm-modelSelection/derivatives/cpp_spm-modelSelection/group/MS_SMM_BMS_10:
+% outputs/derivatives/bidspm-modelSelection/derivatives/bidspm-modelSelection/group/MS_SMM_BMS_10:
 %
 % - MS_SMM_map_pos_01_mod_03_No Derivative With Tissue Confounds No Scrubbing.nii
 % - MS_SMM_map_pos_02_mod_01_No Derivative No Tissue Confounds No Scrubbing.nii
@@ -28,7 +28,7 @@ opt.subjects = subjects;
 % TODO: probably should not have to be that heavy handed to save things in a
 % different directory
 % - getFFXDir seems to always create things in opt.dir.stats and not opt.dir.output
-opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'cpp_spm-modelSelection'), 'cpath');
+opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'bidspm-modelSelection'), 'cpath');
 opt.dir.stats = opt.dir.output;
 
 for i = 1:numel(models_files)

@@ -32,7 +32,7 @@ contrasts = opt.results.name;
 
 participants_tsv = bids.util.tsvread(fullfile(opt.dir.raw, 'participants.tsv'));
 
-output_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_timecourse.tsv');
+output_file = fullfile(opt.dir.stats, 'derivatives', 'bidspm-groupStats', 'group_timecourse.tsv');
 
 opt.roi.name = {['^space-.*(', ...
                  strjoin(roi_list, '|') ')']};

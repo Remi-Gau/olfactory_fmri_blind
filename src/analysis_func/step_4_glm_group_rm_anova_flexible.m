@@ -27,7 +27,7 @@ opt.pipeline.type = 'stats';
 
 [BIDS, opt] = setUpWorkflow(opt, 'anova flexible design');
 
-opt.dir.output = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats');
+opt.dir.output = fullfile(opt.dir.stats, 'derivatives', 'bidspm-groupStats');
 opt.dir.jobs = fullfile(opt.dir.output, 'jobs',  strjoin(opt.taskName, ''));
 
 % Levels names for each factor

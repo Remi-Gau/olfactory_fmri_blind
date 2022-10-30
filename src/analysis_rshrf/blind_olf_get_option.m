@@ -13,7 +13,7 @@ function opt = blind_olf_get_option()
   opt.taskName = 'rest';
 
   opt.pipeline.type = 'preproc';
-  opt.pipeline.name = 'cpp_spm-rshrf';
+  opt.pipeline.name = 'bidspm-rshrf';
 
   opt.space = 'MNI152NLin2009cAsym';
 

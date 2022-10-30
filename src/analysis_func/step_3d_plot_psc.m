@@ -43,7 +43,7 @@ ROIs = {'V1', ...
 opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 roi_list = getROIs(opt);
 
-input_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_model-3_psc.tsv');
+input_file = fullfile(opt.dir.stats, 'derivatives', 'bidspm-groupStats', 'group_model-3_psc.tsv');
 
 close all;
 
@@ -84,7 +84,7 @@ ROIs = {'Broadmann28Ento'
 opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 roi_list = getROIs(opt);
 
-input_file = fullfile(opt.dir.stats, 'derivatives', 'cpp_spm-groupStats', 'group_model-1_psc.tsv');
+input_file = fullfile(opt.dir.stats, 'derivatives', 'bidspm-groupStats', 'group_model-1_psc.tsv');
 
 close all;
 

@@ -19,11 +19,11 @@ models_files = list_models_files();
 
 opt = opt_stats_subject_level();
 
-opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'cpp_spm-modelSelection'), 'cpath');
+opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'bidspm-modelSelection'), 'cpath');
 
 opt.dir.output = fullfile(opt.dir.output, ...
                           'derivatives', ...
-                          'cpp_spm-modelSelection', ...
+                          'bidspm-modelSelection', ...
                           'group');
 
 %% Get data

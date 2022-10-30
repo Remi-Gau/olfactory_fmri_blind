@@ -41,7 +41,7 @@ for i = 1:numel(models_files)
     % TODO: probably should not have to be that heavy handed to save things in a
     % different directory
     % - getFFXDir seems to always create things in opt.dir.stats and not opt.dir.output
-    opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'cpp_spm-modelSelection'), 'cpath');
+    opt.dir.output = spm_file(fullfile(opt.dir.stats, '..', 'bidspm-modelSelection'), 'cpath');
     opt.dir.stats = opt.dir.output;
 
     opt.glm.useDummyRegressor = true;

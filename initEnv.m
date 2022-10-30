@@ -15,7 +15,7 @@ function initEnv()
   % 2 - Add libraries to the Octave/Matlab path
   %
   % (C) Copyright 2020 Agah Karakuzu
-  % (C) Copyright 2019 CPP_SPM developpers
+  % (C) Copyright 2019 bidspm developpers
   % (C) Copyright 2021 Remi Gau
 
   global ENV_INITIALIZED
@@ -64,7 +64,7 @@ function initEnv()
     % and ask user to update submodules.
     libDirectory = fullfile(fileparts(mfilename('fullpath')), 'lib');
 
-    run(fullfile(libDirectory, 'CPP_SPM', 'initCppSpm'));
+    run(fullfile(libDirectory, 'bidspm', 'bidspm'));
 
     addpath(genpath(fullfile(libDirectory, 'matlab_exchange')));
     addpath(genpath(fullfile(fileparts(mfilename('fullpath')), 'src', 'subfun')));

@@ -9,7 +9,7 @@ opt = opt_stats_subject_level();
 
 %% Create visual ROIs from the wang atlas
 
-opt.dir.roi = spm_file(fullfile(opt.dir.derivatives, 'cpp_spm-roi'), 'cpath');
+opt.dir.roi = spm_file(fullfile(opt.dir.derivatives, 'bidspm-roi'), 'cpath');
 
 opt.roi.atlas = 'wang';
 opt.roi.name = {'V1v'

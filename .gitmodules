@@ -1,3 +1,3 @@
 [submodule "lib/bidspm"]
 	path = lib/bidspm
-	url = https://github.com/cpp-lln-lab/CPP_SPM.git
+	url = https://github.com/cpp-lln-lab/bidspm.git

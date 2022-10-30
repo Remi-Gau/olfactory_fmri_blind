@@ -1,4 +1,5 @@
-[![miss_hit](https://github.com/Remi-Gau/olfactory_fmri_blind/actions/workflows/miss_hit.yml/badge.svg)](https://github.com/Remi-Gau/olfactory_fmri_blind/actions/workflows/miss_hit.yml)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Remi-Gau/olfactory_fmri_blind/master.svg)](https://results.pre-commit.ci/latest/github/Remi-Gau/olfactory_fmri_blind/master)
+[![miss hit](https://img.shields.io/badge/code%20style-miss_hit-000000.svg)](https://misshit.org/)
 
 # Analysis of olfaction fMRI experiment in blind and sighted control
 

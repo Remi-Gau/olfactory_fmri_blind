@@ -20,7 +20,7 @@
         "subject"
       ],
       "Transformations": {
-        "Transformer": "cpp_spm",
+        "Transformer": "bidspm",
         "Description": "add 250 ms to all olfactory onsets to take into account 'time of flight' delay for the odor stimulus to travel the tubing",
         "Instructions": [
           {
@@ -80,7 +80,7 @@
         },
         "Software": {
           "SPM": {
-            "SerialCorrelation": "FAST",
+            "SerialCorrelation": "AR(1)",
             "InclusiveMaskingThreshold": "-Inf"
           }
         }

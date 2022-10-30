@@ -3,6 +3,6 @@ function spm_my_defaults
 
   global defaults
 
-  defaults.cmdline = true;
+  defaults.cmdline = false;
 
 end

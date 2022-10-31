@@ -5,8 +5,6 @@
 
 % TODO "regular" contrasts for visual and posterior ROIs
 
-%% Model 3 : visual, auditory, hand regions
-
 clc;
 close all;
 clear;
@@ -24,53 +22,28 @@ opt.fwhm.func =  0;
 
 opt.bidsFilterFile.roi.space = 'MNI';
 
-model = 'TissueConfounds';
+model = 'TissueConfounds'; % Model 3 : visual, auditory, hand regions
+% model = 'default'; % Model 1 : olfactory regions
 
 ROIs = return_rois(model);
 
 opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 roi_list = getROIs(opt);
 
-input_file = fullfile(opt.dir.stats, 'derivatives', 'bidspm-groupStats', 'group_model-3_psc.tsv');
+input_dir = fullfile(opt.dir.stats, 'derivatives', 'bidspm-groupStats');
+
+switch model
+  case 'default'
+    input_file =  fullfile(input_dir, 'group_model-1_psc.tsv');
+  case 'TissueConfounds'
+    input_file = fullfile(input_dir, 'group_model-3_psc.tsv');
+end
 
 close all;
 
 plot_psc(opt, roi_list, input_file);
 plot_identification(opt, roi_list, input_file);
 plot_localization(opt, roi_list, input_file);
-
-%% Model 1 : olfactory regions
-
-clc;
-clear;
-
-run ../../initEnv.m;
-
-opt.pipeline.type = 'stats';
-
-opt = opt_dir(opt);
-opt = get_options(opt);
-
-opt.verbosity = 2;
-opt.glm.roibased.do = true;
-opt.fwhm.func =  0;
-
-opt.bidsFilterFile.roi.space = 'MNI';
-
-model = 'default';
-
-ROIs = return_rois(model);
-
-opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
-roi_list = getROIs(opt);
-
-input_file = fullfile(opt.dir.stats, 'derivatives', 'bidspm-groupStats', 'group_model-1_psc.tsv');
-
-close all;
-
-% plot_psc(opt, roi_list, input_file);
-% plot_identification(opt, roi_list, input_file);
-% plot_localization(opt, roi_list, input_file);
 
 %%
 function plot_identification(opt, roi_list, input_file)

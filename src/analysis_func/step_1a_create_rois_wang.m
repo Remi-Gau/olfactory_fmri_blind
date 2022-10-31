@@ -46,8 +46,8 @@ for iRoi = 1:3
     roi_name = sprintf('V%i', iRoi);
 
     opt.roi.name = {['hemi-' hemi{iHemi} '.*' roi_name '.*']};
-    roiList = getROIs(opt);
-    merge_dorsal_ventral_rois(roiList, roi_name);
+    roi_list = getROIs(opt);
+    merge_dorsal_ventral_rois(roi_list, roi_name);
 
   end
 
@@ -72,8 +72,8 @@ for iRoi = 1:numel(ROIs)
 
   roi_name =  ['label-' ROIs{iRoi}];
   opt.roi.name = {['.*hemi-L.*' roi_name '.*'], ['.*hemi-R.*' roi_name '.*']};
-  roiList = getROIs(opt);
-  merge_left_right_rois(roiList);
+  roi_list = getROIs(opt);
+  merge_left_right_rois(roi_list);
 
 end
 

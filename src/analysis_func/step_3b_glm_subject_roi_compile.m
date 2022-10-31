@@ -1,4 +1,6 @@
-%% to recompile the results without recomputing them
+%% Recompile results across ROIs for each subject without recomputing
+%
+% Useful to update the summary table if some ROI have been recomputed.
 %
 % (C) Copyright 2022 Remi Gau
 
@@ -44,8 +46,8 @@ ROIs = return_rois(model);
 
 opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 
-roiList = getROIs(opt);
+roi_list = getROIs(opt);
 
 for iSub = 1:numel(opt.subjects)
-  saveRoiGlmSummaryTable(opt, opt.subjects{iSub}, roiList, eventSpec);
+  saveRoiGlmSummaryTable(opt, opt.subjects{iSub}, roi_list, eventSpec);
 end

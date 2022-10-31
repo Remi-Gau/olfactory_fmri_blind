@@ -45,8 +45,8 @@ end
 % bidsFFX('specify', opt);
 
 opt.roi.name = {['^' hemi 'space-.*(', strjoin(ROIs, '|') ')']};
-roiList = getROIs(opt);
-disp(roiList);
+roi_list = getROIs(opt);
+disp(roi_list);
 
 skipped = bidsRoiBasedGLM(opt);
 

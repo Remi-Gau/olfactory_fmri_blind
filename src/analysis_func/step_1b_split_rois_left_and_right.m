@@ -28,12 +28,12 @@ for iRoi = 1:numel(ROIs)
 
   roi_name =  ['^space.*label-' ROIs{iRoi} '.*'];
   opt.roi.name = {roi_name};
-  roiList = getROIs(opt);
+  roi_list = getROIs(opt);
 
-  assert(numel(roiList) == 1);
+  assert(numel(roi_list) == 1);
 
-  left = keepHemisphere(roiList{1}, 'L');
-  right = keepHemisphere(roiList{1}, 'R');
+  left = keepHemisphere(roi_list{1}, 'L');
+  right = keepHemisphere(roi_list{1}, 'R');
 
 end
 
@@ -47,11 +47,11 @@ for iRoi = 1:numel(ROIs)
 
   roi_name =  ['^space.*label-' ROIs{iRoi} '.*GM.*'];
   opt.roi.name = {roi_name};
-  roiList = getROIs(opt);
+  roi_list = getROIs(opt);
 
-  assert(numel(roiList) == 1);
+  assert(numel(roi_list) == 1);
 
-  left = keepHemisphere(roiList{1}, 'L');
-  right = keepHemisphere(roiList{1}, 'R');
+  left = keepHemisphere(roi_list{1}, 'L');
+  right = keepHemisphere(roi_list{1}, 'R');
 
 end

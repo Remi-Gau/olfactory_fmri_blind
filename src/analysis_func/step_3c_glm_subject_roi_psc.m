@@ -13,8 +13,8 @@ clear;
 
 run ../../initEnv.m;
 
-model = 'TissueConfounds'; % Model 3 : visual, auditory, hand regions
-% model = 'default'; % Model 1 : olfactory regions
+% model = 'TissueConfounds'; % Model 3 : visual, auditory, hand regions
+model = 'default'; % Model 1 : olfactory regions
 
 opt = opt_stats_subject_level();
 
@@ -22,7 +22,7 @@ opt.fwhm.func =  0;
 
 opt.glm.roibased.do = true;
 
-opt.verbosity = 2;
+opt.verbosity = 3;
 
 opt.pipeline.type = 'stats';
 
@@ -43,7 +43,7 @@ ROIs = return_rois(model);
 
 opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 roi_list = getROIs(opt);
-disp(roiList);
+disp(roi_list);
 
 output_dir = fullfile(opt.dir.stats, 'derivatives', 'bidspm-groupStats');
 

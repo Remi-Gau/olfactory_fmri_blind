@@ -1,5 +1,8 @@
 function collect_psc(opt, contrasts, roi_list, output_file)
   %
+  % Update data from all roi for each subject and then centralize
+  % all the data in single subject for the whole group.
+  %
   % (C) Copyright 2022 Remi Gau
 
   % collect PSC data from each subject
@@ -83,6 +86,7 @@ function collect_psc(opt, contrasts, roi_list, output_file)
 
   end
 
+  printToScreen(sprintf('Saving to file:\n %s\n', output_file), opt);
   bids.util.tsvwrite(output_file, group_tsv);
 
 end

@@ -41,10 +41,10 @@ for iRoi = 1:numel(ROIs)
   fprintf(1, '\n');
   roi_name =  ['label-' ROIs{iRoi}];
   opt.roi.name = {['hemi-L.*' roi_name], ['hemi-R.*' roi_name]};
-  roiList = getROIs(opt);
-  assert(numel(roiList) == 2);
-  fprintf(1, '%s', strjoin(roiList, '\n '));
-  merge_left_right_rois(roiList, rm_input);
+  roi_list = getROIs(opt);
+  assert(numel(roi_list) == 2);
+  fprintf(1, '%s', strjoin(roi_list, '\n '));
+  merge_left_right_rois(roi_list, rm_input);
 
 end
 

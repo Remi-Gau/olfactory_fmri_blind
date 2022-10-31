@@ -66,37 +66,6 @@ return
 
 %% Model 1 : olfactory regions
 
-% missing results
-%
-% Broadmann34Piriform
-%
-% sub-blnd05
-% sub-blnd13
-% sub-blnd14
-% sub-blnd17
-% sub-ctrl03
-% sub-ctrl09
-% sub-ctrl18
-%
-%
-% OFCpost
-%
-% sub-blnd06
-%
-%
-% ThalamusMDm
-%   blnd 05
-%
-% ACCsup
-%   blnd 09
-%
-% ThalamusMDl
-%   blnd16
-%   ctrl02
-%
-% ThalamusMD
-%   ctrl11
-
 clc;
 clear;
 

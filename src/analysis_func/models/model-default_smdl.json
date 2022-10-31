@@ -78,7 +78,7 @@
         },
         "Software": {
           "SPM": {
-            "SerialCorrelation": "FAST",
+            "SerialCorrelation": "AR(1)",
             "InclusiveMaskingThreshold": "-Inf"
           }
         }

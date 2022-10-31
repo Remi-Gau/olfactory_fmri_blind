@@ -12,15 +12,52 @@ clc;
 
 run ../../initEnv.m;
 
-opt.subjects = {'.*'};
-model = 'default';
-% model = 'TissueConfounds';
-
+opt.subjects = {'blnd.*'};
+model = 'TissueConfounds';
 hemi = '.*';
 
-ROIs = return_rois(model);
+switch model
+
+  case 'TissueConfounds'
+
+    % All other regions use model 3
+
+    ROIs = {'V1'
+            'V2'
+            'V3'
+            'hV4'
+            'hMT'
+            'VO1'
+            'VO2'
+            'LO2'
+            'LO1'
+            'auditory'
+            'hand'
+            'S1'
+            'IPS'
+            'pons'
+            'midbrain'};
+
+  case 'default'
+
+    % Olfactory and frontal regions use default model (number 1)
+
+    ROIs = {'Broadmann28Ento'
+            'Broadmann34Piriform'
+            'Hippocampus'
+            'Insula'
+            'OFCant'
+            'OFClat'
+            'OFCmed'
+            'OFCpost'
+            'ACC'
+            'Thalamus'
+            'Amygdala'};
+
+end
 
 opt = opt_stats_subject_level(opt);
+disp(opt.subjects);
 
 opt.glm.roibased.do = true;
 opt.fwhm.func =  0;
@@ -50,4 +87,4 @@ disp(roiList);
 
 skipped = bidsRoiBasedGLM(opt);
 
-save(fullfile(pwd, 'skipped_ctrl_TissueConfounds.mat'), 'skipped');
+save(fullfile(pwd, 'skipped_blnd_TissueConfounds.mat'), 'skipped');

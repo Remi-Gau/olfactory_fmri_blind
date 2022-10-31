@@ -22,6 +22,11 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
 
   yLabel = {'percent signal change', ''};
 
+  visible = 'off';
+  if  opt.verbosity > 0 && ~spm_get_defaults('cmdline')
+    visible = 'on';
+  end
+
   for i_roi = 1:numel(roi_list)
 
     data = [];
@@ -54,7 +59,9 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
       data_to_save.(columns{i}) = [];
     end
 
-    figure('name', main_title, 'position', [50 50 1300 700], 'visible', 'on');
+    figure('name', main_title, ...
+           'position', [50 50 1300 700], ...
+           'visible', visible);
 
     for i_group = 1:numel(groups)
 

@@ -16,14 +16,14 @@ opt.pipeline.type = 'stats';
 opt = opt_dir(opt);
 opt = get_options(opt);
 
-opt.verbosity = 2;
+opt.verbosity = 0;
 opt.glm.roibased.do = true;
 opt.fwhm.func =  0;
 
 opt.bidsFilterFile.roi.space = 'MNI';
 
-model = 'TissueConfounds'; % Model 3 : visual, auditory, hand regions
-% model = 'default'; % Model 1 : olfactory regions
+% model = 'TissueConfounds'; % Model 3 : visual, auditory, hand regions
+model = 'default'; % Model 1 : olfactory regions
 
 ROIs = return_rois(model);
 
@@ -39,11 +39,14 @@ switch model
     input_file = fullfile(input_dir, 'group_model-3_psc.tsv');
 end
 
+plot_psc(opt, roi_list, input_file);
 close all;
 
-plot_psc(opt, roi_list, input_file);
 plot_identification(opt, roi_list, input_file);
+close all;
+
 plot_localization(opt, roi_list, input_file);
+close all;
 
 %%
 function plot_identification(opt, roi_list, input_file)

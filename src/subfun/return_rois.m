@@ -7,6 +7,9 @@ function ROIs = return_rois(model_type)
 
   switch lower(model_type)
     case 'default'
+
+      %% Model 1 : olfactory regions
+
       ROIs = {'Broadmann28Ento'
               'Broadmann34Piriform'
               'Hippocampus'
@@ -20,6 +23,9 @@ function ROIs = return_rois(model_type)
               'Amygdala'};
 
     case 'tissueconfounds'
+
+      %% Model 3 : visual, auditory, hand regions
+
       ROIs = {'V1'
               'V2'
               'V3'

@@ -33,33 +33,24 @@ for i = 1:numel(opt.results.name)
   contrasts(i).name = opt.results.name{i}; %#ok<*SAGROW>
 end
 
+model = 'TissueConfounds';
+
+opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
+                          'models', ...
+                          ['model-' model '_smdl.json']);
+
 opt.model.bm = BidsModel('file', opt.model.file);
 
 opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
-ROIs = {'V1', ...
-        'V2', ...
-        'V3', ...
-        'hV4', ...
-        'hMT', ...
-        'VO1', ...
-        'VO2', ...
-        'LO2', ...
-        'LO1', ...
-        'auditory', ...
-        'hand', ...
-        'S1', ...
-        'IPS', ...
-        'pons', ...
-        'midbrain'};
+ROIs = return_rois(model);
 
 opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 roi_list = getROIs(opt);
 
 output_file = fullfile(opt.dir.stats, 'derivatives', 'bidspm-groupStats', 'group_model-3_psc.tsv');
 
-%
 collect_psc(opt, contrasts, roi_list, output_file);
 
 return
@@ -87,26 +78,17 @@ for i = 1:numel(opt.results.name)
   contrasts(i).name = opt.results.name{i}; %#ok<*SAGROW>
 end
 
+model = 'default';
+
 opt.model.file = fullfile(fileparts(mfilename('fullpath')), ...
                           'models', ...
-                          'model-default_smdl.json');
+                          ['model-' model '_smdl.json']);
 
 opt.model.bm = BidsModel('file', opt.model.file);
-
 opt.space = opt.model.bm.Input.space;
 opt.taskName = opt.model.bm.Input.task;
 
-ROIs = {'Broadmann28Ento'
-        'Broadmann34Piriform'
-        'Hippocampus'
-        'Insula'
-        'OFCant'
-        'OFClat'
-        'OFCmed'
-        'OFCpost'
-        'ACC'
-        'Thalamus'
-        'Amygdala'};
+ROIs = return_rois(model);
 
 opt.roi.name = {['^.*space-.*(', strjoin(ROIs, '|') ')']};
 roi_list = getROIs(opt);

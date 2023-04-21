@@ -3,6 +3,9 @@ function trial_courses = get_trial_timecourse(event_file)
   %
   % returns time course
   % trial_courses  of size [numel(trial_type), timecourse_dur * samp_freq]
+  % - with 1 for trial onsets
+  % - with -1 for trial offsets
+  % - with 0 everywhere else
   %
   % onsets are equal to 1 and offet to -1
   %

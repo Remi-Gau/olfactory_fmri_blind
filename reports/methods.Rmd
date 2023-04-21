@@ -38,10 +38,10 @@ F(3, 36) = 2.06, p = .12, ηpartial2 = .15).
 The study was approved by the Multicentric Research Ethics Board of the
 “Regroupement Neuroimagerie du Québec” [CMER RNQ 11-12-007].
 
-```{r, echo=FALSE, warning=FALSE}
-library(flextable)
-flextable(read.table(file = "participants.tsv", sep = '\t', header = TRUE))
-```
+# ```{r, echo=FALSE, warning=FALSE}
+# library(flextable)
+# flextable(read.table(file = "participants.tsv", sep = '\t', header = TRUE))
+# ```
 
 ## Chemosensory stimuli
 

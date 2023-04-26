@@ -71,6 +71,7 @@ function spaghetti_plot(varargin)
   addParameter(args, 'title', 'TITLE', @ischar);
   addParameter(args, 'markerSize', 5, @isnumeric);
   addParameter(args, 'color', [0 0 255], @isnumeric);
+  addParameter(args, 'dispersion_estimator', 'std', @ischar);
 
   parse(args, varargin{:});
 
@@ -78,6 +79,7 @@ function spaghetti_plot(varargin)
   spaghetti = args.Results.spaghetti;
   fontSize = args.Results.fontSize;
   markerSize = args.Results.markerSize;
+  dispersion_estimator = args.Results.dispersion_estimator;
 
   color = args.Results.color;
   color = color / 255;
@@ -168,9 +170,18 @@ function spaghetti_plot(varargin)
     % plot means
     if nb_cols <= 2
 
+      dispersion = std(to_plot, 'omitnan');
+      switch dispersion_estimator
+        case 'sem'
+          dispersion = dispersion / (sum(~isnan(to_plot)))^0.5;
+        case 'ci'
+          ci = spm_invNcdf(1 - 0.05);
+          dispersion = ci * dispersion / (sum(~isnan(to_plot)))^0.5;
+      end
+
       errorbar(x_values_for_mean(i_col), ...
                mean(to_plot, 'omitnan'), ...
-               std(to_plot, 'omitnan'), ...
+               dispersion, ...
                'o', ...
                'color', color, ...
                'linewidth', 2, ...

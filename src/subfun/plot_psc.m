@@ -1,13 +1,10 @@
-function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_prefix)
+function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel)
   %
   % (C) Copyright 2022 Remi Gau
 
   if nargin < 4
     contrasts = {'all_olfid', 'all_olfloc'};
     xTickLabel = {'identification', 'localization'};
-  end
-  if nargin < 6
-    main_title_prefix = '';
   end
 
   group_tsv = bids.util.tsvread(input_file);
@@ -35,23 +32,16 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
 
     roi_filter = strcmp(group_tsv.roi, bf.entities.label);
 
-    if isempty(main_title_prefix)
-      main_title = ['label-' bf.entities.label];
-    else
-      main_title = [main_title_prefix ' - label-' bf.entities.label];
-    end
+    main_title = set_main_title(opt, roi_list, i_roi);
+
+    hemi_filter = strcmp(group_tsv.hemi, 'NaN');
     if isfield(bf.entities, 'hemi')
-      main_title = [main_title ' - hemi-' bf.entities.hemi];
       hemi_filter = strcmp(group_tsv.hemi, bf.entities.hemi);
-    else
-      hemi_filter = strcmp(group_tsv.hemi, 'NaN');
     end
 
+    desc_filter = true(size(group_tsv.desc));
     if isfield(bf.entities, 'desc')
-      main_title = [main_title ' - desc-' bf.entities.desc];
       desc_filter = strcmp(group_tsv.desc, bf.entities.desc);
-    else
-      desc_filter = true(size(group_tsv.desc));
     end
 
     columns = fieldnames(group_tsv);
@@ -94,16 +84,17 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
 
     i_subplot = 1;
 
-    for row = 1:size(data, 1)
+    nb_rows = size(data, 1);
+
+    for row = 1:nb_rows
 
       for col = 1:size(data, 2)
 
         subplot(size(data, 1), size(data, 2), i_subplot);
 
+        subplot_title = '';
         if row == 1
           subplot_title = groups{col};
-        else
-          subplot_title = '';
         end
 
         spaghetti_plot(data{row, col}, ...
@@ -116,7 +107,8 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
                        'yMax', yMax, ...
                        'title', subplot_title, ...
                        'markerSize', 8, ...
-                       'color', Colors(col, :));
+                       'color', Colors(col, :), ...
+                       'dispersion_estimator', opt.dispersion_estimator);
 
         i_subplot = i_subplot + 1;
 
@@ -124,18 +116,38 @@ function plot_psc(opt, roi_list, input_file, contrasts, xTickLabel, main_title_p
 
     end
 
-    mtit(sprintf('%s', main_title), ...
-         'fontsize', 16, ...
-         'xoff', 0, ...
-         'yoff', 0.04);
-
-    output_file = fullfile(output_dir, [strrep(main_title, ' - ', '_'), '.png']);
-    print(gcf, '-dpng', output_file);
-    output_file = fullfile(output_dir, [strrep(main_title, ' - ', '_'), '.svg']);
-    print(gcf, '-dsvg', output_file);
-    output_file = fullfile(output_dir, [strrep(main_title, ' - ', '_'), '.tsv']);
-    bids.util.tsvwrite(output_file, data_to_save);
+    save_figure_and_data(output_dir, main_title, data_to_save);
 
   end
 
+end
+
+function main_title = set_main_title(opt, roi_list, i_roi)
+
+  if isfield(opt, 'main_titles')
+    main_titles = opt.main_titles;
+    assert(numel(main_titles) == numel(roi_list));
+    main_title = main_titles{i_roi};
+    return
+  end
+
+  bf = bids.File(roi_list{i_roi});
+
+  main_title = ['label-' bf.entities.label];
+
+  main_title_prefix = '';
+  if isfield(opt, 'main_title_prefix')
+    main_title_prefix = opt.main_title_prefix;
+  end
+  if ~isempty(main_title_prefix)
+    main_title = [main_title_prefix ' - ' main_title];
+  end
+
+  if isfield(bf.entities, 'hemi')
+    main_title = [main_title ' - hemi-' bf.entities.hemi];
+  end
+
+  if isfield(bf.entities, 'desc')
+    main_title = [main_title ' - desc-' bf.entities.desc];
+  end
 end

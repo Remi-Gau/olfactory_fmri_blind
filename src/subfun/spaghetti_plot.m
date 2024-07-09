@@ -70,7 +70,7 @@ function spaghetti_plot(varargin)
   addParameter(args, 'yMax', [], @isnumeric);
   addParameter(args, 'title', 'TITLE', @ischar);
   addParameter(args, 'markerSize', 5, @isnumeric);
-  addParameter(args, 'color', [0 0 255], @isnumeric);
+  addParameter(args, 'color', [0 0 255]);
   addParameter(args, 'dispersion_estimator', 'std', @ischar);
 
   parse(args, varargin{:});
@@ -80,9 +80,6 @@ function spaghetti_plot(varargin)
   fontSize = args.Results.fontSize;
   markerSize = args.Results.markerSize;
   dispersion_estimator = args.Results.dispersion_estimator;
-
-  color = args.Results.color;
-  color = color / 255;
 
   % dummy data for standalone testing
   if isempty(data)
@@ -106,23 +103,8 @@ function spaghetti_plot(varargin)
   %%
   nb_cols = size(data, 2);
 
-  yMin = args.Results.yMin;
-
-  if isempty(yMin)
-    yMin = min(data(:)) * 1.2;
-  end
-  if yMin > 0
-    yMin = 0;
-  end
-
-  yMax = args.Results.yMax;
-  if isempty(yMax)
-    yMax = max(data(:)) * 1.2;
-  end
-  if yMax  < 0
-    yMax = 0;
-  end
-
+  yMin = get_yMin(args, data);
+  yMax = get_yMax(args, data);
   range = yMax - yMin;
 
   x_values_for_data = 1:nb_cols;
@@ -130,8 +112,8 @@ function spaghetti_plot(varargin)
   xMax = nb_cols + 0.4;
 
   if nb_cols <= 2
-    x_values_for_mean = [0.6, 2.4];
-    x_values_for_data = [1.1, 1.9];
+    x_values_for_mean = [1, 2];
+    x_values_for_data = [1.3, 1.7];
     xMin = x_values_for_mean(1) - 0.2;
     xMax = x_values_for_mean(nb_cols) + 0.2;
   end
@@ -150,10 +132,12 @@ function spaghetti_plot(varargin)
 
     to_plot = data(:, i_col);
 
+    color_to_use = get_color(args, i_col);
+
     if ~spaghetti
       h = plotSpread(to_plot, 'distributionIdx', ones(1, numel(to_plot)), ...
                      'distributionMarkers', {'o'}, ...
-                     'distributionColors', color, ...
+                     'distributionColors', color_to_use, ...
                      'xValues', x_values_for_data(i_col), ...
                      'showMM', 0, ...
                      'binWidth', range * 0.2, ...
@@ -162,7 +146,7 @@ function spaghetti_plot(varargin)
       set(h{1}, ...
           'markerSize', markerSize, ...
           'MarkerEdgeColor', 'k', ...
-          'MarkerFaceColor', color, ...
+          'MarkerFaceColor', color_to_use, ...
           'LineWidth', 2);
 
     end
@@ -183,42 +167,24 @@ function spaghetti_plot(varargin)
                mean(to_plot, 'omitnan'), ...
                dispersion, ...
                'o', ...
-               'color', color, ...
+               'color', color_to_use, ...
                'linewidth', 2, ...
                'markerSize', markerSize * 1.5, ...
                'MarkerEdgeColor', 'k', ...
-               'MarkerFaceColor', color);
+               'MarkerFaceColor', color_to_use);
 
     end
 
   end
 
-  if spaghetti
-    lineColor = color * 1.3;
-    lineColor(lineColor > 1) = 1;
-    h = plot(x_values_for_data, data, 'o-');
-    for i = 1:numel(h)
-      set(h(i), ...
-          'color', lineColor, ...
-          'linewidth', 1, ...
-          'MarkerSize', markerSize, ...
-          'MarkerEdgeColor', 'k', ...
-          'MarkerFaceColor', color);
-    end
-  end
+  set_sphagetti_lines(spaghetti, color_to_use, x_values_for_data, data, markerSize);
 
   axis([xMin, xMax,  yMin, yMax]);
 
   abs_max = round(max(abs([yMin yMax])) * 100);
-  yTickLabel = round(-2 * abs_max:abs_max / 8:abs_max * 2) / 100;
+  yTickLabel = round(-2 * abs_max:abs_max / 6:abs_max * 2) / 100;
 
-  xTickLabel = args.Results.xTickLabel;
-  if isnumeric(xTickLabel)
-    xTickLabel = num2cell(xTickLabel);
-    xTickLabel = cellfun(@(x) num2str(x), xTickLabel, 'UniformOutput', false);
-  end
-
-  xTickLabel = strrep(xTickLabel, '_', ' ');
+  xTickLabel = get_xTickLabel(args);
 
   set(gca, ...
       'fontSize', fontSize, ...
@@ -232,11 +198,75 @@ function spaghetti_plot(varargin)
   t = ylabel(args.Results.yLabel);
   set(t, 'fontSize', fontSize + 2);
 
-  % any line with a nan is skipped;
-  n = size(data, 1);
-  t = title(sprintf('%s (n=%i)', ...
-                    args.Results.title, ...
-                    n));
-  set(t, 'fontSize', fontSize + 4);
+  if ~isempty(args.Results.title)
+    n = size(data, 1);
+    t = title(sprintf('%s (n=%i)', ...
+                      args.Results.title, ...
+                      n));
+    set(t, 'fontSize', fontSize + 4);
+  end
 
+end
+
+function color = get_color(args, i_col)
+  color = args.Results.color;
+  if isnumeric(color)
+    color = color / 255;
+    return
+  end
+
+  if iscell(color)
+    for i = 1:numel(color)
+      color{i} = color{i} / 255;
+    end
+    color = color{i_col};
+    return
+  end
+
+  error('color must be numeric or cell');
+end
+
+function yMin = get_yMin(args, data)
+  yMin = args.Results.yMin;
+  if isempty(yMin)
+    yMin = min(data(:)) * 1.2;
+  end
+  if yMin > 0
+    yMin = 0;
+  end
+end
+
+function yMax = get_yMax(args, data)
+  yMax = args.Results.yMax;
+  if isempty(yMax)
+    yMax = max(data(:)) * 1.2;
+  end
+  if yMax  < 0
+    yMax = 0;
+  end
+end
+
+function set_sphagetti_lines(spaghetti, color, x_values_for_data, data, markerSize)
+  if spaghetti
+    lineColor = color * 1.3;
+    lineColor(lineColor > 1) = 1;
+    h = plot(x_values_for_data, data, 'o-');
+    for i = 1:numel(h)
+      set(h(i), ...
+          'color', lineColor, ...
+          'linewidth', 1, ...
+          'MarkerSize', markerSize, ...
+          'MarkerEdgeColor', 'k', ...
+          'MarkerFaceColor', color);
+    end
+  end
+end
+
+function xTickLabel = get_xTickLabel(args)
+  xTickLabel = args.Results.xTickLabel;
+  if isnumeric(xTickLabel)
+    xTickLabel = num2cell(xTickLabel);
+    xTickLabel = cellfun(@(x) num2str(x), xTickLabel, 'UniformOutput', false);
+  end
+  xTickLabel = strrep(xTickLabel, '_', ' ');
 end

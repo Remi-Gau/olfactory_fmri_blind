@@ -15,7 +15,7 @@ opt = opt_dir(opt);
 opt = get_options(opt);
 
 opt.verbosity = 0;
-opt.glm.roibased.do = true;
+% opt.glm.roibased.do = true;
 opt.fwhm.func =  0;
 
 opt.dispersion_estimator = 'ci'; % std sem
@@ -37,7 +37,7 @@ rois_for_figure = {'Broadmann28Ento'
                    'hMT'};
 
 model = 'TissueConfounds'; % Model 3 : visual, auditory, hand regions
-% model = 'default'; % Model 1 : olfactory regions
+model = 'default'; % Model 1 : olfactory regions
 
 ROIs = return_rois(model);
 disp('Found ROIs');
@@ -65,6 +65,7 @@ switch model
 end
 
 if ~only_rois_for_figure
+
   plot_psc(opt, roi_list, input_file);
   close all;
 
@@ -76,18 +77,21 @@ if ~only_rois_for_figure
 
 else
 
+  opt.merge_cols = true;
   opt.main_title_prefix = '';
   opt.main_titles = return_main_titles(roi_list);
+  opt.spaghetti = false;
+  opt.add_subplot_title = false;
 
   if strcmp(model, 'TissueConfounds')
     contrasts = {'all_olfloc'};
-    xTickLabel = {''};
+    xTickLabel = {'blind', 'control'};
 
     plot_psc(opt, roi_list, input_file, contrasts, xTickLabel);
 
   elseif  strcmp(model, 'default')
     contrasts = {'all_olfid'};
-    xTickLabel = {''};
+    xTickLabel = {'blind', 'control'};
     plot_psc(opt, roi_list, input_file, contrasts, xTickLabel);
 
   end
